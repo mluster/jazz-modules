@@ -24,4 +24,4 @@
 
 ---
 ## Release Notes
-[CHANGELOG](./CHANGELOG)
+[CHANGELOG](./CHANGELOG.md)
