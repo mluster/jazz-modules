@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<ruleset name="PHP Mess Detector"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <!-- https://phpmd.org/ -->
+    <description>PHPMD Standards</description>
+
+
+    <!-- CLEANCODE -->
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="StaticAccess" />
+    </rule>
+    <rule ref="rulesets/cleancode.xml/StaticAccess">
+        <properties>
+            <property name="exceptions">
+                <value>
+                    \Illuminate\Pagination\Paginator,
+                    \Illuminate\Support\Facades\Broadcast,
+                    \Illuminate\Support\Facades\RateLimiter
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- CODESIZE -->
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="TooManyMethods" />
+        <exclude name="TooManyPublicMethods" />
+    </rule>
+    <rule ref="rulesets/codesize.xml/TooManyMethods">
+        <properties>
+            <property name="ignorepattern" value="(^(set|get|is|has|do))i" />
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
+        <properties>
+            <property name="ignorepattern" value="(^(set|get|is|has|do))i" />
+        </properties>
+    </rule>
+
+    <!-- CONTROVERSIAL -->
+    <rule ref="rulesets/controversial.xml" />
+
+    <!-- DESIGN -->
+    <rule ref="rulesets/design.xml" />
+
+    <!-- NAMING -->
+    <rule ref="rulesets/naming.xml">
+        <exclude name="ShortVariable" />
+        <exclude name="LongVariable" />
+        <exclude name="ShortMethodName" />
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="exceptions" value="id,i,j,k,x,y,z" />
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" value="30" />
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortMethodName">
+        <properties>
+            <property name="exception" value="do" />
+        </properties>
+    </rule>
+
+    <!-- UNUSEDCODE -->
+    <rule ref="rulesets/unusedcode.xml" />
+</ruleset>

@@ -46,22 +46,22 @@
     "prefer-stable": true,
     "scripts": {
         "phpcs": [
-            "./vendor/bin/phpcs -s --report-json=storage/reports/phpcs.json > storage/reports/phpcs.out"
+            "./vendor/bin/phpcs -s --report-json=storage/phpcs.json > storage/phpcs.out"
         ],
         "phpmd": [
-            "./vendor/bin/phpmd app,tests json phpmd.xml --reportfile storage/reports/phpmd.json"
+            "./vendor/bin/phpmd src,tests json phpmd.xml --reportfile storage/phpmd.json"
         ],
         "phploc": [
-            "./vendor/bin/phploc --count-tests --log-json storage/reports/phploc.json app tests > storage/reports/phploc.out"
+            "./vendor/bin/phploc --count-tests --log-json storage/phploc.json src tests > storage/phploc.out"
         ],
         "phpcpd": [
-            "./vendor/bin/phpcpd --log-pmd storage/reports/phpcpd.xml app tests > storage/reports/phpcpd.out"
+            "./vendor/bin/phpcpd --log-pmd storage/phpcpd.xml src tests > storage/phpcpd.out"
         ],
         "phpstan": [
-            "./vendor/bin/phpstan analyse -c phpstan.neon --error-format=prettyJson app tests > storage/reports/phpstan.json"
+            "./vendor/bin/phpstan analyse -c phpstan.neon --error-format=prettyJson src tests > storage/phpstan.json"
         ],
         "phpunit": [
-            "./vendor/bin/phpunit -c phpunit.xml > storage/reports/phpunit.out"
+            "./vendor/bin/phpunit -c phpunit.xml > storage/phpunit.out"
         ],
 
         "analyze": [

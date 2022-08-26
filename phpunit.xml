@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="All">
+            <directory suffix="Test.php">./tests</directory>
+        </testsuite>
+        <!--<testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
+            <exclude>./tests/Feature/Sample</exclude>
+        </testsuite>-->
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+        <!-- <report>
+            <clover outputFile="storage/phpunit/clover.xml" />
+            <html outputDirectory="storage/phpunit/html" lowUpperBound="50" highLowerBound="90" />
+            <php outputFile="storage/phpunit/coverage.php" />
+            <text outputFile="storage/phpunit/coverage.txt" showUncoveredFiles="false" showOnlySummary="true" />
+            <xml outputDirectory="storage/phpunit/xml" />
+        </report> -->
+    </coverage>
+    <!-- <logging>
+        <junit outputFile="storage/phpunit/log.junit.xml" />
+        <testdoxXml outputFile="storage/phpunit/log.testdox.xml" />
+        <text outputFile="storage/phpunit/log.txt" />
+    </logging> -->
+    <php>
+        <server name="APP_ENV" value="testing"/>
+    </php>
+</phpunit>
