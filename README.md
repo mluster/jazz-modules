@@ -1,9 +1,23 @@
 # Jazz Modules
-![GitHub](https://img.shields.io/github/license/mluster/jazz-modules?style=plastic)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mluster/jazz-modules?style=plastic)
 [![GitHub issues](https://img.shields.io/github/issues/mluster/jazz-modules?style=plastic)](https://github.com/mluster/jazz-modules/issues)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/mluster/jazz-modules?style=plastic)
+![GitHub contributors](https://img.shields.io/github/contributors/mluster/jazz-modules?style=plastic&color=blue)
 [![GitHub forks](https://img.shields.io/github/forks/mluster/jazz-modules?style=plastic)](https://github.com/mluster/jazz-modules/network)
 [![GitHub stars](https://img.shields.io/github/stars/mluster/jazz-modules?style=plastic)](https://github.com/mluster/jazz-modules/stargazers)
 ![GitHub all releases](https://img.shields.io/github/downloads/mluster/jazz-modules/total?style=plastic)
+![GitHub last commit](https://img.shields.io/github/last-commit/mluster/jazz-modules?style=plastic)
+![GitHub Release Date](https://img.shields.io/github/release-date/mluster/jazz-modules?style=plastic)
+![GitHub Discussions](https://img.shields.io/github/discussions/mluster/jazz-modules?style=plastic)
+
+![coverage](https://img.shields.io/badge/coverage-0%25-yellow?style=plastic)
+![tests](https://img.shields.io/badge/tests-0%20passed-yellow?style=plastic)
+
+
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/mluster/jazz-modules?logo=php&style=plastic)
+![Framework](https://img.shields.io/badge/laravel-9.x-informational?style=plastic&logo=laravel)
+[![GitHub](https://img.shields.io/github/license/mluster/jazz-modules?style=plastic&color=9cf)](LICENSE)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=plastic&color=9cf)](CODE_OF_CONDUCT.md)
 
 
 ## Install
@@ -15,12 +29,6 @@
 ## Contributing
 ### Coding Standards
 
----
-## Code of Conduct
-
----
-## License
-[BSD 3-Clause License](./LICENSE)
 
 ---
 ## Release Notes
