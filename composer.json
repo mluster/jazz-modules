@@ -3,8 +3,9 @@
     "type": "project",
     "description": "Jazz Modules for Laravel",
     "keywords": [
-        "framework",
         "laravel",
+        "framework",
+        "package",
         "modules"
     ],
     "license": "BSD-3-Clause",
@@ -29,6 +30,10 @@
     },
     "extra": {
         "laravel": {
+            "providers": [
+                "Jazz\\Modules\\Provider",
+                "Jazz\\Modules\\ConsoleProvider"
+            ],
             "dont-discover": []
         }
     },
@@ -39,7 +44,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Jazz\\Modules\\": "tests/"
+            "JazzTest\\Modules\\": "tests/"
         }
     },
     "minimum-stability": "dev",

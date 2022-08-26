@@ -21,7 +21,12 @@ COPY docker/xdebug.ini /usr/local/etc/php/conf.d/99-xdebug.ini
 RUN apk del g++ make autoconf && \
     rm /var/cache/apk/*
 
-COPY docker/local.ini /usr/local/etc/php/conf.d//
+RUN curl -s http://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer
+
+COPY docker/local.ini /usr/local/etc/php/conf.d/
+
+RUN chmod -R 755 /var/www
 
 ARG WORKDIR=/var/www
 WORKDIR ${WORKDIR}
