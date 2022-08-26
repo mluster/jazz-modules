@@ -1,5 +1,7 @@
 # Release Notes
+## _[Unreleased](https://github.com/mluster/jazz-modules/compare/v0.1.0...main)_
 
+---
 ## _[v0.1.0](https://github.com/mluster/jazz-modules/compare/v0.1.0...main)_
 ### NEW
 - added documentation files
