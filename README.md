@@ -14,8 +14,8 @@
 ![tests](https://img.shields.io/badge/tests-0%20passed-yellow?style=plastic)
 
 
-![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/mluster/jazz-modules?logo=php&style=plastic)
-![Framework](https://img.shields.io/badge/laravel-9.x-informational?style=plastic&logo=laravel)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/mluster/jazz-modules?logo=php&style=plastic&color=9cf)
+![Framework](https://img.shields.io/badge/laravel-9.x-9cf?style=plastic&logo=laravel)
 [![GitHub](https://img.shields.io/github/license/mluster/jazz-modules?style=plastic&color=9cf)](LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=plastic&color=9cf)](CODE_OF_CONDUCT.md)
 
