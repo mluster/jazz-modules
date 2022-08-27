@@ -13,6 +13,7 @@ use Jazz\Modules\Console\ConsoleMake;
 use Jazz\Modules\Console\EventMake;
 use Jazz\Modules\Console\ExceptionMake;
 use Jazz\Modules\Console\FactoryMake;
+use Jazz\Modules\Console\JobMake;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -24,6 +25,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'EventMake' => 'command.event.make',
         'ExceptionMake' => 'command.exception.make',
         'FactoryMake' => 'command.factory.make',
+        'JobMake' => 'command.job.make',
     ];
 
 
@@ -84,11 +86,18 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
             return new ExceptionMake($app['files']);
         });
     }
-    
+
     protected function registerFactoryMake(): void
     {
         $this->app->singleton('command.factory.make', static function ($app) {
             return new FactoryMake($app['files']);
+        });
+    }
+
+    protected function registerJobMake(): void
+    {
+        $this->app->singleton('command.job.make', static function ($app) {
+            return new JobMake($app['files']);
         });
     }
 }
