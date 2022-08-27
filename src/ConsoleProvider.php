@@ -7,6 +7,7 @@ namespace Jazz\Modules;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Jazz\Modules\Console\CastMake;
+use Jazz\Modules\Console\ChannelMake;
 use Jazz\Modules\Console\ConsoleMake;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
@@ -14,6 +15,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     protected array $commands = [
         'ConsoleMake' => 'command.console.make',
         'CastMake' => 'command.cast.make',
+        'ChannelMake' => 'command.channel.make',
     ];
 
 
@@ -44,6 +46,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.cast.make', function ($app) {
             return new CastMake($app['files']);
+        }
+    }
+
+    protected function registerChannelMake(): void
+    {
+        $this->app->singleton('command.channel.make', static function ($app) {
+            return new ChannelMake($app['files']);\
         });
     }
 }
