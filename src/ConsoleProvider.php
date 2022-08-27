@@ -11,6 +11,7 @@ use Jazz\Modules\Console\ChannelMake;
 use Jazz\Modules\Console\ComponentMake;
 use Jazz\Modules\Console\ConsoleMake;
 use Jazz\Modules\Console\EventMake;
+use Jazz\Modules\Console\ExceptionMake;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -20,6 +21,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'ChannelMake' => 'command.channel.make',
         'ComponentMake' => 'command.component.make',
         'EventMake' => 'command.event.make',
+        'ExceptionMake' => 'command.exception.make',
     ];
 
 
@@ -71,6 +73,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.event.make', static function ($app) {
             return new EventMake($app['files']);
+        });
+    }
+
+    protected function registerExceptionMake(): void
+    {
+        $this->app->singleton('command.exception.make', static function ($app) {
+            return new ExceptionMake($app['files']);
         });
     }
 }
