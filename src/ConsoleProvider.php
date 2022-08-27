@@ -46,13 +46,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.cast.make', function ($app) {
             return new CastMake($app['files']);
-        }
+        });
     }
 
     protected function registerChannelMake(): void
     {
         $this->app->singleton('command.channel.make', static function ($app) {
-            return new ChannelMake($app['files']);\
+            return new ChannelMake($app['files']);
         });
     }
 }
