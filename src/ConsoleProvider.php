@@ -10,6 +10,7 @@ use Jazz\Modules\Console\CastMake;
 use Jazz\Modules\Console\ChannelMake;
 use Jazz\Modules\Console\ComponentMake;
 use Jazz\Modules\Console\ConsoleMake;
+use Jazz\Modules\Console\EventMake;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -18,6 +19,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'CastMake' => 'command.cast.make',
         'ChannelMake' => 'command.channel.make',
         'ComponentMake' => 'command.component.make',
+        'EventMake' => 'command.event.make',
     ];
 
 
@@ -62,6 +64,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.component.make', static function ($app) {
             return new ComponentMake($app['files']);
+        });
+    }
+
+    protected function registerEventMake(): void
+    {
+        $this->app->singleton('command.event.make', static function ($app) {
+            return new EventMake($app['files']);
         });
     }
 }
