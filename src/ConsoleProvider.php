@@ -18,6 +18,7 @@ use Jazz\Modules\Console\ListenerMake;
 use Jazz\Modules\Console\MiddlewareMake;
 use Jazz\Modules\Console\NotificationMake;
 use Jazz\Modules\Console\ObserverMake;
+use Jazz\Modules\Console\PolicyMake;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -34,6 +35,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'MiddlewareMake' => 'command.middleware.make',
         'NotificationMake' => 'command.notification.make',
         'ObserverMake' => 'command.observer.make',
+        'PolicyMake' => 'command.policy.make',
     ];
 
 
@@ -129,11 +131,18 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
             return new NotificationMake($app['files']);
         });
     }
-    
+
     protected function registerObserverMake(): void
     {
         $this->app->singleton('command.observer.make', static function ($app) {
             return new ObserverMake($app['files']);
+        });
+    }
+
+    protected function registerPolicyMake(): void
+    {
+        $this->app->singleton('command.policy.make', static function ($app) {
+            return new PolicyMake($app['files']);
         });
     }
 }
