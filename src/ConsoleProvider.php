@@ -12,7 +12,6 @@ use Jazz\Modules\Console\ComponentMake;
 use Jazz\Modules\Console\ConsoleMake;
 use Jazz\Modules\Console\EventMake;
 use Jazz\Modules\Console\ExceptionMake;
-use Jazz\Modules\Console\FactoryMake;
 use Jazz\Modules\Console\JobMake;
 use Jazz\Modules\Console\ListenerMake;
 use Jazz\Modules\Console\MailMake;
@@ -23,8 +22,10 @@ use Jazz\Modules\Console\PolicyMake;
 use Jazz\Modules\Console\RequestMake;
 use Jazz\Modules\Console\ResourceMake;
 use Jazz\Modules\Console\RuleMake;
-use Jazz\Modules\Console\MigrationMake;
 use Jazz\Modules\Database\Migration;
+use Jazz\Modules\Console\MigrationMake;
+use Jazz\Modules\Console\FactoryMake;
+use Jazz\Modules\Console\SeederMake;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -35,7 +36,6 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'ComponentMake' => 'command.component.make',
         'EventMake' => 'command.event.make',
         'ExceptionMake' => 'command.exception.make',
-        'FactoryMake' => 'command.factory.make',
         'JobMake' => 'command.job.make',
         'ListenerMake' => 'command.listener.make',
         'MailMake' => 'command.mail.make',
@@ -48,6 +48,8 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'RuleMake' => 'command.rule.make',
 
         'MigrationMake' => 'command.migrate.make',
+        'FactoryMake' => 'command.factory.make',
+        'SeederMake' => 'command.seeder.make',
     ];
 
 
@@ -106,13 +108,6 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.exception.make', static function ($app) {
             return new ExceptionMake($app['files']);
-        });
-    }
-
-    protected function registerFactoryMake(): void
-    {
-        $this->app->singleton('command.factory.make', static function ($app) {
-            return new FactoryMake($app['files']);
         });
     }
 
@@ -197,6 +192,20 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
             $creator = $app['migration.creator'];
             $composer = $app['composer'];
             return new MigrationMake($creator, $composer);
+        });
+    }
+
+    protected function registerFactoryMake(): void
+    {
+        $this->app->singleton('command.factory.make', static function ($app) {
+            return new FactoryMake($app['files']);
+        });
+    }
+
+    protected function registerSeederMake(): void
+    {
+        $this->app->singleton('command.seeder.make', static function ($app) {
+            return new SeederMake($app['files']);
         });
     }
 }
