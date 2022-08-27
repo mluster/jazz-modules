@@ -7,11 +7,13 @@ namespace Jazz\Modules;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Jazz\Modules\Console\ConsoleMake;
+use Jazz\Modules\Console\ControllerMake;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
     protected array $commands = [
         'ConsoleMake' => 'command.console.make',
+        'ControllerMake' => 'command.controller.make',
     ];
 
 
@@ -35,6 +37,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.console.make', static function ($app) {
             return new ConsoleMake($app['files']);
+        });
+    }
+
+    protected function registerControllerMake(): void
+    {
+        $this->app->singleton('command.controller.make', static function ($app) {
+            return new ControllerMake($app['files']);
         });
     }
 }
