@@ -15,6 +15,7 @@ use Jazz\Modules\Console\ExceptionMake;
 use Jazz\Modules\Console\FactoryMake;
 use Jazz\Modules\Console\JobMake;
 use Jazz\Modules\Console\ListenerMake;
+use Jazz\Modules\Console\MailMake;
 use Jazz\Modules\Console\MiddlewareMake;
 use Jazz\Modules\Console\NotificationMake;
 use Jazz\Modules\Console\ObserverMake;
@@ -35,6 +36,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'FactoryMake' => 'command.factory.make',
         'JobMake' => 'command.job.make',
         'ListenerMake' => 'command.listener.make',
+        'MailMake' => 'command.mail.make',
         'MiddlewareMake' => 'command.middleware.make',
         'NotificationMake' => 'command.notification.make',
         'ObserverMake' => 'command.observer.make',
@@ -121,6 +123,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.listener.make', static function ($app) {
             return new ListenerMake($app['files']);
+        });
+    }
+
+    protected function registerMailMake(): void
+    {
+        $this->app->singleton('command.mail.make', static function ($app) {
+            return new MailMake($app['files']);
         });
     }
 
