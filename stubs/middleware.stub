@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Closure;
+use Illuminate\Http\Request;
+
+class {{ class }}
+{
+    public function handle(Request $request, Closure $next): mixed
+    {
+        // BEFORE..
+
+        $response = $next($request);
+        // AFTER..
+
+        return $response;
+    }
+}
