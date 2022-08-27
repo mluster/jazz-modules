@@ -19,6 +19,7 @@ use Jazz\Modules\Console\MiddlewareMake;
 use Jazz\Modules\Console\NotificationMake;
 use Jazz\Modules\Console\ObserverMake;
 use Jazz\Modules\Console\PolicyMake;
+use Jazz\Modules\Console\RuleMake;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -36,6 +37,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'NotificationMake' => 'command.notification.make',
         'ObserverMake' => 'command.observer.make',
         'PolicyMake' => 'command.policy.make',
+        'RuleMake' => 'command.rule.make',
     ];
 
 
@@ -143,6 +145,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.policy.make', static function ($app) {
             return new PolicyMake($app['files']);
+        });
+    }
+
+    protected function registerRuleMake(): void
+    {
+        $this->app->singleton('command.rule.make', static function ($app) {
+            return new RuleMake($app['files']);
         });
     }
 }

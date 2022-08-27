@@ -1,0 +1,23 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Validation\InvokableRule;
+use Illuminate\Translation\PotentiallyTranslatedString;
+use Closure;
+
+class {{ class }} implements InvokableRule
+{
+    public bool $implicit = true;
+
+    /**
+     * Run the validation rule
+     * @param string $attribute
+     * @param mixed $value
+     * @param Closure(string): PotentiallyTranslatedString $fail
+     */
+    public function __invoke($attribute, $value, $fail)
+    {
+        //
+    }
+}
