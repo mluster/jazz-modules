@@ -6,6 +6,7 @@ namespace JazzTest\Modules\Console;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Support\Str;
 use Illuminate\Testing\PendingCommand;
 
@@ -19,23 +20,27 @@ class ModelMakeTest extends ATestCase
         return [
             ['MyModel', null, []],
             ['MyPivotModel', null, ['--pivot' => null]],
-            //['MyFactoryModel', null, ['--factory' => null]],
-            //['MyMigrationModel', null, ['--migration' => null]],
-            //['MySeedModel', null, ['--seed' => null]],
-            //['MyControllerModel', null, ['--controller' => null]],
-            //['MyResourceModel', null, ['--resource' => null]],
-            //['MyApiModel', null, ['--api' => null]],
-            //['MyAllModel', null, ['--all' => null]],
+            ['MyMorphPivotModel', null, ['--morph-pivot' => null]],
+            ['MyFactoryModel', null, ['--factory' => null]],
+            ['MyMigrationModel', null, ['--migration' => null]],
+            ['MySeedModel', null, ['--seed' => null]],
+            ['MyControllerModel', null, ['--controller' => null]],
+            ['MyResourceModel', null, ['--resource' => null]],
+            ['MyPolicyModel', null, ['--policy' => null]],
+            ['MyApiModel', null, ['--api' => null]],
+            ['MyAllModel', null, ['--all' => null]],
 
             ['MyModel', self::MODULE, []],
             ['MyPivotModel', self::MODULE, ['--pivot' => null]],
-            //['MyFactoryModel', self::MODULE, ['--factory' => null]],
-            //['MyMigrationModel', self::MODULE, ['--migration' => null]],
-            //['MySeedModel', self::MODULE, ['--seed' => null]],
-            //['MyControllerModel', self::MODULE, ['--controller' => null]],
-            //['MyResourceModel', self::MODULE, ['--resource' => null]],
-            //['MyApiModel', self::MODULE, ['--api' => null]],
-            //['MyAllModel', self::MODULE, ['--all' => null]],
+            ['MyMorphPivotModel', self::MODULE, ['--morph-pivot' => null]],
+            ['MyFactoryModel', self::MODULE, ['--factory' => null]],
+            ['MyMigrationModel', self::MODULE, ['--migration' => null]],
+            ['MySeedModel', self::MODULE, ['--seed' => null]],
+            ['MyControllerModel', self::MODULE, ['--controller' => null]],
+            ['MyResourceModel', self::MODULE, ['--resource' => null]],
+            ['MyPolicyModel', self::MODULE, ['--policy' => null]],
+            ['MyApiModel', self::MODULE, ['--api' => null]],
+            ['MyAllModel', self::MODULE, ['--all' => null]],
         ];
     }
 
@@ -65,6 +70,9 @@ class ModelMakeTest extends ATestCase
         if (isset($args['--pivot'])) {
             $subclass = Pivot::class;
         }
+        if (isset($args['--morph-pivot'])) {
+            $subclass = MorphPivot::class;
+        }
         $this->assertTrue(is_subclass_of($class, $subclass, true), 'Does not extend ' . $subclass);
 
         if (isset($args['--all'])) {
@@ -73,12 +81,14 @@ class ModelMakeTest extends ATestCase
             $args['--migration'] = true;
             $args['--controller'] = true;
             $args['--resource'] = true;
+            $args['--policy'] = true;
         }
 
         $this->assertionsFactory($class, $args);
         $this->assertionsMigration($args);
         $this->assertionsSeeders($class, $args);
         $this->assertionsController($class, $args);
+        $this->assertionsPolicies($class, $args);
     }
 
     protected function assertionsFactory(string $class, array $args): void
@@ -127,6 +137,18 @@ class ModelMakeTest extends ATestCase
             }
             $path .= '/Http/Controllers/' . Str::after($class, 'Models\\') . 'Controller.php';
             $this->assertFileExists($path, 'CONTROLLER not found');
+        }
+    }
+
+    protected function assertionsPolicies(string $class, array $args): void
+    {
+        if (isset($args['--policy'])) {
+            $path = self::SANDBOX;
+            if ($args[$this->myModuleKey]) {
+                $path = $this->myModulePath;
+            }
+            $path .= '/Policies/' . Str::after($class, 'Models\\') . 'Policy.php';
+            $this->assertFileExists($path, 'POLICY not found');
         }
     }
 }
