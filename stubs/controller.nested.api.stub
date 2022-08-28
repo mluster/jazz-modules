@@ -6,18 +6,18 @@ namespace {{ namespace }};
 
 use {{ rootNamespace }}\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use {{ namespacedModel }} as {{ model }};
 use {{ namespacedParentModel }} as {{ parentModel }};
 
 class {{ class }} extends Controller
 {
-    public function index({{ parentModel }} ${{ parentModelVariable }}): Response
+    public function index({{ parentModel }} ${{ parentModelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
-    public function store(Request $request, {{ parentModel }} ${{ parentModelVariable }}): Response
+    public function store(Request $request, {{ parentModel }} ${{ parentModelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
@@ -25,7 +25,8 @@ class {{ class }} extends Controller
     public function show(
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}
-    ): Response {
+    ): JsonResponse
+    {
         return response()->json(['method' => __METHOD__]);
     }
 
@@ -33,14 +34,16 @@ class {{ class }} extends Controller
         Request $request,
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}
-    ): Response {
+    ): JsonResponse
+    {
         return response()->json(['method' => __METHOD__]);
     }
 
     public function destroy(
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}
-    ): Response {
+    ): JsonResponse
+    {
         return response()->json(['method' => __METHOD__]);
     }
 }

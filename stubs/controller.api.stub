@@ -6,31 +6,31 @@ namespace {{ namespace }};
 
 use {{ rootNamespace }}\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class {{ class }} extends Controller
 {
-    public function index(): Response
+    public function index(): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
-    public function store(Request $request): Response
+    public function store(Request $request): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
-    public function show(int $id): Response
+    public function show(int $id): JsonResponse
     {
         return response()->json(['method' => __METHOD__ . '::' . $id]);
     }
 
-    public function update(Request $request, int $id): Response
+    public function update(Request $request, int $id): JsonResponse
     {
         return response()->json(['method' => __METHOD__ . '::' . $id]);
     }
 
-    public function destroy(int $id): Response
+    public function destroy(int $id): JsonResponse
     {
         return response()->json(['method' => __METHOD__ . '::' . $id]);
     }

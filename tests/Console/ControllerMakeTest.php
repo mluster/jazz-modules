@@ -23,7 +23,7 @@ class ControllerMakeTest extends ATestCase
         $contents .= 'use Illuminate\Foundation\Validation\ValidatesRequests;' . PHP_EOL;
         $contents .= 'use Illuminate\Routing\Controller as BaseController;' . PHP_EOL . PHP_EOL;
         $contents .= 'class Controller extends BaseController' . PHP_EOL . '{' . PHP_EOL;
-        $contents .= 'use AuthorizesRequests, DispatchesJobs, ValidatesRequests;' . PHP_EOL . PHP_EOL;
+        $contents .= '    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;' . PHP_EOL . PHP_EOL;
         $contents .= '}' . PHP_EOL;
 
         $file = new Filesystem();
@@ -47,14 +47,14 @@ class ControllerMakeTest extends ATestCase
 
     protected function createArtisan(string $command, array $args = []): PendingCommand
     {
-        $question = 'A %s model does not exist. Do you want to generate it?';
-// @todo await [#55] completion
+        $question = 'Model does not exist. Do you want to generate it?';
+
         $artisan = parent::createArtisan($command, $args);
         if (isset($args['--parent'])) {
-            $artisan->expectsConfirmation(sprintf($question, $args['--parent']), 'yes');
+            $artisan->expectsConfirmation(sprintf($question, $args['--parent']), 'no');
         }
         if (isset($args['--model'])) {
-            $artisan->expectsConfirmation(sprintf($question, $args['--model']), 'yes');
+            $artisan->expectsConfirmation(sprintf($question, $args['--model']), 'no');
         }
         return $artisan;
     }
@@ -77,6 +77,7 @@ class ControllerMakeTest extends ATestCase
                 '--model' => 'MyApiModelWithParent',
                 '--parent' => 'MyApiParent']
             ],
+            ['MyRequestController', null, ['--model' => 'MyRequestModel', '--requests' => true]],
 
             ['MyController', self::MODULE, null],
             ['MyModelController', self::MODULE, ['--model' => 'MyControllerModel']],
@@ -93,6 +94,7 @@ class ControllerMakeTest extends ATestCase
                 '--model' => 'MyApiModelWithParent',
                 '--parent' => 'MyApiParent']
             ],
+            ['MyRequestController', self::MODULE, ['--model' => 'MyRequestModel', '--requests' => true]],
         ];
     }
 

@@ -12,6 +12,6 @@ class {{ class }} extends Controller
 {
     public function __invoke(Request $request): Response
     {
-        return response()->json(['method' => __METHOD__]);
+        return response(__METHOD__);
     }
 }

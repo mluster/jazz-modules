@@ -5,34 +5,33 @@ declare(strict_types=1);
 namespace {{ namespace }};
 
 use {{ rootNamespace }}\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use {{ namespacedModel }} as {{ model }};
 use {{ namespacedRequests }}
+use Illuminate\Http\JsonResponse;
+use {{ namespacedModel }} as {{ model }};
 
 class {{ class }} extends Controller
 {
-    public function index(): Response
+    public function index(): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
-    public function store({{ storeRequest }} $request): Response
+    public function store({{ storeRequest }} $request): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
-    public function show({{ model }} ${{ modelVariable }}): Response
+    public function show({{ model }} ${{ modelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
-    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): Response
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
-    public function destroy({{ model }} ${{ modelVariable }}): Response
+    public function destroy({{ model }} ${{ modelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }

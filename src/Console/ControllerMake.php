@@ -25,12 +25,11 @@ class ControllerMake extends ControllerMakeCommand
         if ($this->option('model')) {
             $model = $this->qualifyModel($this->option('model'));
             $stub = $this->replaceModels($stub, $this->confirmModel($model));
+            $stub = $this->replaceRequests($stub, $model);
         }
 
         $controllerNamespace = $this->getNamespace($name);
-        $stub = str_replace('use ' . $controllerNamespace . "\Controller;\n", '', $stub);
-
-        return $stub;
+        return str_replace('use ' . $controllerNamespace . "\Controller;\n", '', $stub);
     }
 
     protected function confirmModel(string $model): string
@@ -84,5 +83,53 @@ class ControllerMake extends ControllerMakeCommand
         }
 
         return $stub;
+    }
+
+
+
+    protected function replaceRequests(string $stub, string $model): string
+    {
+        $namespace = 'Illuminate\\Http';
+
+        $storeRequest = $updateRequest = 'Request';
+        if ($this->option('requests')) {
+            $namespace = $this->rootNamespace() . '\\Http\\Requests';
+            [$storeRequest, $updateRequest] = $this->generateFormRequests(
+                $model,
+                $storeRequest,
+                $updateRequest
+            );
+        }
+
+        $namespacedRequests = $namespace . '\\' . $storeRequest . ';';
+        if ($storeRequest !== $updateRequest) {
+            $namespacedRequests .= PHP_EOL . 'use ' . $namespace . '\\' . $updateRequest . ';';
+        }
+
+        $stub = str_replace(['{{storeRequest}}', '{{ storeRequest }}'], $storeRequest, $stub);
+        $stub = str_replace(['{{namespacedStoreRequest}}', '{{ namespacedStoreRequest }}'], $namespace . '\\' . $storeRequest, $stub);
+        $stub = str_replace(['{{updateRequest}}', '{{ updateRequest }}'], $updateRequest, $stub);
+        $stub = str_replace(['{{namespacedUpdateRequest}}', '{{ namespacedUpdateRequest }}'], $namespace . '\\' . $updateRequest, $stub);
+        $stub = str_replace(['{{namespacedRequests}}', '{{ namespacedRequests }}'], $namespacedRequests, $stub);
+        return $stub;
+    }
+
+    protected function generateFormRequests($modelClass, $storeRequestClass, $updateRequestClass): array
+    {
+        $moduleKey = Config::get('modules.key');
+
+        $storeRequestClass = 'Store' . class_basename($modelClass) . 'Request';
+        $this->call('make:request', [
+            'name' => $storeRequestClass,
+            '--' . $moduleKey => $this->option($moduleKey),
+        ]);
+
+        $updateRequestClass = 'Update' . class_basename($modelClass) . 'Request';
+        $this->call('make:request', [
+            'name' => $updateRequestClass,
+            '--' . $moduleKey => $this->option($moduleKey),
+        ]);
+
+        return [$storeRequestClass, $updateRequestClass];
     }
 }

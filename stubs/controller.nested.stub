@@ -30,14 +30,16 @@ class {{ class }} extends Controller
     public function show(
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}
-    ): Response {
+    ): Response
+    {
         return response()->view('show', ['method' => __METHOD__]);
     }
 
     public function edit(
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}
-    ): Response {
+    ): Response
+    {
         return response()->view('edit', ['method' => __METHOD__]);
     }
 
@@ -45,14 +47,16 @@ class {{ class }} extends Controller
         Request $request,
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}
-    ): Response {
+    ): Response
+    {
         return redirect()->route('index');
     }
 
     public function destroy(
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}
-    ): Response {
+    ): Response
+    {
         return redirect()->route('index');
     }
 }
