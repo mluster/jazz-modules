@@ -22,6 +22,7 @@ use Jazz\Modules\Console\PolicyMake;
 use Jazz\Modules\Console\RequestMake;
 use Jazz\Modules\Console\ResourceMake;
 use Jazz\Modules\Console\RuleMake;
+use Jazz\Modules\Console\ScopeMake;
 use Jazz\Modules\Console\TestMake;
 use Jazz\Modules\Database\Migration;
 use Jazz\Modules\Console\MigrationMake;
@@ -47,6 +48,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'RequestMake' => 'command.request.make',
         'ResourceMake' => 'command.resource.make',
         'RuleMake' => 'command.rule.make',
+        'ScopeMake' => 'command.scope.make',
         'TestMake' => 'command.test.make',
 
         'MigrationMake' => 'command.migrate.make',
@@ -180,6 +182,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.rule.make', static function ($app) {
             return new RuleMake($app['files']);
+        });
+    }
+
+    protected function registerScopeMake(): void
+    {
+        $this->app->singleton('command.scope.make', static function ($app) {
+            return new ScopeMake($app['files']);
         });
     }
 
