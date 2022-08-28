@@ -23,6 +23,11 @@ trait TGenerator
             : dirname(__DIR__, 2) . '/' . $path;
     }
 
+    protected function sortImports($stub): string
+    {
+        return $stub;
+    }
+
     protected function rootNamespace(): string
     {
         $ret = $this->laravel->getNamespace();
