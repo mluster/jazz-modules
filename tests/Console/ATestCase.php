@@ -57,8 +57,7 @@ abstract class ATestCase extends ABaseTestCase
         }
 
         $this->myArgs = $args;
-        $this->artisan($this->myCommand, $args)
-            ->assertExitCode(0);
+        $this->createArtisan($this->myCommand, $this->myArgs);
         $this->assertions($name, $module);
     }
 

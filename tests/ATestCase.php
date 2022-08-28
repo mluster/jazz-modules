@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JazzTest\Modules;
 
 use Illuminate\Support\Str;
+use Illuminate\Testing\PendingCommand;
 use Orchestra\Testbench\TestCase;
 use Jazz\Modules\Provider;
 use Jazz\Modules\ConsoleProvider;
@@ -53,6 +54,14 @@ abstract class ATestCase extends TestCase
                 $this->sandboxClean($path);
             }
         }
+    }
+
+
+
+    protected function createArtisan(string $command, array $args = []): PendingCommand
+    {
+        return $this->artisan($command, $args)
+            ->assertExitCode(0);
     }
 
 
