@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jazz\Modules;
 
+use Illuminate\Database\Eloquent\Factories\Factory as LaravelFactory;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Jazz\Modules\Console\CastMake;
@@ -27,6 +28,7 @@ use Jazz\Modules\Console\ResourceMake;
 use Jazz\Modules\Console\RuleMake;
 use Jazz\Modules\Console\ScopeMake;
 use Jazz\Modules\Console\TestMake;
+use Jazz\Modules\Database\Factory;
 use Jazz\Modules\Database\Migration;
 use Jazz\Modules\Console\MigrationMake;
 use Jazz\Modules\Console\FactoryMake;
@@ -70,6 +72,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
             call_user_func([$this, $method]);
         }
         $this->commands(array_values($this->commands));
+
+        LaravelFactory::guessFactoryNamesUsing(function (string $model) {
+            return Factory::resolveFactory($model);
+        });
+        LaravelFactory::guessModelNamesUsing(function (LaravelFactory $factory) {
+            return Factory::resolveModel($factory);
+        });
     }
 
     public function provides(): array
