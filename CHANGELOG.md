@@ -2,7 +2,7 @@
 ## _[Unreleased](https://github.com/mluster/jazz-modules/compare/v0.2.0...main)_
 
 ---
-## _[v0.2.0 - Aug 29th, 2022](https://github.com/mluster/jazz-modules/compare/v0.2.0...main)_
+## _[v0.2.0 - Aug 29th, 2022](https://github.com/mluster/jazz-modules/compare/v0.1.0...v0.2.0)_
 ### NEW
 - added `make:cast` command ([#25](https://github.com/mluster/jazz-modules/issues/25))
 - added `make:channel` command ([#26](https://github.com/mluster/jazz-modules/issues/26))
@@ -29,7 +29,7 @@
 - added `make:test` command ([#47](https://github.com/mluster/jazz-modules/issues/47))
 
 ---
-## _[v0.1.0 - Aug 26th, 2022](https://github.com/mluster/jazz-modules/compare/v0.1.0...v0.2.0)_
+## _[v0.1.0 - Aug 26th, 2022](https://github.com/mluster/jazz-modules/compare/v0.1.0...v0.1.0)_
 ### NEW
 - added documentation files
   - README ([#19](https://github.com/mluster/jazz-modules/issues/19))
