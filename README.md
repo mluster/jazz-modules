@@ -10,8 +10,8 @@
 [![GitHub issues](https://img.shields.io/github/issues/mluster/jazz-modules?style=plastic)](https://github.com/mluster/jazz-modules/issues)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/mluster/jazz-modules?style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/mluster/jazz-modules?style=plastic)
-![coverage](https://img.shields.io/badge/coverage-0%25-yellow?style=plastic)
-![tests](https://img.shields.io/badge/tests-0%20passed-yellow?style=plastic)
+![coverage](https://img.shields.io/badge/coverage-93%25-green?style=plastic)
+![tests](https://img.shields.io/badge/tests-124%20passed-success?style=plastic)
 
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/mluster/jazz-modules?logo=php&style=plastic&color=9cf)
 ![Framework](https://img.shields.io/badge/laravel-9.x-9cf?style=plastic&logo=laravel)
