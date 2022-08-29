@@ -51,10 +51,10 @@ class ControllerMakeTest extends ATestCase
 
         $artisan = parent::createArtisan($command, $args);
         if (isset($args['--parent'])) {
-            $artisan->expectsConfirmation(sprintf($question, $args['--parent']), 'no');
+            $artisan->expectsConfirmation(sprintf($question, $args['--parent']), 'yes');
         }
         if (isset($args['--model'])) {
-            $artisan->expectsConfirmation(sprintf($question, $args['--model']), 'no');
+            $artisan->expectsConfirmation(sprintf($question, $args['--model']), 'yes');
         }
         return $artisan;
     }
