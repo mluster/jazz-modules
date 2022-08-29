@@ -7,7 +7,7 @@ namespace JazzTest\Modules\Console;
 class ScopeMakeTest extends ATestCase
 {
     protected string $myCommand = 'make:scope';
-    protected string $myComponent = 'Models.Scopes';
+    protected string $myComponent = 'Scopes';
 
     public function provider(): array
     {
