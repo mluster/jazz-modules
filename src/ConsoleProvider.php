@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jazz\Modules;
 
+use Illuminate\Database\Eloquent\Factories\Factory as LaravelFactory;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Jazz\Modules\Console\CastMake;
@@ -27,10 +28,12 @@ use Jazz\Modules\Console\ResourceMake;
 use Jazz\Modules\Console\RuleMake;
 use Jazz\Modules\Console\ScopeMake;
 use Jazz\Modules\Console\TestMake;
+use Jazz\Modules\Database\Factory;
 use Jazz\Modules\Database\Migration;
 use Jazz\Modules\Console\MigrationMake;
 use Jazz\Modules\Console\FactoryMake;
 use Jazz\Modules\Console\SeederMake;
+use Jazz\Modules\Database\Seed;
 use Jazz\Modules\Console\StubPublish;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
@@ -61,6 +64,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'MigrationMake' => 'command.migrate.make',
         'FactoryMake' => 'command.factory.make',
         'SeederMake' => 'command.seeder.make',
+        'Seed' => 'command.seed',
 
         'StubPublish' => 'command.stub.publish',
     ];
@@ -73,6 +77,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
             call_user_func([$this, $method]);
         }
         $this->commands(array_values($this->commands));
+
+        LaravelFactory::guessFactoryNamesUsing(function (string $model) {
+            return Factory::resolveFactory($model);
+        });
+        LaravelFactory::guessModelNamesUsing(function (LaravelFactory $factory) {
+            return Factory::resolveModel($factory);
+        });
     }
 
     public function provides(): array
@@ -254,6 +265,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.seeder.make', static function ($app) {
             return new SeederMake($app['files']);
+        });
+    }
+    
+    protected function registerSeed(): void
+    {
+        $this->app->singleton('command.seed', function ($app) {
+            return new Seed($app['db']);
         });
     }
 
