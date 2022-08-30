@@ -34,6 +34,7 @@ use Jazz\Modules\Console\MigrationMake;
 use Jazz\Modules\Console\FactoryMake;
 use Jazz\Modules\Console\SeederMake;
 use Jazz\Modules\Database\Seed;
+use Jazz\Modules\Console\StubPublish;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -63,8 +64,9 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'MigrationMake' => 'command.migrate.make',
         'FactoryMake' => 'command.factory.make',
         'SeederMake' => 'command.seeder.make',
-
         'Seed' => 'command.seed',
+
+        'StubPublish' => 'command.stub.publish',
     ];
 
 
@@ -265,11 +267,19 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
             return new SeederMake($app['files']);
         });
     }
-
+    
     protected function registerSeed(): void
     {
         $this->app->singleton('command.seed', function ($app) {
             return new Seed($app['db']);
+        });
+    }
+
+
+    protected function registerStubPublish(): void
+    {
+        $this->app->singleton('command.stub.publish', function () {
+            return new StubPublish();
         });
     }
 }
