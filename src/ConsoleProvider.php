@@ -35,6 +35,8 @@ use Jazz\Modules\Console\FactoryMake;
 use Jazz\Modules\Console\SeederMake;
 use Jazz\Modules\Database\Seed;
 use Jazz\Modules\Console\StubPublish;
+use Jazz\Modules\Console\ModelShow;
+use Illuminate\Foundation\Console\ShowModelCommand;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -67,6 +69,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'Seed' => 'command.seed',
 
         'StubPublish' => 'command.stub.publish',
+        'ShowModel' => ShowModelCommand::class,
     ];
 
 
@@ -267,7 +270,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
             return new SeederMake($app['files']);
         });
     }
-    
+
     protected function registerSeed(): void
     {
         $this->app->singleton('command.seed', function ($app) {
@@ -280,6 +283,13 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton('command.stub.publish', function () {
             return new StubPublish();
+        });
+    }
+
+    protected function registerShowModel(): void
+    {
+        $this->app->singleton(ShowModelCommand::class, function ($app) {
+            return new ModelShow($this->app['composer']);
         });
     }
 }

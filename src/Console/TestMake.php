@@ -13,16 +13,6 @@ class TestMake extends TestMakeCommand
 {
     use TGenerator;
 
-    /*public function __construct(Filesystem $files)
-    {
-        $key = Config::get('modules.key');
-        $name = Config::get('modules.name');
-        $signature = '{--' . $key . '= : ' . sprintf('Install in %s', $name) . '}';
-        $this->signature .= $signature;
-
-        parent::__construct($files);
-    }*/
-
     protected function getPath($name): string
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
