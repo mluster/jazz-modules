@@ -12,13 +12,11 @@ use Illuminate\Support\Str;
 
 class MigrationMake extends MigrateMakeCommand
 {
+    use TSignature;
+
     public function __construct(MigrationCreator $creator, Composer $composer)
     {
-        $key = Config::get('modules.key');
-        $name = Config::get('modules.name');
-        $signature = '{--' . $key . '= : ' . sprintf('Install in %s', $name) . '}';
-        $this->signature .= $signature;
-
+        $this->appendSignature();
         parent::__construct($creator, $composer);
     }
 
