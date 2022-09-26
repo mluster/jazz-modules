@@ -15,7 +15,7 @@ trait TOptions
         $name = Config::get('modules.name');
 
         $ret = parent::getOptions();
-        $ret[] = [$key, null, InputOption::VALUE_OPTIONAL, sprintf('Install in %s', $name)];
+        $ret[] = [$key, null, InputOption::VALUE_OPTIONAL, sprintf('Install in "[context.]%s"', $name)];
         return $ret;
     }
 }

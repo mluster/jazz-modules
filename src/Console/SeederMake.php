@@ -16,9 +16,9 @@ class SeederMake extends SeederMakeCommand
     {
         $ret = 'Database\Seeders';
 
-        $module = $this->option(Config::get('modules.key'));
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $ret = Config::get('modules.namespace') . $module . '\\' . $ret;
+            $ret = $meta['namespace'] . $module . '\\' . $ret;
         }
 
         return $ret;
@@ -26,14 +26,16 @@ class SeederMake extends SeederMakeCommand
 
     protected function getPath($name): string
     {
-        $path = $this->laravel->basePath() . '/';
-
-        $module = $this->option(Config::get('modules.key'));
-        if ($module) {
-            $path .= Config::get('modules.path') . '/' . $module . '/resources/';
-        }
         $name = Str::finish($name, 'Seeder');
-        $path .= 'database/seeders/' . str_replace('\\', '/', $name) . '.php';
+
+        $path = $this->laravel->basePath() . '/';
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
+        if ($module) {
+            $path .= $meta['path'] . '/' . $module . '/Database/Seeders/';
+        } else {
+            $path .= 'database/seeders/';
+        }
+        $path .= str_replace('\\', '/', $name) . '.php';
 
         return $path;
     }

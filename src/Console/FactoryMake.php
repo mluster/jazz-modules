@@ -45,16 +45,21 @@ class FactoryMake extends FactoryMakeCommand
     {
         $path = $this->laravel->basePath() . '/';
 
-        $module = $this->option(Config::get('modules.key'));
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $moduleNamespace = Config::get('modules.namespace') . $module . '\\';
+            $moduleNamespace = $meta['namespace'] . $module . '\\';
+
             $name = Str::replaceFirst($moduleNamespace, '', $name);
-            $path .= Config::get('modules.path') . '/' . $module . '/resources/';
+            $name = Str::finish($name, 'Factory');
+
+            $path .= $meta['path'] . '/' . $module . '/Database/Factories/';
         } else {
             $name = Str::replaceFirst('App\\', '', $name);
+            $name = Str::finish($name, 'Factory');
+
+            $path .= 'database/factories/';
         }
-        $name = Str::finish($name, 'Factory');
-        $path .= 'database/factories/' . str_replace('\\', '/', $name) . '.php';
+        $path .= str_replace('\\', '/', $name) . '.php';
 
         return $path;
     }

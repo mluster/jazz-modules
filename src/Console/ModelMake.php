@@ -15,7 +15,7 @@ class ModelMake extends ModelMakeCommand
     public function call($command, array $arguments = []): int
     {
         $key = Config::get('modules.key');
-        $module = $this->option($key);
+        ['name' => $module] = $this->getModule();
         if ($module) {
             $arguments['--' . $key] = $module;
         }
@@ -48,7 +48,7 @@ class ModelMake extends ModelMakeCommand
         $this->call('make:factory', [
             'name' => $factory . 'Factory',
             '--model' => $this->qualifyClass($this->getNameInput()),
-            '--' . $moduleKey => $this->option($moduleKey),
+            '--' . $moduleKey => $this->getModule()['name'],
         ]);
     }
 
@@ -63,7 +63,7 @@ class ModelMake extends ModelMakeCommand
         $this->call('make:migration', [
             'name' => "create_{$table}_table",
             '--create' => $table,
-            '--' . $moduleKey => $this->option($moduleKey),
+            '--' . $moduleKey => $this->getModule()['name'],
         ]);
     }
 
@@ -74,7 +74,7 @@ class ModelMake extends ModelMakeCommand
 
         $this->call('make:seeder', [
             'name' => "{$seeder}Seeder",
-            '--' . $moduleKey => $this->option($moduleKey),
+            '--' . $moduleKey => $this->getModule()['name'],
         ]);
     }
 
@@ -89,7 +89,7 @@ class ModelMake extends ModelMakeCommand
             '--model' => $this->option('resource') || $this->option('api') ? $modelName : null,
             '--api' => $this->option('api'),
             '--requests' => $this->option('requests') || $this->option('all'),
-            '--' . $moduleKey => $this->option($moduleKey),
+            '--' . $moduleKey => $this->getModule()['name'],
         ]));
     }
 
@@ -101,7 +101,7 @@ class ModelMake extends ModelMakeCommand
         $this->call('make:policy', [
             'name' => "{$policy}Policy",
             '--model' => $this->qualifyClass($this->getNameInput()),
-            '--' . $moduleKey => $this->option($moduleKey),
+            '--' . $moduleKey => $this->getModule()['name'],
         ]);
     }
 }

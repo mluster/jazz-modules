@@ -29,9 +29,9 @@ class TestMake extends TestMakeCommand
         $name = Str::replaceFirst('\Tests', '', $name);
         $path = base_path('tests');
 
-        $module = $this->option(Config::get('modules.key'));
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $path = $this->laravel->basePath() . '/' . Config::get('modules.path') . '/' . $module . '/Tests';
+            $path = $this->laravel->basePath() . '/' . $meta['path'] . '/' . $module . '/Tests';
         }
 
         return $path . '/' . str_replace('\\', '/', $name) . '.php';

@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 trait TGenerator
 {
     use TOptions;
+    use TModuleContext;
 
     protected function getStubFile(string $name): string
     {
@@ -32,9 +33,9 @@ trait TGenerator
     {
         $ret = $this->laravel->getNamespace();
 
-        $module = $this->option(Config::get('modules.key'));
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $ret = Config::get('modules.namespace') . $module;
+            $ret = $meta['namespace'] . $module;
         }
 
         return $ret;
@@ -70,11 +71,11 @@ trait TGenerator
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        $module = $this->option(Config::get('modules.key'));
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
 
         $path = $this->laravel['path'];
         if ($module) {
-            $path = $this->laravel->basePath() . '/' . Config::get('modules.path') . '/' . $module;
+            $path = $this->laravel->basePath() . '/' . $meta['path'] . '/' . $module;
         }
 
         return $path . '/' . str_replace('\\', '/', $name) . '.php';
@@ -85,11 +86,10 @@ trait TGenerator
         $views = (Config::get('view.paths')[0] ?? resource_path('views'));
         $ret = $views . ($path ? DIRECTORY_SEPARATOR . $path : $path);
 
-        $module = $this->option(Config::get('modules.key'));
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
             $ret = $this->laravel->basePath() . '/' .
-                Config::get('modules.path') . '/' .
-                $module . '/resources/views/' . $path;
+                $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['views'] . '/' . $path;
         }
 
         return $ret;
@@ -178,7 +178,8 @@ trait TGenerator
     protected function replaceFactoryNamespace(string $stub, string $model): string
     {
         $namespace = 'Database\\Factories\\';
-        $module = $this->option(Config::get('modules.key'));
+
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
             $namespace = $this->rootNamespace() . '\\Database\\Factories\\';
         }

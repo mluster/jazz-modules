@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 
 class MigrationMake extends MigrateMakeCommand
 {
+    use TModuleContext;
+
     public function __construct(MigrationCreator $creator, Composer $composer)
     {
         $key = Config::get('modules.key');
@@ -24,7 +26,7 @@ class MigrationMake extends MigrateMakeCommand
 
     protected function writeMigration($name, $table, $create)
     {
-        $module = $this->option(Config::get('modules.key'));
+        ['name' => $module] = $this->getModule();
         if ($module) {
             $name = Str::snake($module . '_' . $name);
         }
@@ -33,10 +35,9 @@ class MigrationMake extends MigrateMakeCommand
 
     protected function getMigrationPath(): string
     {
-        $module = $this->option(Config::get('modules.key'));
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $path = Config::get('modules.path') . '/'
-                . $module . '/resources/database/migrations';
+            $path = $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['migrations'];
             $this->input->setOption('path', $path);
             $this->input->setOption('realpath', false);
         }
