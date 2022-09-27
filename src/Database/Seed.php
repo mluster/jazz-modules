@@ -18,26 +18,30 @@ class Seed extends SeedCommand
 
     protected function getSeeder(): Seeder
     {
-        $class = $this->argument('class') ?? $this->option('class');
-        if (empty($class)) {
-            $class = 'DatabaseSeeder';
+        $name = $this->argument('class') ?? $this->option('class');
+        if (empty($name)) {
+            $name = 'DatabaseSeeder';
         }
 
         ['name' => $module, 'meta' => $meta] = $this->getModule();
-        if ($module) {
-            $class = $meta['namespace'] . $module . '\\Database\\Seeders\\' . $class;
-        } else {
-            $path = $this->laravel->basePath() . '/database/seeders/';
-            $path .= Str::replace('\\', '/', $class) . '.php';
-            $this->laravel['files']->requireOnce($path);
 
-            if (!Str::contains($class, '\\')) {
-                $class = 'Database\\Seeders\\' . $class;
+        $path = $this->laravel->basePath() . '/';
+        if ($module) {
+            $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['seeders']['path'] . '/';
+            $class = $meta['namespace'] . $module . '\\' . $meta['seeders']['namespace'] . $name;
+        } else {
+            $path .= 'database/seeders/';
+
+            $class = $name;
+            if (!Str::contains($name, '\\')) {
+                $class = 'Database\\Seeders\\' . $name;
             }
             if ($class === 'Database\\Seeders\\DatabaseSeeder' && !class_exists($class)) {
                 $class = 'DatabaseSeeder';
             }
         }
+        $path .= Str::replace('\\', '/' , $name) . '.php';
+        $this->laravel['files']->requireOnce($path);
 
         return $this->laravel->make($class)
                         ->setContainer($this->laravel)
