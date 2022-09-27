@@ -14,11 +14,11 @@ class SeederMake extends SeederMakeCommand
 
     protected function rootNamespace(): string
     {
-        $ret = 'Database\Seeders';
+        $ret = 'Database\\Seeders';
 
         ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $ret = $meta['namespace'] . $module . '\\' . $ret;
+            $ret = $meta['namespace'] . $module . '\\' . trim($meta['seeders']['namespace'], '\\');
         }
 
         return $ret;
@@ -31,7 +31,7 @@ class SeederMake extends SeederMakeCommand
         $path = $this->laravel->basePath() . '/';
         ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $path .= $meta['path'] . '/' . $module . '/Database/Seeders/';
+            $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['seeders']['path'] . '/';
         } else {
             $path .= 'database/seeders/';
         }

@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 trait TModuleContext
 {
     /**
-     * @return array{module: ?string, meta: ?array{namespace: string, path: string, provider: string, assets: string, active: bool, autoload: bool}}
+     * @return array{name: ?string, meta: ?array{namespace: string, path: string, provider: string, assets: string, active: bool, autoload: bool}}
      */
     protected function getModule(): array
     {
@@ -27,7 +27,7 @@ trait TModuleContext
             }
 
             $ret['name'] = $module;
-            $ret['meta'] = Config::get('modules.' . $context . '._meta');
+            $ret['meta'] = Config::get('modules.contexts.' . $context . '._meta');
         }
 
         return $ret;

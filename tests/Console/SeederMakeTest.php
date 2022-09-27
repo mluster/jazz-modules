@@ -35,22 +35,33 @@ class SeederMakeTest extends ATestCase
     // HELPER METHODS
     protected function getMyPath(string $className, ?string $module): string
     {
+        ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
         $className = str_replace(['.', '\\'], '/', Str::finish($className, 'Seeder'));
 
         $path = $this->app->basePath() . '/';
         if ($module) {
-            $path .= $this->myModulePath . '/' . self::MODULE . '/resources/';
+            $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['seeders']['path'] . '/';
+        } else {
+            $path .= 'database/seeders/';
         }
-        $path .= 'database/seeders/' . $className . '.php';
+        $path .= $className . '.php';
 
         return $path;
     }
 
     protected function getMyClass(string $className, ?string $module): string
     {
+        ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
         $className = str_replace(['.', '/'], '\\', $className);
-        $className = parent::getMyClass($className, $module);
-        $className = Str::replaceFirst('App\\Database', 'Database', $className);
+        if ($module) {
+            $className = $meta['namespace'] . $module . '\\' . $meta['seeders']['namespace'] . $className;
+        } else {
+            $className = parent::getMyClass($className, $module);
+            $className = Str::replaceFirst('App\\Database', 'Database', $className);
+        }
+
         return Str::finish($className, 'Seeder');
     }
 }

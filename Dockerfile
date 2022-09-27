@@ -10,8 +10,7 @@ RUN apk update && \
 RUN docker-php-ext-install \
         bcmath \
         ctype \
-        exif \
-        fileinfo
+        exif
 
 ### XDEBUG #####################################################################
 RUN pecl install xdebug && \

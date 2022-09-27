@@ -76,7 +76,7 @@ abstract class ATestCase extends TestCase
 
     protected function getBasePath(): string
     {
-        return dirname(__DIR__) . '/laravel';
+        return dirname(__DIR__) . '/' . self::SANDBOX;
     }
 
 

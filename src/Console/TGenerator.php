@@ -175,22 +175,6 @@ trait TGenerator
         return $stub;
     }
 
-    protected function replaceFactoryNamespace(string $stub, string $model): string
-    {
-        $namespace = 'Database\\Factories\\';
-
-        ['name' => $module, 'meta' => $meta] = $this->getModule();
-        if ($module) {
-            $namespace = $this->rootNamespace() . '\\Database\\Factories\\';
-        }
-
-        $namespace .= Str::beforeLast(Str::after($model, '\\Models\\'), class_basename($model));
-        $namespace = trim($namespace, '\\');
-
-        $search = ['DummyFactoryNamespace', '{{factoryNamespace}}', '{{ factoryNamespace }}'];
-        return str_replace($search, $namespace, $stub);
-    }
-
     protected function replaceEvent(string $stub, ?string $event): string
     {
         if (!Str::startsWith($event, [$this->rootNamespace(), 'Illuminate', '\\',])) {

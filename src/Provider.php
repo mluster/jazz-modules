@@ -23,14 +23,15 @@ class Provider extends ServiceProvider
 
         $list = config('modules.contexts');
         foreach ($list as $key => $options) {
-            if (!$options['active']) {
+            $meta = $options['_meta'];
+            if (!$meta['active']) {
                 continue;
             }
-            if ($options['autoload']) {
+            if ($meta['autoload']) {
                 $this->registerViaPath(
-                    $options['path'],
-                    $options['namespace'],
-                    $options['provider']
+                    $meta['path'],
+                    $meta['namespace'],
+                    $meta['provider']
                 );
             }
         }

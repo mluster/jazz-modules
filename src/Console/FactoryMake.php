@@ -29,7 +29,7 @@ class FactoryMake extends FactoryMakeCommand
     protected function guessModelName($name): string
     {
         if (Str::endsWith($name, 'Factory')) {
-            $name = substr($name, 0, -7);
+            $name = Str::substr($name, 0, -7);
         }
 
         $modelName = $this->qualifyModel($name);
@@ -52,7 +52,7 @@ class FactoryMake extends FactoryMakeCommand
             $name = Str::replaceFirst($moduleNamespace, '', $name);
             $name = Str::finish($name, 'Factory');
 
-            $path .= $meta['path'] . '/' . $module . '/Database/Factories/';
+            $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['factories']['path'] . '/';
         } else {
             $name = Str::replaceFirst('App\\', '', $name);
             $name = Str::finish($name, 'Factory');
@@ -67,5 +67,21 @@ class FactoryMake extends FactoryMakeCommand
     protected function getStub(): string
     {
         return $this->getStubFile('factory.stub');
+    }
+
+    protected function replaceFactoryNamespace(string $stub, string $model): string
+    {
+        $namespace = 'Database\\Factories\\';
+
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
+        if ($module) {
+            $namespace = $this->rootNamespace() . '\\' . $meta['factories']['namespace'];
+        }
+
+        $namespace .= Str::beforeLast(Str::after($model, '\\Models\\'), class_basename($model));
+        $namespace = trim($namespace, '\\');
+
+        $search = ['DummyFactoryNamespace', '{{factoryNamespace}}', '{{ factoryNamespace }}'];
+        return str_replace($search, $namespace, $stub);
     }
 }

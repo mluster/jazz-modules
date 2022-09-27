@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\Config;
 
 trait TMarkdownTemplate
 {
+    use TModuleContext;
+
     protected function writeMarkdownTemplate(): void
     {
-        $module = $this->option(Config::get('modules.key'));
+        ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $path = $this->laravel->basePath() . '/' . Config::get('modules.path') . '/' . $module;
-            $path .= '/resources/views/';
+            $path = $this->laravel->basePath() . '/' . $meta['path'] . '/' . $module . '/';
+            $path .= $meta['assets'] . '/' . $meta['views'] . '/';
 
             if (!$this->files->isDirectory($path)) {
                 $this->files->makeDirectory($path, 0755, true);

@@ -47,7 +47,7 @@ class ComponentMakeTest extends ATestCase
 
             $path = self::SANDBOX . '/resources/views';
             if (isset($args[$this->myModuleKey])) {
-                $path = self::SANDBOX . '/' . $this->myModulePath . '/' . self::MODULE . '/resources/views';
+                $path = self::SANDBOX . '/' . $this->myModulePath . '/' . self::MODULE . '/assets/views';
             }
 
             $file = $path . '/' . $name;

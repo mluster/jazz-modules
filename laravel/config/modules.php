@@ -69,16 +69,42 @@ return [
                 'migrations' => env('MODULES_DEFAULT_MIGRATIONS', 'migrations'),
                 /*
                 |--------------------------------------------------------------
-                | (Database) FACTORIES Directory Name (within ASSETS)
+                | (Database) FACTORIES
                 |--------------------------------------------------------------
                 */
-                'factories' => env('MODULES_DEFAULT_FACTORIES', 'factories'),
+                'factories' => [
+                    /*
+                    |----------------------------------------------------------
+                    | FACTORIES Path (within ASSETS)
+                    |----------------------------------------------------------
+                    */
+                    'path' => env('MODULES_DEFAULT_FACTORIES_PATH', 'factories'),
+                    /*
+                    |----------------------------------------------------------
+                    | FACTORIES Namespace
+                    |----------------------------------------------------------
+                    */
+                    'namespace' => env('MODULES_DEFAULT_FACTORIES_NAMESPACE', 'Factories\\'),
+                ],
                 /*
                 |--------------------------------------------------------------
-                | (Database) SEEDERS Directory Name (within ASSETS)
+                | (Database) SEEDERS
                 |--------------------------------------------------------------
                 */
-                'seeders' => env('MODULES_DEFAULT_SEEDERS', 'seeders'),
+                'seeders' => [
+                    /*
+                    |----------------------------------------------------------
+                    | SEEDERS Path (within ASSETS)
+                    |----------------------------------------------------------
+                    */
+                    'path' => env('MODULES_DEFAULT_SEEDERS_PATH', 'seeders'),
+                    /*
+                    |----------------------------------------------------------
+                    | SEEDERS Namespace
+                    |----------------------------------------------------------
+                    */
+                    'namespace' => env('MODULES_DEFAULT_SEEDERS_NAMESPACE', 'Seeders\\'),
+                ],
 
                 /*
                 |--------------------------------------------------------------
@@ -94,7 +120,7 @@ return [
                 |       in Primary Context Provider
                 |--------------------------------------------------------------
                 */
-                'autoload' => env('MODULES_DEFAULT_AUTOLOAD', true),
+                'autoload' => env('MODULES_DEFAULT_AUTOLOAD', false),
             ],
         ],
     ],

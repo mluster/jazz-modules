@@ -6,6 +6,7 @@ namespace JazzTest\Modules\Console;
 
 use JazzTest\Modules\ATestCase as ABaseTestCase;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 abstract class ATestCase extends ABaseTestCase
 {
@@ -15,9 +16,10 @@ abstract class ATestCase extends ABaseTestCase
     protected string $myComponent;
 
     protected string $myModuleKey = '--module';
+    protected string $myModuleName = 'Module';
+    protected string $myModuleContext = 'default';
     protected string $myModuleNamespace = 'App\\Modules\\';
     protected string $myModulePath = 'app/Modules';
-    protected string $myModuleName = 'Module';
 
     protected array $myArgs = [];
 
@@ -30,9 +32,12 @@ abstract class ATestCase extends ABaseTestCase
         parent::setUp();
 
         $this->myModuleKey = '--' . Config::get('modules.key');
-        $this->myModuleNamespace = Config::get('modules.namespace');
-        $this->myModulePath = Config::get('modules.path');
         $this->myModuleName = Config::get('modules.name');
+        $this->myModuleContext = Config::get('modules.context');
+
+        $key = 'modules.contexts.' . $this->myModuleContext . '._meta.';
+        $this->myModuleNamespace = Config::get($key . 'namespace');
+        $this->myModulePath = Config::get($key . 'path');
     }
 
 
@@ -126,11 +131,13 @@ abstract class ATestCase extends ABaseTestCase
      */
     protected function getMyPath(string $className, ?string $module): string
     {
+        ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
         $component = str_replace('.', '/', $this->myComponent);
 
         $ret = self::APP_PATH . '/';
-        if ($module !== null) {
-            $ret = self::SANDBOX . '/' . $this->myModulePath . '/' . $module . '/';
+        if ($module) {
+            $ret = self::SANDBOX . '/' . $meta['path'] . '/' . $module . '/';
         }
         $ret .= $component . '/' . $className . '.php';
 
@@ -145,13 +152,35 @@ abstract class ATestCase extends ABaseTestCase
      */
     protected function getMyClass(string $className, ?string $module): string
     {
+        ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
         $component = str_replace('.', '\\', $this->myComponent);
 
         $ret = self::APP_NAMESPACE;
-        if ($module !== null) {
-            $ret = $this->myModuleNamespace . $module . '\\';
+        if ($module) {
+            $ret = $meta['namespace'] . $module . '\\';
         }
         $ret .= $component . '\\' . $className;
+
+        return $ret;
+    }
+
+    /**
+     * @return array{name: ?string, meta: ?array{namespace: string, path: string, provider: string, assets: string, active: bool, autoload: bool}}
+     */
+    protected function getMyModule(?string $module): array
+    {
+        $ret = ['name' => null, 'meta' => null];
+
+        if ($module) {
+            $context = Config::get('modules.context');
+            if (Str::contains('.', $module)) {
+                [$context, $module] = explode('.', $module);
+            }
+
+            $ret['name'] = $module;
+            $ret['meta'] = Config::get('modules.contexts.' . $context . '._meta');
+        }
 
         return $ret;
     }

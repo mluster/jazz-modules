@@ -54,12 +54,16 @@ class MigrationMakeTest extends ATestCase
     // HELPER METHODS
     protected function getMyPath(string $className, ?string $module): string
     {
+        ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
         $name = Str::snake($className);
         $path = $this->app->basePath() . '/';
         if ($module) {
-            $path .= $this->myModulePath . '/' . $module . '/resources/';
+            $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['migrations'] . '/';
+        } else {
+            $path .= 'database/migrations/';
         }
-        $path .= 'database/migrations/*_' . $name . '.php';
+        $path .= '*_' . $name . '.php';
 
         $files = $this->app['files']->glob($path);
         return array_shift($files);

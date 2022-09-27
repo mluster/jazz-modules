@@ -32,12 +32,16 @@ class NotificationMakeTest extends ATestCase
         $this->assertIsArray($args);
 
         if (isset($args['--markdown'])) {
-            $file = '/resources/views/' . $args['--markdown'] . '.blade.php';
-            $path = self::SANDBOX . $file;
+            ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
 
-            if (isset($args[$this->myModuleKey])) {
-                $path = dirname($this->getMyPath($args['name'], $args[$this->myModuleKey]), 2) . $file;
+            $path = self::SANDBOX . '/';
+            if ($module) {
+                $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['views'] . '/';
+            } else {
+                $path .= '/resources/views/';
             }
+            $path .= $args['--markdown'] . '.blade.php';
+
             $this->assertFileExists($path);
         }
     }
