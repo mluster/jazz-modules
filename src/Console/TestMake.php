@@ -39,7 +39,7 @@ class TestMake extends TestMakeCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\Tests' . ($this->option('unit') ? '\Unit' : '\Feature');
+        return $rootNamespace . ($this->option('unit') ? '\\Unit' : '\\Feature');
     }
 
     protected function getStub(): string

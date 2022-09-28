@@ -35,7 +35,7 @@ trait TGenerator
 
         ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $ret = $meta['namespace'] . $module;
+            $ret = $meta['namespace'] . $module . '\\';
         }
 
         return $ret;
@@ -64,7 +64,7 @@ trait TGenerator
             return $model;
         }
 
-        return $rootNamespace . '\\Models\\' . $model;
+        return $rootNamespace . 'Models\\' . $model;
     }
 
     protected function getPath($name): string
@@ -178,7 +178,7 @@ trait TGenerator
     protected function replaceEvent(string $stub, ?string $event): string
     {
         if (!Str::startsWith($event, [$this->rootNamespace(), 'Illuminate', '\\',])) {
-            $event = $this->rootNamespace() . '\\Events\\' . $event;
+            $event = $this->rootNamespace() . 'Events\\' . $event;
         }
 
         $stub = str_replace(['DummyEvent', '{{event}}', '{{ event }}'], class_basename($event), $stub);

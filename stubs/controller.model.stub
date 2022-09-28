@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
-use {{ rootNamespace }}\Http\Controllers\Controller;
+use {{ rootNamespace }}Http\Controllers\Controller;
 use {{ namespacedRequests }}
 use Illuminate\Http\Response;
 use {{ namespacedModel }} as {{ model }};

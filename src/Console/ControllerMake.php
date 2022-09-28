@@ -93,7 +93,7 @@ class ControllerMake extends ControllerMakeCommand
 
         $storeRequest = $updateRequest = 'Request';
         if ($this->option('requests')) {
-            $namespace = $this->rootNamespace() . '\\Http\\Requests';
+            $namespace = $this->rootNamespace() . 'Http\\Requests';
             [$storeRequest, $updateRequest] = $this->generateFormRequests(
                 $model,
                 $storeRequest,

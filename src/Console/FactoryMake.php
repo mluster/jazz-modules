@@ -38,7 +38,7 @@ class FactoryMake extends FactoryMakeCommand
         }
 
         $name = trim(Str::replaceFirst($this->rootNamespace(), '', $name), '\\');
-        return $this->rootNamespace() . '\\Models\\' . $name;
+        return $this->rootNamespace() . 'Models\\' . $name;
     }
 
     protected function getPath($name): string
@@ -75,7 +75,7 @@ class FactoryMake extends FactoryMakeCommand
 
         ['name' => $module, 'meta' => $meta] = $this->getModule();
         if ($module) {
-            $namespace = $this->rootNamespace() . '\\' . $meta['factories']['namespace'];
+            $namespace = $this->rootNamespace() . $meta['factories']['namespace'];
         }
 
         $namespace .= Str::beforeLast(Str::after($model, '\\Models\\'), class_basename($model));
