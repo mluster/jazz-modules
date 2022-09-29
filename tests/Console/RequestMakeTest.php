@@ -16,6 +16,7 @@ class RequestMakeTest extends ATestCase
         return [
             ['MyRequest', null, null],
             ['MyRequest', self::MODULE, null],
+            ['MyRequest', 'sample.Sandbox', null],
         ];
     }
 

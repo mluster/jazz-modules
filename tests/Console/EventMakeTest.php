@@ -14,6 +14,7 @@ class EventMakeTest extends ATestCase
         return [
             ['MyEvent', null, null],
             ['MyEvent', self::MODULE, null],
+            ['MyEvent', 'sample.Sandbox', null],
         ];
     }
 }

@@ -1,3 +1,9 @@
+app/
+database/
+modules/
+resources/
+sample/
 storage/
-vendor/
 stubs/
+tests/
+vendor/

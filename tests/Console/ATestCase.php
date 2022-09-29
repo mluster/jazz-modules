@@ -174,7 +174,7 @@ abstract class ATestCase extends ABaseTestCase
 
         if ($module) {
             $context = Config::get('modules.context');
-            if (Str::contains('.', $module)) {
+            if (Str::contains($module, '.')) {
                 [$context, $module] = explode('.', $module);
             }
 

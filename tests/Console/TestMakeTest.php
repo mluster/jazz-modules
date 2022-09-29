@@ -19,6 +19,9 @@ class TestMakeTest extends ATestCase
 
             ['MyTest', self::MODULE, null],
             ['MyTest', self::MODULE, ['--unit' => null]],
+
+            ['MyTest', 'sample.Sandbox', null],
+            ['MyTest', 'sample.Sandbox', ['--unit' => null]],
         ];
     }
 
@@ -30,11 +33,12 @@ class TestMakeTest extends ATestCase
 
     protected function getMyPath(string $className, ?string $module): string
     {
+        ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
         $component = str_replace('.', '/', $this->myComponent);
 
         $ret = self::SANDBOX . '/tests';
         if ($module !== null) {
-            $ret = self::SANDBOX . '/' . $this->myModulePath . '/' . $module . '/' . $component;
+            $ret = self::SANDBOX . '/' . $meta['path'] . '/' . $module . '/' . $component;
         }
         $ret .= (array_key_exists('--unit', $this->myArgs)) ? '/Unit' : '/Feature';
         $ret .= '/' . $className . '.php';

@@ -14,6 +14,7 @@ class ChannelMakeTest extends ATestCase
         return [
             ['MyChannel', null, null],
             ['MyChannel', self::MODULE, null],
+            ['MyChannel', 'sample.Sandbox', null],
         ];
     }
 }

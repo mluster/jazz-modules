@@ -36,6 +36,10 @@ class MigrationMakeTest extends ATestCase
             ['MyMigration', self::MODULE, ['--path' => 'not/applicable']],
             ['MyTable', self::MODULE, ['--table' => 'my_table']],
             ['MyCreate', self::MODULE, ['--create' => 'my_create']],
+
+            ['MyMigration', 'sample.Sandbox', ['--path' => 'not/applicable']],
+            ['MyTable', 'sample.Sandbox', ['--table' => 'my_table']],
+            ['MyCreate', 'sample.Sandbox', ['--create' => 'my_create']],
         ];
     }
 

@@ -17,7 +17,7 @@ class ModelMake extends ModelMakeCommand
         $key = Config::get('modules.key');
         ['name' => $module] = $this->getModule();
         if ($module) {
-            $arguments['--' . $key] = $module;
+            $arguments['--' . $key] = $this->option($key);
         }
         return parent::call($command, $arguments);
     }
@@ -48,13 +48,15 @@ class ModelMake extends ModelMakeCommand
         $this->call('make:factory', [
             'name' => $factory . 'Factory',
             '--model' => $this->qualifyClass($this->getNameInput()),
-            '--' . $moduleKey => $this->getModule()['name'],
+            '--' . $moduleKey => $this->option($moduleKey),
         ]);
     }
 
     protected function createMigration()
     {
         $moduleKey = Config::get('modules.key');
+        $module = $this->option($moduleKey);
+
         $table = Str::snake(Str::pluralStudly(class_basename($this->argument('name'))));
         if ($this->option('pivot')) {
             $table = Str::singular($table);
@@ -63,7 +65,7 @@ class ModelMake extends ModelMakeCommand
         $this->call('make:migration', [
             'name' => "create_{$table}_table",
             '--create' => $table,
-            '--' . $moduleKey => $this->getModule()['name'],
+            '--' . $moduleKey => $module,
         ]);
     }
 
@@ -74,7 +76,7 @@ class ModelMake extends ModelMakeCommand
 
         $this->call('make:seeder', [
             'name' => "{$seeder}Seeder",
-            '--' . $moduleKey => $this->getModule()['name'],
+            '--' . $moduleKey => $this->option($moduleKey),
         ]);
     }
 
@@ -89,7 +91,7 @@ class ModelMake extends ModelMakeCommand
             '--model' => $this->option('resource') || $this->option('api') ? $modelName : null,
             '--api' => $this->option('api'),
             '--requests' => $this->option('requests') || $this->option('all'),
-            '--' . $moduleKey => $this->getModule()['name'],
+            '--' . $moduleKey => $this->option($moduleKey),
         ]));
     }
 
@@ -101,7 +103,7 @@ class ModelMake extends ModelMakeCommand
         $this->call('make:policy', [
             'name' => "{$policy}Policy",
             '--model' => $this->qualifyClass($this->getNameInput()),
-            '--' . $moduleKey => $this->getModule()['name'],
+            '--' . $moduleKey => $this->option($moduleKey),
         ]);
     }
 }

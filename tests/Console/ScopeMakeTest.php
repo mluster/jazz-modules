@@ -14,6 +14,7 @@ class ScopeMakeTest extends ATestCase
         return [
             ['MyScope', null, null],
             ['MyScope', self::MODULE, null],
+            ['MyScope', 'sample.Sandbox', null],
         ];
     }
 }

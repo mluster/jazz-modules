@@ -20,6 +20,9 @@ class ComponentMakeTest extends ATestCase
 
             ['MyViewComponent', self::MODULE, []],
             ['MyViewInlineComponent', self::MODULE, ['--inline' => null]],
+
+            ['MyViewComponent', 'sample.Sandbox', []],
+            ['MyViewInlineComponent', 'sample.Sandbox', ['--inline' => null]],
         ];
     }
 
@@ -37,6 +40,8 @@ class ComponentMakeTest extends ATestCase
 
         // verify View Component File
         if (!array_key_exists('--inline', $args)) {
+            ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
             $name = str_replace('\\', '/', $args['name']);
             $name = collect(explode('/', $name))
                 ->map(function ($part) {
@@ -46,8 +51,8 @@ class ComponentMakeTest extends ATestCase
             $name = str_replace('.', '/', 'components.' . $name) . '.blade.php';
 
             $path = self::SANDBOX . '/resources/views';
-            if (isset($args[$this->myModuleKey])) {
-                $path = self::SANDBOX . '/' . $this->myModulePath . '/' . self::MODULE . '/assets/views';
+            if ($module) {
+                $path = self::SANDBOX . '/' . $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['views'];
             }
 
             $file = $path . '/' . $name;

@@ -20,6 +20,9 @@ class JobMakeTest extends ATestCase
 
             ['MyJob', self::MODULE, ['--sync' => false]],
             ['MySyncJob', self::MODULE, ['--sync' => true]],
+
+            ['MyJob', 'sample.Sandbox', ['--sync' => false]],
+            ['MySyncJob', 'sample.Sandbox', ['--sync' => true]],
         ];
     }
 

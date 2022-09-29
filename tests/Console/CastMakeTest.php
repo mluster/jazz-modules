@@ -14,8 +14,10 @@ class CastMakeTest extends ATestCase
         return [
             ['MyCast', null, null],
             ['MyCast', self::MODULE, null],
+            ['MyCast', 'sample.Sandbox', null],
             ['MyInboundCast', null, ['--inbound' => true]],
             ['MyInboundCast', self::MODULE, ['--inbound' => true]],
+            ['MyInboudCast', 'sample.Sandbox', ['--inbound' => true]],
         ];
     }
 }

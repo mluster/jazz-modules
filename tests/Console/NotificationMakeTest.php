@@ -19,6 +19,9 @@ class NotificationMakeTest extends ATestCase
 
             ['MyNotification', self::MODULE, null],
             ['MyMarkdownNotification', self::MODULE, ['--markdown' => 'notification']],
+
+            ['MyNotification', 'sample.Sandbox', null],
+            ['MyMarkdownNotification', 'sample.Sandbox', ['--markdown' => 'notification']],
         ];
     }
 

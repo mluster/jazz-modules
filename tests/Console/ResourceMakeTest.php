@@ -20,6 +20,9 @@ class ResourceMakeTest extends ATestCase
 
             ['MyResource', self::MODULE, null],
             ['MyResourceCollection', self::MODULE, ['--collection' => 'MyCollection']],
+
+            ['MyResource', 'sample.Sandbox', null],
+            ['MyResourceCollection', 'sample.Sandbox', ['--collection' => 'MyCollection']],
         ];
     }
 

@@ -17,6 +17,7 @@ class SeederMakeTest extends ATestCase
         return [
             ['MySeeder', null, null],
             ['MySeeder', self::MODULE, null],
+            ['MySeeder', 'sample.Sandbox', null],
         ];
     }
 

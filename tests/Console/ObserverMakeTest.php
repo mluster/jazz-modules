@@ -18,6 +18,9 @@ class ObserverMakeTest extends ATestCase
 
             ['MyObserver', self::MODULE, ['--model' => null]],
             ['MyModelObserver', self::MODULE, ['--model' => 'MyFakeModel']],
+
+            ['MyObserver', 'sample.Sandbox', ['--model' => null]],
+            ['MyModelObserver', 'sample.Sandbox', ['--model' => 'MyFakeModel']],
         ];
     }
 

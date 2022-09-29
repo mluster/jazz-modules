@@ -19,6 +19,9 @@ class MailMakeTest extends ATestCase
 
             ['MyMail', self::MODULE, null],
             ['MyMarkdownMail', self::MODULE, ['--markdown' => 'mail']],
+
+            ['MyMail', 'sample.Sandbox', null],
+            ['MyMarkdownMail', 'sample.Sandbox', ['--markdown' => 'mail']],
         ];
     }
 

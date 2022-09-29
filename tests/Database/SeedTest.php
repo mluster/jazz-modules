@@ -32,6 +32,7 @@ class SeedTest extends SeederMakeTest
         return [
             ['MySeedSeeder', null, []],
             ['MySeedSeeder', self::MODULE, []],
+            ['MySeedSeeder', 'sample.Sandbox', []],
         ];
     }
 }

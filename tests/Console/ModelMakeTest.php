@@ -19,28 +19,40 @@ class ModelMakeTest extends ATestCase
     {
         return [
             ['MyModel', null, []],
-            ['MyModelPivot', null, ['--pivot' => null]],
-            ['MyModelMorphPivot', null, ['--morph-pivot' => null]],
-            ['MyModelFactory', null, ['--factory' => null]],
-            ['MyModelMigration', null, ['--migration' => null]],
-            ['MyModelSeed', null, ['--seed' => null]],
-            ['MyModelController', null, ['--controller' => null]],
-            ['MyModelResource', null, ['--resource' => null]],
-            ['MyModelPolicy', null, ['--policy' => null]],
-            ['MyModelApi', null, ['--api' => null]],
-            ['MyModelAll', null, ['--all' => null]],
+            ['MyPivotModel', null, ['--pivot' => true]],
+            ['MyMorphPivotModel', null, ['--morph-pivot' => true]],
+            ['MyFactoryModel', null, ['--factory' => true]],
+            ['MyMigrationModel', null, ['--migration' => true]],
+            ['MySeedModel', null, ['--seed' => true]],
+            ['MyControllerModel', null, ['--controller' => true]],
+            ['MyResourceModel', null, ['--resource' => true]],
+            ['MyPolicyModel', null, ['--policy' => true]],
+            ['MyApiModel', null, ['--api' => true]],
+            ['MyAllModel', null, ['--all' => true]],
 
             ['MyModel', self::MODULE, []],
-            ['MyModelPivot', self::MODULE, ['--pivot' => null]],
-            ['MyModelMorphPivot', self::MODULE, ['--morph-pivot' => null]],
-            ['MyModelFactory', self::MODULE, ['--factory' => null]],
-            ['MyModelMigration', self::MODULE, ['--migration' => null]],
-            ['MyModelSeed', self::MODULE, ['--seed' => null]],
-            ['MyModelController', self::MODULE, ['--controller' => null]],
-            ['MyModelResource', self::MODULE, ['--resource' => null]],
-            ['MyModelPolicy', self::MODULE, ['--policy' => null]],
-            ['MyModelApi', self::MODULE, ['--api' => null]],
-            ['MyModelAll', self::MODULE, ['--all' => null]],
+            ['MyPivotModel', self::MODULE, ['--pivot' => true]],
+            ['MyMorphPivotModel', self::MODULE, ['--morph-pivot' => true]],
+            ['MyFactoryModel', self::MODULE, ['--factory' => true]],
+            ['MyMigrationModel', self::MODULE, ['--migration' => true]],
+            ['MySeedModel', self::MODULE, ['--seed' => true]],
+            ['MyControllerModel', self::MODULE, ['--controller' => true]],
+            ['MyResourceModel', self::MODULE, ['--resource' => true]],
+            ['MyPolicyModel', self::MODULE, ['--policy' => true]],
+            ['MyModelApi', self::MODULE, ['--api' => true]],
+            ['MyAllModel', self::MODULE, ['--all' => true]],
+
+            ['MyModel', 'sample.Sandbox', []],
+            ['MyPivotModel', 'sample.Sandbox', ['--pivot' => true]],
+            ['MyMorphPivotModel', 'sample.Sandbox', ['--morph-pivot' => true]],
+            ['MyFactoryModel', 'sample.Sandbox', ['--factory' => true]],
+            ['MyMigrationModel', 'sample.Sandbox', ['--migration' => true]],
+            ['MySeedModel', 'sample.Sandbox', ['--seed' => true]],
+            ['MyControllerModel', 'sample.Sandbox', ['--controller' => true]],
+            ['MyResourceModel', 'sample.Sandbox', ['--resource' => true]],
+            ['MyPolicyModel', 'sample.Sandbox', ['--policy' => true]],
+            ['MyModelApi', 'sample.Sandbox', ['--api' => true]],
+            ['MyAllModel', 'sample.Sandbox', ['--all' => true]],
         ];
     }
 
@@ -84,70 +96,94 @@ class ModelMakeTest extends ATestCase
             $args['--policy'] = true;
         }
 
-        $this->assertionsFactory($class, $args);
-        $this->assertionsMigration($args);
-        $this->assertionsSeeders($class, $args);
-        $this->assertionsController($class, $args);
-        $this->assertionsPolicies($class, $args);
+        $this->assertionsFactory($class, $args, $module);
+        $this->assertionsMigration($args, $module);
+        $this->assertionsSeeders($class, $args, $module);
+        $this->assertionsController($class, $args, $module);
+        $this->assertionsPolicies($class, $args, $module);
     }
 
-    protected function assertionsFactory(string $class, array $args): void
+    protected function assertionsFactory(string $class, array $args, ?string $module): void
     {
         if (isset($args['--factory'])) {
-            $path = self::SANDBOX;
-            if ($args[$this->myModuleKey]) {
-                $path = $this->myModulePath;
+            ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
+            $path = self::SANDBOX . '/';
+            if ($module) {
+                $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['factories']['path'] . '/';
+            } else {
+                $path .= 'database/factories/';
             }
-            $path .= '/database/factories/' . Str::after($class, 'Models\\') . 'Factory.php';
+            $path .= Str::after($class, 'Models\\') . 'Factory.php';
             $this->assertFileExists($path, 'FACTORY not found');
         }
     }
 
-    protected function assertionsMigration(array $args): void
+    protected function assertionsMigration(array $args, ?string $module): void
     {
         if (isset($args['--migration'])) {
-            $path = $this->app->basePath();
-            if ($args[$this->myModuleKey]) {
-                $path = $this->myModulePath . '/' . $args[$this->myModuleKey];
+            ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
+            $path = $this->app->basePath() . '/';
+            if ($module) {
+                $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['migrations'] . '/';
+            } else {
+                $path .= 'database/migrations/';
             }
-            $path .= '/database/migrations/*_table.php';
+            $path .= '*_table.php';
+
             $files = $this->app['files']->glob($path);
-            $this->assertCount(1, $files, 'MIGRATION not found');
+            $this->assertGreaterThanOrEqual(1, $files, 'MIGRATION not found: ' . $path);
         }
     }
 
-    protected function assertionsSeeders(string $class, array $args): void
+    protected function assertionsSeeders(string $class, array $args, ?string $module): void
     {
         if (isset($args['--seed'])) {
-            $path = self::SANDBOX;
-            if ($args[$this->myModuleKey]) {
-                $path = $this->myModulePath;
+            ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
+            $path = self::SANDBOX . '/';
+            if ($module) {
+                $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['seeders']['path'] . '/';
+            } else {
+                $path .= 'database/seeders/';
             }
-            $path .= '/database/seeders/' . Str::after($class, 'Models\\') . 'Seeder.php';
+            $path .= Str::after($class, 'Models\\') . 'Seeder.php';
+
             $this->assertFileExists($path, 'SEEDER not found');
         }
     }
 
-    protected function assertionsController(string $class, array $args): void
+    protected function assertionsController(string $class, array $args, ?string $module): void
     {
         if (isset($args['--controller']) || isset($args['--resource']) || isset($args['--api'])) {
-            $path = self::APP_PATH;
-            if ($args[$this->myModuleKey]) {
-                $path = $this->myModulePath;
+            ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
+            $path = self::SANDBOX . '/';
+            if ($module) {
+                $path .= $meta['path'] . '/' . $module . '/';
+            } else {
+                $path = self::APP_PATH . '/';
             }
-            $path .= '/Http/Controllers/' . Str::after($class, 'Models\\') . 'Controller.php';
+            $path .= 'Http/Controllers/' . Str::after($class, 'Models\\') . 'Controller.php';
+
             $this->assertFileExists($path, 'CONTROLLER not found');
         }
     }
 
-    protected function assertionsPolicies(string $class, array $args): void
+    protected function assertionsPolicies(string $class, array $args, ?string $module): void
     {
         if (isset($args['--policy'])) {
-            $path = self::SANDBOX;
-            if ($args[$this->myModuleKey]) {
-                $path = $this->myModulePath;
+            ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
+
+            $path = self::SANDBOX . '/';
+            if ($module) {
+                $path .= $meta['path'] . '/' . $module . '/';
+            } else {
+                $path = self::APP_PATH . '/';
             }
-            $path .= '/Policies/' . Str::after($class, 'Models\\') . 'Policy.php';
+            $path .= 'Policies/' . Str::after($class, 'Models\\') . 'Policy.php';
+
             $this->assertFileExists($path, 'POLICY not found');
         }
     }

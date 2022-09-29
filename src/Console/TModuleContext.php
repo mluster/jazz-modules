@@ -22,7 +22,7 @@ trait TModuleContext
         $module = $this->option(Config::get('modules.key'));
         if ($module) {
             $context = Config::get('modules.context');
-            if (Str::contains('.', $module)) {
+            if (Str::contains($module, '.')) {
                 [$context, $module] = explode('.', $module);
             }
 

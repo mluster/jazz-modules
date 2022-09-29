@@ -23,6 +23,11 @@ class ExceptionMakeTest extends ATestCase
             ['MyRenderException', self::MODULE, ['--render' => true]],
             ['MyReportException', self::MODULE, ['--report' => true]],
             ['MyRenderReportException', self::MODULE, ['--render' => true, '--report' => true]],
+
+            ['MyException', 'sample.Sandbox', []],
+            ['MyRenderException', 'sample.Sandbox', ['--render' => true]],
+            ['MyReportException', 'sample.Sandbox', ['--report' => true]],
+            ['MyRenderReportException', 'sample.Sandbox', ['--render' => true, '--report' => true]],
         ];
     }
 

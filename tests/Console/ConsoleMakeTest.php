@@ -17,6 +17,7 @@ class ConsoleMakeTest extends ATestCase
         return [
             ['MyCommand', null, null],
             ['MyCommand', self::MODULE, null],
+            ['MyCommand', 'sample.Sandbox', null],
         ];
     }
 

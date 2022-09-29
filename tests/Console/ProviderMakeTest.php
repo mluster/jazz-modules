@@ -14,6 +14,7 @@ class ProviderMakeTest extends ATestCase
         return [
             ['MyProvider', null, null],
             ['MyProvider', self::MODULE, null],
+            ['MyProvider', 'sample.Sandbox', null],
         ];
     }
 }

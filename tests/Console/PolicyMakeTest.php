@@ -18,6 +18,9 @@ class PolicyMakeTest extends ATestCase
 
             ['MyPolicy', self::MODULE, ['--model' => null]],
             ['MyModelPolicy', self::MODULE, ['--model' => 'MyFakeModel']],
+
+            ['MyPolicy', 'sample.Sandbox', ['--model' => null]],
+            ['MyModelPolicy', 'sample.Sandbox', ['--model' => 'MyFakeModel']],
         ];
     }
 

@@ -14,6 +14,7 @@ class MiddlewareMakeTest extends ATestCase
         return [
             ['MyMiddleware', null, null],
             ['MyMiddleware', self::MODULE, null],
+            ['MyMiddleware', 'sample.Sandbox', null],
         ];
     }
 

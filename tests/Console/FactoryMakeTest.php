@@ -20,6 +20,9 @@ class FactoryMakeTest extends ATestCase
 
             ['MyUser', self::MODULE, []],
             ['My.User', self::MODULE, []],
+
+            ['MyUser', 'sample.Sandbox', []],
+            ['My.User', 'sample.Sandbox', []],
         ];
     }
 

@@ -23,6 +23,10 @@ class RuleMakeTest extends ATestCase
             ['MyRule', self::MODULE, null],
             ['MyInvokableRule', self::MODULE, ['--invokable' => true]],
             ['MyInvokableImplicitRule', self::MODULE, ['--invokable' => true, '--implicit' => true]],
+
+            ['MyRule', 'sample.Sandbox', null],
+            ['MyInvokableRule', 'sample.Sandbox', ['--invokable' => true]],
+            ['MyInvokableImplicitRule', 'sample.Sandbox', ['--invokable' => true, '--implicit' => true]],
         ];
     }
 

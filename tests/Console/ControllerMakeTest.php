@@ -22,11 +22,12 @@ class ControllerMakeTest extends ATestCase
         $contents .= 'use Illuminate\Foundation\Bus\DispatchesJobs;' . PHP_EOL;
         $contents .= 'use Illuminate\Foundation\Validation\ValidatesRequests;' . PHP_EOL;
         $contents .= 'use Illuminate\Routing\Controller as BaseController;' . PHP_EOL . PHP_EOL;
-        $contents .= 'class Controller extends BaseController' . PHP_EOL . '{' . PHP_EOL;
+        $contents .= 'abstract class Controller extends BaseController' . PHP_EOL . '{' . PHP_EOL;
         $contents .= '    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;' . PHP_EOL . PHP_EOL;
         $contents .= '}' . PHP_EOL;
 
         $file = new Filesystem();
+
 
         $path = $this->getMyPath('Controller', null);
         $ns = substr($this->getMyClass('Controller', null), 0, -11);
@@ -36,8 +37,18 @@ class ControllerMakeTest extends ATestCase
         $file->put($path, str_replace('{{NAMESPACE}}', $ns, $contents));
         $file->requireOnce($path);
 
+
         $path = $this->getMyPath('Controller', self::MODULE);
         $ns = substr($this->getMyClass('Controller', self::MODULE), 0, -11);
+        if (!is_dir(dirname($path))) {
+            $file->makeDirectory(dirname($path), 0755, true);
+        }
+        $file->put($path, str_replace('{{NAMESPACE}}', $ns, $contents));
+        $file->requireOnce($path);
+
+
+        $path = $this->getMyPath('Controller', 'sample.Sandbox');
+        $ns = substr($this->getMyClass('Controller', 'sample.Sandbox'), 0, -11);
         if (!is_dir(dirname($path))) {
             $file->makeDirectory(dirname($path), 0755, true);
         }
@@ -95,6 +106,23 @@ class ControllerMakeTest extends ATestCase
                 '--parent' => 'MyApiParent']
             ],
             ['MyRequestController', self::MODULE, ['--model' => 'MyRequestModel', '--requests' => true]],
+
+            ['MyController', 'sample.Sandbox', null],
+            ['MyModelController', 'sample.Sandbox', ['--model' => 'MyControllerModel']],
+            ['MyParentController', 'sample.Sandbox', [
+                '--model' => 'MyControllerModelWithParent',
+                '--parent' => 'MyControllerParent'
+            ]],
+            ['MyResourceController', 'sample.Sandbox', ['--resource' => true]],
+            ['MyInvokableController', 'sample.Sandbox', ['--invokable' => true]],
+            ['MyApiController', 'sample.Sandbox', ['--api' => true]],
+            ['MyApiModelController', 'sample.Sandbox', ['--api' => true, '--model' => 'MyControllerApiModel']],
+            ['MyApiParentController', 'sample.Sandbox', [
+                '--api' => true,
+                '--model' => 'MyApiModelWithParent',
+                '--parent' => 'MyApiParent']
+            ],
+            ['MyRequestController', 'sample.Sandbox', ['--model' => 'MyRequestModel', '--requests' => true]],
         ];
     }
 
