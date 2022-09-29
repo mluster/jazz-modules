@@ -39,8 +39,8 @@ class FactoryResolveTest extends ATestCase
         return [
             ['MyResolve', null, 'Database\\Factories\\MyResolveFactory', 'App\\Models\\MyResolve'],
             ['My.Resolve', null, 'Database\\Factories\\My\\ResolveFactory', 'App\\Models\\My\\Resolve'],
-            ['MyResolve', 'Sandbox', 'Module\\Sandbox\\Factories\\MyResolveFactory', 'Module\\Sandbox\\Models\\MyResolve'],
-            ['My.Resolve', 'Sandbox', 'Module\\Sandbox\\Factories\\My\\ResolveFactory', 'Module\\Sandbox\\Models\\My\\Resolve'],
+            ['MyResolve', 'Sandbox', 'Module\\Sandbox\\Database\\Factories\\MyResolveFactory', 'Module\\Sandbox\\Models\\MyResolve'],
+            ['My.Resolve', 'Sandbox', 'Module\\Sandbox\\Database\\Factories\\My\\ResolveFactory', 'Module\\Sandbox\\Models\\My\\Resolve'],
         ];
     }
 }

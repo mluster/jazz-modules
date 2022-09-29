@@ -17,14 +17,14 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Default Context Name
-    | - must exist in "contexts" list
     |--------------------------------------------------------------------------
+    | Must exist in the "contexts" list
     */
     'context' => env('MODULES_CONTEXT', 'default'),
 
     /*
     |--------------------------------------------------------------------------
-    | Available Module Contexts
+    | Module Contexts List
     |--------------------------------------------------------------------------
     */
     'contexts' => [
@@ -32,13 +32,29 @@ return [
             '_meta' => [
                 /*
                 |--------------------------------------------------------------
-                | Modules Namespace
+                | If Module is ACTIVE (bool)
+                |--------------------------------------------------------------
+                */
+                'active' => env('MODULES_DEFAULT_ACTIVE', true),
+                /*
+                |--------------------------------------------------------------
+                | Autoload Context Provider
+                |--------------------------------------------------------------
+                | - if TRUE, system will load ALL Context Providers at startup
+                | - if FALSE, manually add Module Providers in APP Config OR
+                |       in Primary Context Provider
+                */
+                'autoload' => env('MODULES_DEFAULT_AUTOLOAD', false),
+
+                /*
+                |--------------------------------------------------------------
+                | Context Namespace
                 |--------------------------------------------------------------
                 */
                 'namespace' => env('MODULES_DEFAULT_NAMESPACE', 'Module\\'),
                 /*
                 |--------------------------------------------------------------
-                | Path to Modules (relative to Application base path)
+                | Path to Context (relative to Application base path)
                 |--------------------------------------------------------------
                 */
                 'path' => env('MODULES_DEFAULT_BASE', 'modules'),
@@ -51,25 +67,25 @@ return [
 
                 /*
                 |--------------------------------------------------------------
-                | ASSETS Directory Name
+                | Module ASSETS Directory Name
                 |--------------------------------------------------------------
                 */
                 'assets' => env('MODULES_DEFAULT_ASSETS', 'assets'),
                 /*
                 |--------------------------------------------------------------
-                | VIEWS Directory Name (within ASSETS)
+                | Modules VIEWS Directory Name (within ASSETS)
                 |--------------------------------------------------------------
                 */
                 'views' => env('MODULES_DEFAULT_VIEWS', 'views'),
                 /*
                 |--------------------------------------------------------------
-                | (Database) MIGRATIONS Directory Name (within ASSETS)
+                | Module (Database) MIGRATIONS Directory Name (within ASSETS)
                 |--------------------------------------------------------------
                 */
-                'migrations' => env('MODULES_DEFAULT_MIGRATIONS', 'migrations'),
+                'migrations' => env('MODULES_DEFAULT_MIGRATIONS', 'database/migrations'),
                 /*
                 |--------------------------------------------------------------
-                | (Database) FACTORIES
+                | Module (Database) FACTORIES
                 |--------------------------------------------------------------
                 */
                 'factories' => [
@@ -78,17 +94,17 @@ return [
                     | FACTORIES Path (within ASSETS)
                     |----------------------------------------------------------
                     */
-                    'path' => env('MODULES_DEFAULT_FACTORIES_PATH', 'factories'),
+                    'path' => env('MODULES_DEFAULT_FACTORIES_PATH', 'database/factories'),
                     /*
                     |----------------------------------------------------------
                     | FACTORIES Namespace
                     |----------------------------------------------------------
                     */
-                    'namespace' => env('MODULES_DEFAULT_FACTORIES_NAMESPACE', 'Factories\\'),
+                    'namespace' => env('MODULES_DEFAULT_FACTORIES_NAMESPACE', 'Database\\Factories\\'),
                 ],
                 /*
                 |--------------------------------------------------------------
-                | (Database) SEEDERS
+                | Module (Database) SEEDERS
                 |--------------------------------------------------------------
                 */
                 'seeders' => [
@@ -97,30 +113,34 @@ return [
                     | SEEDERS Path (within ASSETS)
                     |----------------------------------------------------------
                     */
-                    'path' => env('MODULES_DEFAULT_SEEDERS_PATH', 'seeders'),
+                    'path' => env('MODULES_DEFAULT_SEEDERS_PATH', 'database/seeders'),
                     /*
                     |----------------------------------------------------------
                     | SEEDERS Namespace
                     |----------------------------------------------------------
                     */
-                    'namespace' => env('MODULES_DEFAULT_SEEDERS_NAMESPACE', 'Seeders\\'),
+                    'namespace' => env('MODULES_DEFAULT_SEEDERS_NAMESPACE', 'Database\\Seeders\\'),
                 ],
-
-                /*
-                |--------------------------------------------------------------
-                | If Module is ACTIVE (bool)
-                |--------------------------------------------------------------
-                */
-                'active' => env('MODULES_DEFAULT_ACTIVE', true),
-                /*
-                |--------------------------------------------------------------
-                | Autoload Module Providers
-                | - if TRUE, system will load ALL Module Providers at startup
-                | - if FALSE, manually add Module Providers in APP Config OR
-                |       in Primary Context Provider
-                |--------------------------------------------------------------
-                */
-                'autoload' => env('MODULES_DEFAULT_AUTOLOAD', false),
+            ],
+        ],
+        'sample' => [
+            '_meta' => [
+                'active' => true,
+                'autoload' => false,
+                'namespace' => 'Sample\\',
+                'path' => 'sample',
+                'provider' => 'Provider',
+                'assets' => 'assets',
+                'views' => 'views',
+                'migrations' => 'database/migrations',
+                'factories' => [
+                    'path' => 'database/factories',
+                    'namespace' => 'Database\\Factories\\',
+                ],
+                'seeders' => [
+                    'path' => 'database/seeders',
+                    'namespace' => 'Database\\Seeders\\',
+                ],
             ],
         ],
     ],

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jazz\Modules;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use DirectoryIterator;
 
@@ -18,21 +19,23 @@ class Provider extends ServiceProvider
 
     public function register(): void
     {
-        $config = dirname(__DIR__) . '/config/modules.php';
-        $this->mergeConfigFrom($config, 'modules');
+        $this->app->instance('config', new ConfigRepository(Config::all()));
+        Config::clearResolvedInstance('config');
 
-        $list = config('modules.contexts');
+        /*$config = dirname(__DIR__) . '/config/modules.php';
+        $this->mergeConfigFrom($config, 'modules');*/
+
+        $list = Config::get('modules.contexts');
         foreach ($list as $key => $options) {
             $meta = $options['_meta'];
             if (!$meta['active']) {
                 continue;
             }
-            if ($meta['autoload']) {
-                $this->registerViaPath(
-                    $meta['path'],
-                    $meta['namespace'],
-                    $meta['provider']
-                );
+            if ($meta['autoload'] && $meta['provider'] !== null) {
+                $class = $meta['namespace'] . $meta['provider'];
+                if (class_exists($class)) {
+                    $this->app->register($class);
+                }
             }
         }
     }

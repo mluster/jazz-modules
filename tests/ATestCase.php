@@ -17,17 +17,18 @@ abstract class ATestCase extends TestCase
     protected const APP_PATH = self::SANDBOX . '/app';
     protected const APP_NAMESPACE = 'App\\';
 
-    protected array $sandboxPaths = [
+    protected array $sandboxClean = [
         'bootstrap/cache',
+    ];
+    protected array $sandboxPaths = [
         'app',
-        'database/factories',
-        'database/migrations',
-        'database/seeders',
+        'database',
         'modules',
-        'resources/views',
+        'resources',
+        'sample',
         'stubs',
-        'tests/Feature',
-        'tests/Unit',
+        'tests',
+        'vendor',
     ];
 
 
@@ -38,8 +39,11 @@ abstract class ATestCase extends TestCase
 
         $clear = (bool) env('TEST_CLEAR_AT_SETUP', true);
         if ($clear) {
-            foreach ($this->sandboxPaths as $path) {
+            foreach ($this->sandboxClean as $path) {
                 $this->sandboxClean($path);
+            }
+            foreach ($this->sandboxPaths as $path) {
+                $this->sandboxRemove($path);
             }
         }
     }
@@ -50,8 +54,11 @@ abstract class ATestCase extends TestCase
 
         $clear = (bool) env('TEST_CLEAR_AT_TEARDOWN', true);
         if ($clear) {
-            foreach ($this->sandboxPaths as $path) {
+            foreach ($this->sandboxClean as $path) {
                 $this->sandboxClean($path);
+            }
+            foreach ($this->sandboxPaths as $path) {
+                $this->sandboxRemove($path);
             }
         }
     }
@@ -105,5 +112,29 @@ abstract class ATestCase extends TestCase
                 unlink($dir->getRealPath());
             }
         }
+    }
+    private function sandboxRemove(string $path): void
+    {
+        $sandbox = dirname(__DIR__) . '/' . self::SANDBOX;
+        if (!Str::contains($path, $sandbox)) {
+            $path = $sandbox . '/' . $path;
+        }
+        if (!is_dir($path)) {
+            return;
+        }
+        $dir = new DirectoryIterator($path);
+        foreach ($dir as $file) {
+            if ($file->isDot() || $file->getFilename() === '.gitignore') {
+                continue;
+            }
+
+            if ($file->isDir()) {
+                $this->sandboxRemove($file->getRealPath());
+                //rmdir($file->getRealPath());
+            } else {
+                unlink($dir->getRealPath());
+            }
+        }
+        rmdir($path);
     }
 }
