@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
+
+class {{ class }} extends AuthServiceProvider
+{
+
+    protected $policies = [
+        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+    ];
+
+    public function boot()
+    {
+        $this->registerPolicies();
+    }
+
+}

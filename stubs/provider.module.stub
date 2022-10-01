@@ -1,0 +1,47 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Config;
+
+class {{ class }} extends ServiceProvider
+{
+
+    public function register()
+    {
+        $meta = Config::get('modules.contexts.{{ context }}._meta');
+
+        $path = __DIR__ . '/' . $meta['assets'] . '/config.php';
+        if (file_exists($path)) {
+            $this->mergeConfigFrom($path, 'modules.{{ context }}.{{ module }}');
+        }
+    }
+
+    public function boot(): void
+    {
+        $config = Config::get('modules.{{ context }}.{{ module }}');
+
+        $meta = Config::get('modules.contexts.{{ context }}._meta');
+        $path = $this->app->basePath($meta['path'] . '/{{ module }}/' . $meta['assets'] . '/');
+        $namespace = '{{ context }}-{{ module }}';
+
+        $this->loadRoutesFrom($path . 'routes.php');
+
+        $this->loadViewsFrom($path . $meta['views'], $namespace);
+        //$this->loadViewComponentsAs();
+
+        $this->loadTranslationsFrom($path . 'lang', $namespace);
+        $this->loadJsonTranslationsFrom($path . 'lang');
+
+        $this->loadMigrationsFrom($path . $meta['migrations']);
+        //$this->loadFactoriesFrom($path . $meta['factories']['path']);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([]);
+        }
+    }
+
+}

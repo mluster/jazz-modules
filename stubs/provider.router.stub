@@ -1,0 +1,84 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+
+class {{ class }} extends ServiceProvider
+{
+    public function boot(): void
+    {
+        $meta = Config::get('modules.{{ context }}._meta');
+        $config = Config::get('modules.{{ context }}.{{ module }}');
+
+        Route::namespace($meta['namespace'] . '{{ module }}\\Http\\Controllers')
+            ->prefix(Str::kebab('{{ context }}') . '/' . Str::kebab('{{ module }}'))
+            ->name('{{ context }}.{{ module }}.')
+            ->group(function () {
+
+
+                Route::prefix('api')
+                    ->name('api.')
+                    ->group(function () {
+
+                        // GET /{{ context }}/{{ module }}/{id}
+                        Route::get('/{id}', 'ApiController@readAction')
+                            ->name('read');
+
+                        // GET /{{ context }}/{{ module }}
+                        Route::get('/', 'ApiController@browseAction')
+                            ->name('browse');
+
+                        // POST /{{ context }}/{{ module }}/search
+                        Route::get('/search', 'ApiController@searchAction')
+                            ->name('search');
+
+                        // POST /{{ context }}/{{ module }}
+                        Route::post('/', 'ApiController@createAction')
+                            ->name('create');
+
+                        // PUT /{{ context }}/{{ module }}
+                        Route::put('/{id}', 'ApiController@updateAction')
+                            ->name('update');
+
+                        // DELETE /{{ context }}/{{ module }}/{id}
+                        Route::delete('/{id}', 'ApiController@deleteAction')
+                            ->name('delete');
+                    });
+
+
+                // GET /{{ context }}/{{ module }}
+                Route::get('/', 'WebController@indexAction')
+                    ->name('index');
+
+                // GET /{{ context }}/{{ module }}/new
+                Route::get('/new', 'WebController@createAction')
+                    ->name('create');
+
+                // GET /{{ context }}/{{ module }}/{id}/edit
+                Route::get('/{id}/edit', 'WebController@editAction')
+                    ->name('edit');
+
+                // GET /{{ context }}/{{ module }}/{id}
+                Route::get('/{id}', 'WebController@showAction')
+                    ->name('show');
+
+                // POST /{{ context }}/{{ module }}
+                Route::post('/', 'WebController@storeAction')
+                    ->name('store');
+
+                // PUT /{{ context }}/{{ module }}/{id}
+                Route::put('/{id}', 'WebController@updateAction')
+                    ->name('update');
+
+                // DELETE /{{ context }}/{{ module }}/{id}
+                Route::delete('/{id}', 'WebController@destroyAction')
+                    ->name('destroy');
+            });
+    }
+}

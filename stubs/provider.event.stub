@@ -1,0 +1,32 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Foundation\Support\Providers\EventServiceProvider;
+use Illuminate\Support\Facades\Event;
+
+class {{ class }} extends EventServiceProvider
+{
+    /**
+     * The event listener mappings for the application
+     * @var array<class-string, array<class-string>>
+     */
+    protected $listen = [
+        /*Registered::class => [
+            SendEmailVerificationNotification::class,
+        ],*/
+    ];
+
+
+    public function boot(): void
+    {
+        //
+    }
+
+    public function shouldDiscoverEvents(): bool
+    {
+        return false;
+    }
+}

@@ -22,9 +22,6 @@ class Provider extends ServiceProvider
         $this->app->instance('config', new ConfigRepository(Config::all()));
         Config::clearResolvedInstance('config');
 
-        /*$config = dirname(__DIR__) . '/config/modules.php';
-        $this->mergeConfigFrom($config, 'modules');*/
-
         $list = Config::get('modules.contexts');
         foreach ($list as $key => $options) {
             $meta = $options['_meta'];
@@ -36,28 +33,6 @@ class Provider extends ServiceProvider
                 if (class_exists($class)) {
                     $this->app->register($class);
                 }
-            }
-        }
-    }
-
-    protected function registerProvider(string $namespace, string $name, string $provider = 'Provider'): void
-    {
-        $class = $namespace . $name . '\\' . $provider;
-        if (class_exists($class)) {
-            $this->app->register($class);
-        }
-    }
-
-    protected function registerViaPath(string $path, string $namespace, string $provider): void
-    {
-        $path = $this->app->basePath($path);
-        if (is_dir($path)) {
-            $dir = new DirectoryIterator($path);
-            foreach ($dir as $file) {
-                if ($file->isDot() || !$file->isDir()) {
-                    continue;
-                }
-                $this->registerProvider($namespace, $file->getFilename(), $provider);
             }
         }
     }

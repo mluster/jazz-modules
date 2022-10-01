@@ -166,11 +166,15 @@ abstract class ATestCase extends ABaseTestCase
     }
 
     /**
-     * @return array{name: ?string, meta: ?array{namespace: string, path: string, provider: string, assets: string, active: bool, autoload: bool}}
+     * @return array{context: ?string, name: ?string, meta: ?array{namespace: string, path: string, provider: string, assets: string, active: bool, autoload: bool}}
      */
     protected function getMyModule(?string $module): array
     {
-        $ret = ['name' => null, 'meta' => null];
+        $ret = [
+            'context' => null,
+            'name' => null,
+            'meta' => null
+        ];
 
         if ($module) {
             $context = Config::get('modules.context');
@@ -178,6 +182,7 @@ abstract class ATestCase extends ABaseTestCase
                 [$context, $module] = explode('.', $module);
             }
 
+            $ret['context'] = $context;
             $ret['name'] = $module;
             $ret['meta'] = Config::get('modules.contexts.' . $context . '._meta');
         }
