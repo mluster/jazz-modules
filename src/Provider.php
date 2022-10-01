@@ -23,15 +23,17 @@ class Provider extends ServiceProvider
         Config::clearResolvedInstance('config');
 
         $list = Config::get('modules.contexts');
-        foreach ($list as $key => $options) {
-            $meta = $options['_meta'];
-            if (!$meta['active']) {
-                continue;
-            }
-            if ($meta['autoload'] && $meta['provider'] !== null) {
-                $class = $meta['namespace'] . $meta['provider'];
-                if (class_exists($class)) {
-                    $this->app->register($class);
+        if (is_array($list)) {
+            foreach ($list as $key => $options) {
+                $meta = $options['_meta'];
+                if (!$meta['active']) {
+                    continue;
+                }
+                if ($meta['autoload'] && $meta['provider'] !== null) {
+                    $class = $meta['namespace'] . $meta['provider'];
+                    if (class_exists($class)) {
+                        $this->app->register($class);
+                    }
                 }
             }
         }
