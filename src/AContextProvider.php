@@ -9,16 +9,16 @@ use Illuminate\Filesystem\Filesystem;
 
 class AContextProvider extends ServiceProvider
 {
-    protected function registerModuleProviders(): void
+    final protected function registerModuleProviders(string $path, string $namespace): void
     {
         $fs = new Filesystem();
-        $list = $fs->files(__DIR__);
+        $list = $fs->directories($path);
         foreach ($list as $file) {
-            if (!$fs->exists(__DIR__ . '/' . $file->getFilename() . '/Providers/Provider.php')) {
+            if (!$fs->exists($file . '/Providers/Provider.php')) {
                 continue;
             }
 
-            $class = __NAMESPACE__ . '\\' . $file->getFilename() . '\\Providers\\Provider';
+            $class = $namespace . '\\' . basename($file) . '\\Providers\\Provider';
             $this->app->register($class);
         }
     }

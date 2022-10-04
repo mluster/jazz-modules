@@ -22,8 +22,8 @@ class Provider extends ServiceProvider
         $this->app->instance('config', new ConfigRepository(Config::all()));
         Config::clearResolvedInstance('config');
 
-        $list = Config::get('modules.contexts');
-        if (is_array($list)) {
+        if (Config::has('modules.contexts')) {
+            $list = Config::get('modules.contexts');
             foreach ($list as $key => $options) {
                 $meta = $options['_meta'];
                 if (!$meta['active']) {

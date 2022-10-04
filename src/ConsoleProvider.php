@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jazz\Modules;
 
 use Illuminate\Database\Eloquent\Factories\Factory as LaravelFactory;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Jazz\Modules\Console\CastMake;
@@ -72,23 +73,28 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 
     public function register(): void
     {
-        foreach (array_keys($this->commands) as $command) {
-            $method = 'register' . $command;
-            call_user_func([$this, $method]);
-        }
-        $this->commands(array_values($this->commands));
+        if (Config::has('modules')) {
+            foreach (array_keys($this->commands) as $command) {
+                $method = 'register' . $command;
+                call_user_func([$this, $method]);
+            }
+            $this->commands(array_values($this->commands));
 
-        LaravelFactory::guessFactoryNamesUsing(function (string $model) {
-            return Factory::resolveFactory($model);
-        });
-        LaravelFactory::guessModelNamesUsing(function (LaravelFactory $factory) {
-            return Factory::resolveModel($factory);
-        });
+            LaravelFactory::guessFactoryNamesUsing(function (string $model) {
+                return Factory::resolveFactory($model);
+            });
+            LaravelFactory::guessModelNamesUsing(function (LaravelFactory $factory) {
+                return Factory::resolveModel($factory);
+            });
+        }
     }
 
     public function provides(): array
     {
-        return array_values($this->commands);
+        if (Config::has('modules')) {
+            return array_values($this->commands);
+        }
+        return [];
     }
 
 
@@ -267,7 +273,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
             return new SeederMake($app['files']);
         });
     }
-    
+
     protected function registerSeed(): void
     {
         $this->app->singleton('command.seed', function ($app) {

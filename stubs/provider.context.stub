@@ -10,6 +10,6 @@ class {{ class }} extends AContextProvider
 {
     public function register(): void
     {
-        // $this->registerModuleProviders();
+        // $this->registerModuleProviders(__DIR__, __NAMESPACE__);
     }
 }
