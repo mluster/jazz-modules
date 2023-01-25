@@ -4,7 +4,7 @@ FROM php:${VERSION}-fpm-alpine
 ARG VERSION=8.0
 
 RUN apk update && \
-    apk add g++ make autoconf && \
+    apk add --update g++ make autoconf linux-headers && \
     pecl channel-update pecl.php.net
 
 RUN docker-php-ext-install \
