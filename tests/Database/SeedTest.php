@@ -17,7 +17,10 @@ class SeedTest extends SeederMakeTest
         parent::testRun($name, $module, $args);
 
         $args = ($args ?? []);
-        $args['--class'] = $name;
+
+        if ($name !== 'DatabaseSeeder') {
+            $args['--class'] = $name;
+        }
         $args['--no-interaction'] = true;
         if ($module) {
             $args[$this->myModuleKey] = $module;
@@ -30,6 +33,10 @@ class SeedTest extends SeederMakeTest
     public function provider(): array
     {
         return [
+            ['DatabaseSeeder', null, []],
+            ['DatabaseSeeder', self::MODULE, []],
+            ['DatabaseSeeder', 'sample.Sandbox', []],
+
             ['MySeedSeeder', null, []],
             ['MySeedSeeder', self::MODULE, []],
             ['MySeedSeeder', 'sample.Sandbox', []],

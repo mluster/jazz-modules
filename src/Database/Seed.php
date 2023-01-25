@@ -19,7 +19,7 @@ class Seed extends SeedCommand
     protected function getSeeder(): Seeder
     {
         $name = $this->argument('class') ?? $this->option('class');
-        if (empty($name)) {
+        if (empty($name) || $name === 'Database\\Seeders\\DatabaseSeeder') {
             $name = 'DatabaseSeeder';
         }
 
