@@ -1,7 +1,7 @@
-ARG VERSION=8.0
+ARG VERSION=8.1
 FROM php:${VERSION}-fpm-alpine
 
-ARG VERSION=8.0
+ARG VERSION=8.1
 
 RUN apk update && \
     apk add --update g++ make autoconf linux-headers && \

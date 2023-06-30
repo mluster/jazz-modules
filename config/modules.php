@@ -73,7 +73,7 @@ return [
                 'assets' => env('MODULES_DEFAULT_ASSETS', 'assets'),
                 /*
                 |--------------------------------------------------------------
-                | Modules VIEWS Directory Name (within ASSETS)
+                | Module VIEWS Directory Name (within ASSETS)
                 |--------------------------------------------------------------
                 */
                 'views' => env('MODULES_DEFAULT_VIEWS', 'views'),

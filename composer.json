@@ -10,18 +10,16 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^8.0|^8.1",
-        "laravel/framework": "^9.0"
+        "php": "^8.1|^8.2",
+        "laravel/framework": "^10.14"
     },
     "require-dev": {
-        "orchestra/testbench": "^7.7",
-        "mockery/mockery": "^1.5.0",
-        "fakerphp/faker": "^1.9.1",
-        "phploc/phploc": "^7.0",
+        "orchestra/testbench": "^8.5",
+        "mockery/mockery": "^1.6",
+        "fakerphp/faker": "^1.23",
         "phpmd/phpmd": "@stable",
         "phpstan/phpstan": "^0.12",
-        "phpunit/phpunit": "^9.5.10",
-        "sebastian/phpcpd": "^6.0",
+        "phpunit/phpunit": "^9.6",
         "squizlabs/php_codesniffer": "^3.7"
     },
     "config": {
@@ -57,12 +55,6 @@
         "phpmd": [
             "./vendor/bin/phpmd src,tests json phpmd.xml --reportfile storage/phpmd.json"
         ],
-        "phploc": [
-            "./vendor/bin/phploc --count-tests --log-json storage/phploc.json src tests > storage/phploc.out"
-        ],
-        "phpcpd": [
-            "./vendor/bin/phpcpd --log-pmd storage/phpcpd.xml src tests > storage/phpcpd.out"
-        ],
         "phpstan": [
             "./vendor/bin/phpstan analyse -c phpstan.neon --error-format=prettyJson src tests > storage/phpstan.json"
         ],
@@ -74,8 +66,6 @@
             "@phpunit",
             "@phpcs",
             "@phpmd",
-            "@phploc",
-            "@phpcpd",
             "@phpstan"
         ]
     }
