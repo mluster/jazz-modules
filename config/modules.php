@@ -5,7 +5,7 @@ return [
     |--------------------------------------------------------------------------
     | Console Options KEY for Module
     |--------------------------------------------------------------------------
-    | php artisan my:command --module=...
+    | php artisan my:command --{{module}}=...
     */
     'key' => env('MODULES_KEY', 'module'),
     /*

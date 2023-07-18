@@ -26,6 +26,7 @@ abstract class ATestCase extends TestCase
         'modules',
         'resources',
         'sample',
+        'storage',
         'stubs',
         'tests',
         'vendor',
