@@ -72,12 +72,21 @@ class ControllerMake extends ControllerMakeCommand
     {
         $stub = null;
 
-        if ($this->option('parent')) {
-            $stub = 'controller.nested.stub';
+        $type = $this->option('type');
+        if ($type) {
+            $stub = 'controller.' . $type . '.stub';
+        } elseif ($this->option('parent')) {
+            if ($this->option('singleton')) {
+                $stub = 'controller.nested.singleton.stub';
+            } else {
+                $stub = 'controller.nested.stub';
+            }
         } elseif ($this->option('model')) {
             $stub = 'controller.model.stub';
         } elseif ($this->option('invokable')) {
             $stub = 'controller.invokable.stub';
+        } elseif ($this->option('singleton')) {
+            $stub = 'controller.singleton.stub';
         } elseif ($this->option('resource')) {
             $stub = 'controller.stub';
         }

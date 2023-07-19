@@ -11,7 +11,7 @@ use {{ namespacedModel }};
 
 class {{ class }}
 {
-    use HandlesAuthorization;
+    //use HandlesAuthorization;
 
     public function viewAny({{ user }} $user): bool|Response
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class {{ class }} extends FormRequest
@@ -13,6 +14,9 @@ class {{ class }} extends FormRequest
         return false;
     }
 
+    /**
+     * @return array<string, ValidationRule|array|string>
+     */
     public function rules(): array
     {
         return [

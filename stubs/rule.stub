@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
-use Illuminate\Contracts\Validation\Rule;
+use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Translation\PotentiallyTranslatedString;
 
-class {{ class }} implements Rule
+class {{ class }} implements ValidationRule
 {
-    public function __construct()
+    /**
+     * @param Closure(string): PotentiallyTranslatedString $fail
+     */
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-    }
-
-    public function passes($attribute, $value): bool
-    {
-    }
-
-    public function message(): string
-    {
-        return 'The validation error message.';
     }
 }

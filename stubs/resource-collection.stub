@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Support\Arrayable;
-use JsonSerializable;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class {{ class }} extends ResourceCollection
 {
-    public function toArray($request): array|Arrayable|JsonSerializable
+    /**
+     * @return array<int|string, mixed>
+     */
+    public function toArray(Request $request): array
     {
         return parent::toArray($request);
     }

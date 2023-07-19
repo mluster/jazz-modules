@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace {{ rootNamespace }};
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class {{ class }} extends Seeder

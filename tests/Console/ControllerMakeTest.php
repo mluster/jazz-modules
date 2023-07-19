@@ -89,6 +89,19 @@ class ControllerMakeTest extends ATestCase
                 '--parent' => 'MyApiParent']
             ],
             ['MyRequestController', null, ['--model' => 'MyRequestModel', '--requests' => true]],
+            ['MySingletonController', null, ['--singleton' => true]],
+            ['MyApiSingletonController', null, ['--api' => true, '--singleton' => true]],
+            ['MySingletonParentController', null, [
+                '--singleton' => true,
+                '--model' => 'MySingletonModelWithParent',
+                '--parent' => 'MySingletonParent',
+            ]],
+            ['MyApiSingletonParentController', null, [
+                '--api' => true,
+                '--singleton' => true,
+                '--model' => 'MySingletonModelWithParent',
+                '--parent' => 'MySingletonParent',
+            ]],
 
             ['MyController', self::MODULE, null],
             ['MyModelController', self::MODULE, ['--model' => 'MyControllerModel']],
@@ -106,6 +119,19 @@ class ControllerMakeTest extends ATestCase
                 '--parent' => 'MyApiParent']
             ],
             ['MyRequestController', self::MODULE, ['--model' => 'MyRequestModel', '--requests' => true]],
+            ['MySingletonController', self::MODULE, ['--singleton' => true]],
+            ['MyApiSingletonController', self::MODULE, ['--api' => true, '--singleton' => true]],
+            ['MySingletonParentController', self::MODULE, [
+                '--singleton' => true,
+                '--model' => 'MySingletonModelWithParent',
+                '--parent' => 'MySingletonParent',
+            ]],
+            ['MyApiSingletonParentController', self::MODULE, [
+                '--api' => true,
+                '--singleton' => true,
+                '--model' => 'MySingletonModelWithParent',
+                '--parent' => 'MySingletonParent',
+            ]],
 
             ['MyController', 'sample.Sandbox', null],
             ['MyModelController', 'sample.Sandbox', ['--model' => 'MyControllerModel']],
@@ -123,6 +149,19 @@ class ControllerMakeTest extends ATestCase
                 '--parent' => 'MyApiParent']
             ],
             ['MyRequestController', 'sample.Sandbox', ['--model' => 'MyRequestModel', '--requests' => true]],
+            ['MySingletonController', 'sample.Sandbox', ['--singleton' => true]],
+            ['MyApiSingletonController', 'sample.Sandbox', ['--api' => true, '--singleton' => true]],
+            ['MySingletonParentController', 'sample.Sandbox', [
+                '--singleton' => true,
+                '--model' => 'MySingletonModelWithParent',
+                '--parent' => 'MySingletonParent',
+            ]],
+            ['MyApiSingletonParentController', 'sample.Sandbox', [
+                '--api' => true,
+                '--singleton' => true,
+                '--model' => 'MySingletonModelWithParent',
+                '--parent' => 'MySingletonParent',
+            ]],
         ];
     }
 
@@ -170,6 +209,7 @@ class ControllerMakeTest extends ATestCase
             isset($args['--model']) ||
             isset($args['--parent']) ||
             isset($args['--resource']) ||
+            isset($args['--singleton']) ||
             isset($args['--api'])
         ) {
             $methods['index'] = true;
@@ -184,6 +224,10 @@ class ControllerMakeTest extends ATestCase
         if (isset($args['--api'])) {
             $methods['create'] = false;
             $methods['edit'] = false;
+        }
+
+        if (isset($args['--singleton'])) {
+            $methods['index'] = false;
         }
 
         return $methods;

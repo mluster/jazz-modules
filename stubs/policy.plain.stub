@@ -10,7 +10,7 @@ use {{ namespacedUserModel }};
 
 class {{ class }}
 {
-    use HandlesAuthorization;
+    //use HandlesAuthorization;
 
     public function __construct()
     {

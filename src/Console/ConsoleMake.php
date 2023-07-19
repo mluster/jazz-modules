@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jazz\Modules\Console;
 
 use Illuminate\Foundation\Console\ConsoleMakeCommand;
+use Illuminate\Support\Str;
 
 class ConsoleMake extends ConsoleMakeCommand
 {
@@ -20,6 +21,7 @@ class ConsoleMake extends ConsoleMakeCommand
     protected function buildClass($name): string
     {
         $stub = $this->myBuildClass($name);
-        return $this->replaceCommand($stub, $this->option('command'));
+        $command = $this->option('command') ?: 'app:' . Str::of($name)->classBasename()->kebab()->value();
+        return $this->replaceCommand($stub, $command);
     }
 }

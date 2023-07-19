@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JazzTest\Modules\Console;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\ImplicitRule;
 use Illuminate\Contracts\Validation\InvokableRule;
@@ -17,16 +18,13 @@ class RuleMakeTest extends ATestCase
     {
         return [
             ['MyRule', null, null],
-            ['MyInvokableRule', null, ['--invokable' => true]],
-            ['MyInvokableImplicitRule', null, ['--invokable' => true, '--implicit' => true]],
+            ['MyImplicitRule', null, ['--implicit' => true]],
 
             ['MyRule', self::MODULE, null],
-            ['MyInvokableRule', self::MODULE, ['--invokable' => true]],
-            ['MyInvokableImplicitRule', self::MODULE, ['--invokable' => true, '--implicit' => true]],
+            ['MyImplicitRule', self::MODULE, ['--implicit' => true]],
 
             ['MyRule', 'sample.Sandbox', null],
-            ['MyInvokableRule', 'sample.Sandbox', ['--invokable' => true]],
-            ['MyInvokableImplicitRule', 'sample.Sandbox', ['--invokable' => true, '--implicit' => true]],
+            ['MyImplicitRule', 'sample.Sandbox', ['--implicit' => true]],
         ];
     }
 
@@ -35,12 +33,6 @@ class RuleMakeTest extends ATestCase
         parent::assertions($name, $module);
 
         $class = $this->getMyClass($name, $module);
-
-        $args = $this->myArgs;
-        if (array_key_exists('--invokable', $args)) {
-            $this->assertTrue(is_subclass_of($class, InvokableRule::class));
-        } else {
-            $this->assertTrue(is_subclass_of($class, Rule::class));
-        }
+        $this->assertTrue(is_subclass_of($class, ValidationRule::class));
     }
 }

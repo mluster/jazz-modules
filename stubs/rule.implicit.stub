@@ -2,11 +2,11 @@
 
 namespace {{ namespace }};
 
-use Illuminate\Contracts\Validation\InvokableRule;
-use Illuminate\Translation\PotentiallyTranslatedString;
 use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Translation\PotentiallyTranslatedString;
 
-class {{ class }} implements InvokableRule
+class {{ class }} implements ValidationRule
 {
     public bool $implicit = true;
 
@@ -16,7 +16,7 @@ class {{ class }} implements InvokableRule
      * @param mixed $value
      * @param Closure(string): PotentiallyTranslatedString $fail
      */
-    public function __invoke($attribute, $value, $fail)
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         //
     }

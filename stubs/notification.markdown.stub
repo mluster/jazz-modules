@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace {{ namespace }};
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class {{ class }} extends Notification
 {
@@ -17,17 +17,23 @@ class {{ class }} extends Notification
     {
     }
 
-    public function via($notifiable): array
+    /**
+     * @return array<int, string>
+     */
+    public function via(object $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage())->markdown('{{ view }}');
+        return (new MailMessage)->markdown('{{ view }}');
     }
 
-    public function toArray($notifiable): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(object $notifiable): array
     {
         return [
             //
