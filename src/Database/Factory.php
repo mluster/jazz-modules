@@ -50,14 +50,15 @@ abstract class Factory extends LaravelFactory
     public static function resolveModel(LaravelFactory $factory): string
     {
         $name = Str::replaceLast('Factory', '', get_class($factory));
-        if (Str::startsWith('Database\\Factories\\', $name)) {
+        $tmp = str_starts_with('Database', $name);
+        if (Str::startsWith($name, 'Database\\Factories\\')) {
             $model = 'App\\Models\\' . Str::after($name, 'Database\\Factories\\');
         } else {
             $found = false;
             $contexts = Config::get('modules.contexts');
             foreach ($contexts as $options) {
                 $meta = $options['_meta'];
-                if (Str::startsWith($name, $meta['namespace'])) {
+                if (Str::startsWith($meta['namespace'], $name)) {
                     $found = true;
                     $model = Str::replace($meta['factories']['namespace'], 'Models//', $name);
                     break;
