@@ -15,7 +15,7 @@ class ComponentMake extends ComponentMakeCommand
 
     protected function getStub(): string
     {
-        return $this->getStubFile('component.stub');
+        return $this->getStubFile('view-component.stub');
     }
 
     protected function buildClass($name): string

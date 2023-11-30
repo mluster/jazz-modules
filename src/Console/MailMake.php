@@ -17,7 +17,7 @@ class MailMake extends MailMakeCommand
     {
         $stubFile = 'mail.stub';
         if ($this->option('markdown')) {
-            $stubFile = 'mail.markdown.stub';
+            $stubFile = 'markdown-mail.stub';
         }
         return $this->getStubFile($stubFile);
     }

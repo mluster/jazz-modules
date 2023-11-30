@@ -8,12 +8,14 @@ return [
     | php artisan my:command --{{module}}=...
     */
     'key' => env('MODULES_KEY', 'module'),
+
     /*
     |--------------------------------------------------------------------------
     | Formal Name used for Descriptions/Comments
     |--------------------------------------------------------------------------
     */
     'name' => env('MODULES_NAME', 'Module'),
+
     /*
     |--------------------------------------------------------------------------
     | Default Context Name
@@ -36,6 +38,7 @@ return [
                 |--------------------------------------------------------------
                 */
                 'active' => env('MODULES_DEFAULT_ACTIVE', true),
+
                 /*
                 |--------------------------------------------------------------
                 | Autoload Context Provider
@@ -52,12 +55,14 @@ return [
                 |--------------------------------------------------------------
                 */
                 'namespace' => env('MODULES_DEFAULT_NAMESPACE', 'Module\\'),
+
                 /*
                 |--------------------------------------------------------------
                 | Path to Context (relative to Application base path)
                 |--------------------------------------------------------------
                 */
                 'path' => env('MODULES_DEFAULT_BASE', 'modules'),
+
                 /*
                 |--------------------------------------------------------------
                 | Primary Context Provider
@@ -71,18 +76,21 @@ return [
                 |--------------------------------------------------------------
                 */
                 'assets' => env('MODULES_DEFAULT_ASSETS', 'assets'),
+
                 /*
                 |--------------------------------------------------------------
                 | Module VIEWS Directory Name (within ASSETS)
                 |--------------------------------------------------------------
                 */
                 'views' => env('MODULES_DEFAULT_VIEWS', 'views'),
+
                 /*
                 |--------------------------------------------------------------
                 | Module (Database) MIGRATIONS Directory Name (within ASSETS)
                 |--------------------------------------------------------------
                 */
                 'migrations' => env('MODULES_DEFAULT_MIGRATIONS', 'database/migrations'),
+
                 /*
                 |--------------------------------------------------------------
                 | Module (Database) FACTORIES
@@ -95,6 +103,7 @@ return [
                     |----------------------------------------------------------
                     */
                     'path' => env('MODULES_DEFAULT_FACTORIES_PATH', 'database/factories'),
+
                     /*
                     |----------------------------------------------------------
                     | FACTORIES Namespace
@@ -114,6 +123,7 @@ return [
                     |----------------------------------------------------------
                     */
                     'path' => env('MODULES_DEFAULT_SEEDERS_PATH', 'database/seeders'),
+
                     /*
                     |----------------------------------------------------------
                     | SEEDERS Namespace

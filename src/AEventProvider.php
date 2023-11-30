@@ -38,4 +38,13 @@ abstract class AEventProvider extends EventServiceProvider
                 );
             }, []);
     }
+
+    public function getContext(): ?string
+    {
+        return $this->context;
+    }
+    public function getModule(): ?string
+    {
+        return $this->module;
+    }
 }

@@ -36,38 +36,64 @@ use Jazz\Modules\Console\FactoryMake;
 use Jazz\Modules\Console\SeederMake;
 use Jazz\Modules\Database\Seed;
 use Jazz\Modules\Console\StubPublish;
+use Illuminate\Foundation\Console\CastMakeCommand;
+use Illuminate\Foundation\Console\ChannelMakeCommand;
+use Illuminate\Foundation\Console\ComponentMakeCommand;
+use Illuminate\Foundation\Console\ConsoleMakeCommand;
+use Illuminate\Routing\Console\ControllerMakeCommand;
+use Illuminate\Foundation\Console\EventMakeCommand;
+use Illuminate\Foundation\Console\ExceptionMakeCommand;
+use Illuminate\Foundation\Console\JobMakeCommand;
+use Illuminate\Foundation\Console\ListenerMakeCommand;
+use Illuminate\Foundation\Console\MailMakeCommand;
+use Illuminate\Routing\Console\MiddlewareMakeCommand;
+use Illuminate\Foundation\Console\ModelMakeCommand;
+use Illuminate\Foundation\Console\NotificationMakeCommand;
+use Illuminate\Foundation\Console\ObserverMakeCommand;
+use Illuminate\Foundation\Console\PolicyMakeCommand;
+use Illuminate\Foundation\Console\ProviderMakeCommand;
+use Illuminate\Foundation\Console\RequestMakeCommand;
+use Illuminate\Foundation\Console\ResourceMakeCommand;
+use Illuminate\Foundation\Console\RuleMakeCommand;
+use Illuminate\Foundation\Console\ScopeMakeCommand;
+use Illuminate\Foundation\Console\TestMakeCommand;
+use Illuminate\Database\Console\Migrations\MigrateMakeCommand;
+use Illuminate\Database\Console\Factories\FactoryMakeCommand;
+use Illuminate\Database\Console\Seeds\SeederMakeCommand;
+use Illuminate\Database\Console\Seeds\SeedCommand;
+use Illuminate\Foundation\Console\StubPublishCommand;
 
 class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 {
     protected array $commands = [
-        'ConsoleMake' => 'command.console.make',
-        'CastMake' => 'command.cast.make',
-        'ChannelMake' => 'command.channel.make',
-        'ComponentMake' => 'command.component.make',
-        'ControllerMake' => 'command.controller.make',
-        'EventMake' => 'command.event.make',
-        'ExceptionMake' => 'command.exception.make',
-        'JobMake' => 'command.job.make',
-        'ListenerMake' => 'command.listener.make',
-        'MailMake' => 'command.mail.make',
-        'MiddlewareMake' => 'command.middleware.make',
-        'ModelMake' => 'command.model.make',
-        'NotificationMake' => 'command.notification.make',
-        'ObserverMake' => 'command.observer.make',
-        'PolicyMake' => 'command.policy.make',
-        'ProviderMake' => 'command.provider.make',
-        'RequestMake' => 'command.request.make',
-        'ResourceMake' => 'command.resource.make',
-        'RuleMake' => 'command.rule.make',
-        'ScopeMake' => 'command.scope.make',
-        'TestMake' => 'command.test.make',
+        'ConsoleMake' => ConsoleMakeCommand::class,
+        'CastMake' => CastMakeCommand::class,
+        'ChannelMake' => ChannelMakeCommand::class,
+        'ComponentMake' => ComponentMakeCommand::class,
+        'ControllerMake' => ControllerMakeCommand::class,
+        'EventMake' => EventMakeCommand::class,
+        'ExceptionMake' => ExceptionMakeCommand::class,
+        'JobMake' => JobMakeCommand::class,
+        'ListenerMake' => ListenerMakeCommand::class,
+        'MailMake' => MailMakeCommand::class,
+        'MiddlewareMake' => MiddlewareMakeCommand::class,
+        'ModelMake' => ModelMakeCommand::class,
+        'NotificationMake' => NotificationMakeCommand::class,
+        'ObserverMake' => ObserverMakeCommand::class,
+        'PolicyMake' => PolicyMakeCommand::class,
+        'ProviderMake' => ProviderMakeCommand::class,
+        'RequestMake' => RequestMakeCommand::class,
+        'ResourceMake' => ResourceMakeCommand::class,
+        'RuleMake' => RuleMakeCommand::class,
+        'ScopeMake' => ScopeMakeCommand::class,
+        'TestMake' => TestMakeCommand::class,
 
-        'MigrationMake' => 'command.migrate.make',
-        'FactoryMake' => 'command.factory.make',
-        'SeederMake' => 'command.seeder.make',
-        'Seed' => 'command.seed',
+        'MigrationMake' => MigrateMakeCommand::class,
+        'FactoryMake' => FactoryMakeCommand::class,
+        'SeederMake' => SeederMakeCommand::class,
+        'Seed' => SeedCommand::class,
 
-        'StubPublish' => 'command.stub.publish',
+        'StubPublish' => StubPublishCommand::class,
     ];
 
 
@@ -78,7 +104,6 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
                 $method = 'register' . $command;
                 call_user_func([$this, $method]);
             }
-            $this->commands(array_values($this->commands));
 
             LaravelFactory::guessFactoryNamesUsing(function (string $model) {
                 return Factory::resolveFactory($model);
@@ -101,147 +126,148 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     // Register Methods
     protected function registerConsoleMake(): void
     {
-        $this->app->singleton('command.console.make', static function ($app) {
+        $this->app->singleton(ConsoleMakeCommand::class, static function ($app) {
             return new ConsoleMake($app['files']);
         });
     }
 
     protected function registerCastMake(): void
     {
-        $this->app->singleton('command.cast.make', function ($app) {
+        $this->app->singleton(CastMakeCommand::class, function ($app) {
             return new CastMake($app['files']);
         });
     }
 
     protected function registerChannelMake(): void
     {
-        $this->app->singleton('command.channel.make', static function ($app) {
+        $this->app->singleton(ChannelMakeCommand::class, static function ($app) {
             return new ChannelMake($app['files']);
         });
     }
 
     protected function registerComponentMake(): void
     {
-        $this->app->singleton('command.component.make', static function ($app) {
+        $this->app->singleton(ComponentMakeCommand::class, static function ($app) {
             return new ComponentMake($app['files']);
         });
     }
 
     protected function registerControllerMake(): void
     {
-        $this->app->singleton('command.controller.make', static function ($app) {
+        $this->app->singleton(ControllerMakeCommand::class, static function ($app) {
             return new ControllerMake($app['files']);
         });
     }
 
     protected function registerEventMake(): void
     {
-        $this->app->singleton('command.event.make', static function ($app) {
+        $this->app->singleton(EventMakeCommand::class, static function ($app) {
             return new EventMake($app['files']);
         });
     }
 
     protected function registerExceptionMake(): void
     {
-        $this->app->singleton('command.exception.make', static function ($app) {
+        $this->app->singleton(ExceptionMakeCommand::class, static function ($app) {
             return new ExceptionMake($app['files']);
         });
     }
 
     protected function registerJobMake(): void
     {
-        $this->app->singleton('command.job.make', static function ($app) {
+        $this->app->singleton(JobMakeCommand::class, static function ($app) {
             return new JobMake($app['files']);
         });
     }
 
     protected function registerListenerMake(): void
     {
-        $this->app->singleton('command.listener.make', static function ($app) {
+        $this->app->singleton(ListenerMakeCommand::class, static function ($app) {
             return new ListenerMake($app['files']);
         });
     }
 
     protected function registerMailMake(): void
     {
-        $this->app->singleton('command.mail.make', static function ($app) {
+        $this->app->singleton(MailMakeCommand::class, static function ($app) {
             return new MailMake($app['files']);
         });
     }
 
     protected function registerMiddlewareMake(): void
     {
-        $this->app->singleton('command.middleware.make', static function ($app) {
+        $this->app->singleton(MiddlewareMakeCommand::class, static function ($app) {
             return new MiddlewareMake($app['files']);
         });
     }
 
     protected function registerModelMake(): void
     {
-        $this->app->singleton('command.model.make', static function ($app) {
+        $this->app->singleton(ModelMakeCommand::class, static function ($app) {
             return new ModelMake($app['files']);
         });
     }
 
     protected function registerNotificationMake(): void
     {
-        $this->app->singleton('command.notification.make', static function ($app) {
+        $this->app->singleton(NotificationMakeCommand::class, static function ($app) {
             return new NotificationMake($app['files']);
         });
     }
 
     protected function registerObserverMake(): void
     {
-        $this->app->singleton('command.observer.make', static function ($app) {
+        $this->app->singleton(ObserverMakeCommand::class
+            , static function ($app) {
             return new ObserverMake($app['files']);
         });
     }
 
     protected function registerPolicyMake(): void
     {
-        $this->app->singleton('command.policy.make', static function ($app) {
+        $this->app->singleton(PolicyMakeCommand::class, static function ($app) {
             return new PolicyMake($app['files']);
         });
     }
 
     protected function registerProviderMake(): void
     {
-        $this->app->singleton('command.provider.make', static function ($app) {
+        $this->app->singleton(ProviderMakeCommand::class, static function ($app) {
             return new ProviderMake($app['files']);
         });
     }
 
     protected function registerRequestMake(): void
     {
-        $this->app->singleton('command.request.make', static function ($app) {
+        $this->app->singleton(RequestMakeCommand::class, static function ($app) {
             return new RequestMake($app['files']);
         });
     }
 
     protected function registerResourceMake(): void
     {
-        $this->app->singleton('command.resource.make', static function ($app) {
+        $this->app->singleton(ResourceMakeCommand::class, static function ($app) {
             return new ResourceMake($app['files']);
         });
     }
 
     protected function registerRuleMake(): void
     {
-        $this->app->singleton('command.rule.make', static function ($app) {
+        $this->app->singleton(RuleMakeCommand::class, static function ($app) {
             return new RuleMake($app['files']);
         });
     }
 
     protected function registerScopeMake(): void
     {
-        $this->app->singleton('command.scope.make', static function ($app) {
+        $this->app->singleton(ScopeMakeCommand::class, static function ($app) {
             return new ScopeMake($app['files']);
         });
     }
 
     protected function registerTestMake(): void
     {
-        $this->app->singleton('command.test.make', static function ($app) {
+        $this->app->singleton(TestMakeCommand::class, static function ($app) {
             return new TestMake($app['files']);
         });
     }
@@ -253,7 +279,7 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
             return new Migration($app['files'], $app->basePath('stubs'));
         });
 
-        $this->app->singleton('command.migrate.make', function ($app) {
+        $this->app->singleton(MigrateMakeCommand::class, function ($app) {
             $creator = $app['migration.creator'];
             $composer = $app['composer'];
             return new MigrationMake($creator, $composer);
@@ -262,21 +288,21 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 
     protected function registerFactoryMake(): void
     {
-        $this->app->singleton('command.factory.make', static function ($app) {
+        $this->app->singleton(FactoryMakeCommand::class, static function ($app) {
             return new FactoryMake($app['files']);
         });
     }
 
     protected function registerSeederMake(): void
     {
-        $this->app->singleton('command.seeder.make', static function ($app) {
+        $this->app->singleton(SeederMakeCommand::class, static function ($app) {
             return new SeederMake($app['files']);
         });
     }
 
     protected function registerSeed(): void
     {
-        $this->app->singleton('command.seed', function ($app) {
+        $this->app->singleton(SeedCommand::class, function ($app) {
             return new Seed($app['db']);
         });
     }
@@ -284,8 +310,6 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
 
     protected function registerStubPublish(): void
     {
-        $this->app->singleton('command.stub.publish', function () {
-            return new StubPublish();
-        });
+        $this->app->singleton(StubPublishCommand::class, StubPublish::class);
     }
 }

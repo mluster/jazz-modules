@@ -17,7 +17,7 @@ class NotificationMake extends NotificationMakeCommand
     {
         $stubFile = 'notification.stub';
         if ($this->option('markdown')) {
-            $stubFile = 'notification.markdown.stub';
+            $stubFile = 'markdown-notification.stub';
         }
         return $this->getStubFile($stubFile);
     }
