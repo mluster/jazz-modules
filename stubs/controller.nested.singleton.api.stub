@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace {{ namespace }};
 
 use {{ rootNamespace }}Http\Controllers\Controller;
@@ -10,6 +12,9 @@ use {{ namespacedParentModel }} as {{ parentModel }};
 
 class {{ class }} extends Controller
 {
+    /**
+     * Store the newly created resource in storage
+     */
     public function store(
         Request $request,
         {{ parentModel }} ${{ parentModelVariable }},
@@ -19,6 +24,9 @@ class {{ class }} extends Controller
         abort(404);
     }
 
+    /**
+     * Display the resource
+     */
     public function show(
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}
@@ -27,6 +35,9 @@ class {{ class }} extends Controller
         //
     }
 
+    /**
+     * Update the resource in storage
+     */
     public function update(
         Request $request,
         {{ parentModel }} ${{ parentModelVariable }},
@@ -36,6 +47,9 @@ class {{ class }} extends Controller
         //
     }
 
+    /**
+     * Remove the resource from storage
+     */
     public function destroy(
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}

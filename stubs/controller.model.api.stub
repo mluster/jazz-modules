@@ -11,26 +11,41 @@ use {{ namespacedModel }} as {{ model }};
 
 class {{ class }} extends Controller
 {
+    /**
+     * Display a listing of the resource
+     */
     public function index(): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Store a newly created resource in storage
+     */
     public function store({{ storeRequest }} $request): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Display the specified resource
+     */
     public function show({{ model }} ${{ modelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Update the specified resource in storage
+     */
     public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Remove the specified resource from storage
+     */
     public function destroy({{ model }} ${{ modelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);

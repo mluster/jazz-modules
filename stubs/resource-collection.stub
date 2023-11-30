@@ -10,9 +10,9 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class {{ class }} extends ResourceCollection
 {
     /**
-     * @return array<int|string, mixed>
+     * @return array<int|string, mixed>|Arrayable|JsonSerializable
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request): array|Arrayable|JsonSerializable
     {
         return parent::toArray($request);
     }

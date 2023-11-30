@@ -12,16 +12,25 @@ use {{ namespacedParentModel }} as {{ parentModel }};
 
 class {{ class }} extends Controller
 {
+    /**
+     * Display a listing of the resource
+     */
     public function index({{ parentModel }} ${{ parentModelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Store a newly created resource in storage
+     */
     public function store(Request $request, {{ parentModel }} ${{ parentModelVariable }}): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Display the specified resource
+     */
     public function show(
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}
@@ -30,6 +39,9 @@ class {{ class }} extends Controller
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Update the specified resource in storage
+     */
     public function update(
         Request $request,
         {{ parentModel }} ${{ parentModelVariable }},
@@ -39,6 +51,9 @@ class {{ class }} extends Controller
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Remove the specified resource from storage
+     */
     public function destroy(
         {{ parentModel }} ${{ parentModelVariable }},
         {{ model }} ${{ modelVariable }}

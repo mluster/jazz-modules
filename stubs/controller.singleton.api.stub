@@ -10,21 +10,33 @@ use Illuminate\Http\JsonResponse;
 
 class {{ class }} extends Controller
 {
+    /**
+     * Store the newly created resource in storage
+     */
     public function store(Request $request): never
     {
         abort(404);
     }
 
+    /**
+     * Display the resource
+     */
     public function show(): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Update the resource in storage
+     */
     public function update(Request $request): JsonResponse
     {
         return response()->json(['method' => __METHOD__]);
     }
 
+    /**
+     * Remove the resource from storage
+     */
     public function destroy(): never
     {
         abort(404);

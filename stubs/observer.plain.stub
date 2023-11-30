@@ -6,4 +6,5 @@ namespace {{ namespace }};
 
 class {{ class }}
 {
+    //
 }
