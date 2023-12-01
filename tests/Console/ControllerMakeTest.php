@@ -133,30 +133,30 @@ class ControllerMakeTest extends ATestCase
                 '--parent' => 'MySingletonParent',
             ]],
 
-            ['MyController', 'sample.Sandbox', null],
-            ['MyModelController', 'sample.Sandbox', ['--model' => 'MyControllerModel']],
-            ['MyParentController', 'sample.Sandbox', [
+            ['MyController', self::SAMPLE_MODULE, null],
+            ['MyModelController', self::SAMPLE_MODULE, ['--model' => 'MyControllerModel']],
+            ['MyParentController', self::SAMPLE_MODULE, [
                 '--model' => 'MyControllerModelWithParent',
                 '--parent' => 'MyControllerParent'
             ]],
-            ['MyResourceController', 'sample.Sandbox', ['--resource' => true]],
-            ['MyInvokableController', 'sample.Sandbox', ['--invokable' => true]],
-            ['MyApiController', 'sample.Sandbox', ['--api' => true]],
-            ['MyApiModelController', 'sample.Sandbox', ['--api' => true, '--model' => 'MyControllerApiModel']],
-            ['MyApiParentController', 'sample.Sandbox', [
+            ['MyResourceController', self::SAMPLE_MODULE, ['--resource' => true]],
+            ['MyInvokableController', self::SAMPLE_MODULE, ['--invokable' => true]],
+            ['MyApiController', self::SAMPLE_MODULE, ['--api' => true]],
+            ['MyApiModelController', self::SAMPLE_MODULE, ['--api' => true, '--model' => 'MyControllerApiModel']],
+            ['MyApiParentController', self::SAMPLE_MODULE, [
                 '--api' => true,
                 '--model' => 'MyApiModelWithParent',
                 '--parent' => 'MyApiParent']
             ],
-            ['MyRequestController', 'sample.Sandbox', ['--model' => 'MyRequestModel', '--requests' => true]],
-            ['MySingletonController', 'sample.Sandbox', ['--singleton' => true]],
-            ['MyApiSingletonController', 'sample.Sandbox', ['--api' => true, '--singleton' => true]],
-            ['MySingletonParentController', 'sample.Sandbox', [
+            ['MyRequestController', self::SAMPLE_MODULE, ['--model' => 'MyRequestModel', '--requests' => true]],
+            ['MySingletonController', self::SAMPLE_MODULE, ['--singleton' => true]],
+            ['MyApiSingletonController', self::SAMPLE_MODULE, ['--api' => true, '--singleton' => true]],
+            ['MySingletonParentController', self::SAMPLE_MODULE, [
                 '--singleton' => true,
                 '--model' => 'MySingletonModelWithParent',
                 '--parent' => 'MySingletonParent',
             ]],
-            ['MyApiSingletonParentController', 'sample.Sandbox', [
+            ['MyApiSingletonParentController', self::SAMPLE_MODULE, [
                 '--api' => true,
                 '--singleton' => true,
                 '--model' => 'MySingletonModelWithParent',
@@ -165,10 +165,10 @@ class ControllerMakeTest extends ATestCase
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, ?string $myFile, ?string $myClass): void
     {
         $args = $this->myArgs;
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
 

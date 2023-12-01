@@ -15,22 +15,22 @@ class ComponentMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyViewComponent', null, []],
-            ['MyViewInlineComponent', null, ['--inline' => null]],
+            ['MyViewComponent', null, [], 'MyViewComponent', 'MyViewComponent'],
+            ['MyViewInlineComponent', null, ['--inline' => null], 'MyViewInlineComponent', 'MyViewInlineComponent'],
 
-            ['MyViewComponent', self::MODULE, []],
-            ['MyViewInlineComponent', self::MODULE, ['--inline' => null]],
+            ['MyViewComponent', self::MODULE, [], 'MyViewComponent', 'MyViewComponent'],
+            ['MyViewInlineComponent', self::MODULE, ['--inline' => null], 'MyViewInlineComponent', 'MyViewInlineComponent'],
 
-            ['MyViewComponent', 'sample.Sandbox', []],
-            ['MyViewInlineComponent', 'sample.Sandbox', ['--inline' => null]],
+            ['MyViewComponent', self::SAMPLE_MODULE, [], 'MyViewComponent', 'MyViewComponent'],
+            ['MyViewInlineComponent', self::SAMPLE_MODULE, ['--inline' => null], 'MyViewInlineComponent', 'MyViewInlineComponent'],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, ?string $myFile, ?string $myClass): void
     {
         $args = $this->myArgs;
 
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
         $this->assertTrue(

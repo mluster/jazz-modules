@@ -12,9 +12,9 @@ class EventMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyEvent', null, null],
-            ['MyEvent', self::MODULE, null],
-            ['MyEvent', 'sample.Sandbox', null],
+            ['MyEvent', null, null, 'MyEvent', 'MyEvent'],
+            ['MyEvent', self::MODULE, null, 'MyEvent', 'MyEvent'],
+            ['MyEvent', self::SAMPLE_MODULE, null, 'MyEvent', 'MyEvent'],
         ];
     }
 }

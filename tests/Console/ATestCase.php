@@ -12,6 +12,9 @@ abstract class ATestCase extends ABaseTestCase
 {
     protected const MODULE = 'Sandbox';
 
+    protected const SAMPLE = 'sample';
+    protected const SAMPLE_MODULE = 'sample.' . self::MODULE;
+
     protected string $myCommand;
     protected string $myComponent;
 
@@ -48,7 +51,7 @@ abstract class ATestCase extends ABaseTestCase
      * @param ?array $args
      * @dataProvider provider
      */
-    public function testRun(string $name, ?string $module, ?array $args): void
+    public function testRun(string $name, ?string $module, ?array $args, ?string $myFile, ?string $myClass): void
     {
         if ($name === null || $this->myCommand === null || $this->myComponent === null) {
             $this->markTestIncomplete();
@@ -63,7 +66,7 @@ abstract class ATestCase extends ABaseTestCase
 
         $this->myArgs = $args;
         $this->createArtisan($this->myCommand, $this->myArgs);
-        $this->assertions($name, $module);
+        $this->assertions($name, $module, $myFile, $myClass);
     }
 
     /**
@@ -79,10 +82,10 @@ abstract class ATestCase extends ABaseTestCase
      * @param string $name
      * @param ?string $module
      */
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, ?string $myFile, ?string $myClass): void
     {
-        $this->assertMyFileExists($name, $module);
-        $this->assertMyClassExists($name, $module);
+        $this->assertMyFileExists($module, $myFile);
+        $this->assertMyClassExists($module, $myClass);
     }
 
     /**
@@ -90,10 +93,10 @@ abstract class ATestCase extends ABaseTestCase
      * @param string $name
      * @param ?string $module
      */
-    protected function assertMyFileExists(string $name, ?string $module): void
+    protected function assertMyFileExists(?string $module, ?string $file): void
     {
-        $file = $this->getMyPath($name, $module);
-        $this->assertFileExists($file, $file . ' not found');
+        $file = $this->getMyPath($file, $module);
+        $this->assertFileExists($file, $file . ' MISSING');
         require_once($file);
     }
 
@@ -102,10 +105,10 @@ abstract class ATestCase extends ABaseTestCase
      * @param string $name
      * @param ?string $module
      */
-    protected function assertMyClassExists(string $name, ?string $module): void
+    protected function assertMyClassExists(?string $module, ?string $name): void
     {
         $class = $this->getMyClass($name, $module);
-        $this->assertTrue(class_exists($class, false), $class . ' not found');
+        $this->assertTrue(class_exists($class, false), $class . ' MISSING');
     }
 
     /**
@@ -129,7 +132,7 @@ abstract class ATestCase extends ABaseTestCase
      * @param string|null $module
      * @return string
      */
-    protected function getMyPath(string $className, ?string $module): string
+    protected function getMyPath(string $file, ?string $module): string
     {
         ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
 
@@ -139,7 +142,7 @@ abstract class ATestCase extends ABaseTestCase
         if ($module) {
             $ret = self::SANDBOX . '/' . $meta['path'] . '/' . $module . '/';
         }
-        $ret .= $component . '/' . $className . '.php';
+        $ret .= $component . '/' . Str::replaceLast('.php', '', $file) . '.php';
 
         return $ret;
     }
