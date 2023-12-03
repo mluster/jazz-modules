@@ -12,9 +12,9 @@ class ScopeMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyScope', null, null],
-            ['MyScope', self::MODULE, null],
-            ['MyScope', 'sample.Sandbox', null],
+            ['MyScope', null, null, [], []],
+            ['MyScope', self::MODULE, null, [], []],
+            ['MyScope', self::SAMPLE_MODULE, null, [], []],
         ];
     }
 }

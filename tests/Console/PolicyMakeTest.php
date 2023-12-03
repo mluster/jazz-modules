@@ -13,21 +13,21 @@ class PolicyMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyPolicy', null, ['--model' => null]],
-            ['MyModelPolicy', null, ['--model' => 'MyFakeModel']],
+            ['MyPolicy', null, ['--model' => null], [], []],
+            ['MyModelPolicy', null, ['--model' => 'MyFakeModel'], [], []],
 
-            ['MyPolicy', self::MODULE, ['--model' => null]],
-            ['MyModelPolicy', self::MODULE, ['--model' => 'MyFakeModel']],
+            ['MyPolicy', self::MODULE, ['--model' => null], [], []],
+            ['MyModelPolicy', self::MODULE, ['--model' => 'MyFakeModel'], [], []],
 
-            ['MyPolicy', 'sample.Sandbox', ['--model' => null]],
-            ['MyModelPolicy', 'sample.Sandbox', ['--model' => 'MyFakeModel']],
+            ['MyPolicy', self::SAMPLE_MODULE, ['--model' => null], [], []],
+            ['MyModelPolicy', self::SAMPLE_MODULE, ['--model' => 'MyFakeModel'], [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         $args = $this->myArgs;
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
         $hasModel = $args['--model'] !== null;

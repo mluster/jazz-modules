@@ -15,15 +15,15 @@ class SeederMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MySeeder', null, null],
-            ['MySeeder', self::MODULE, null],
-            ['MySeeder', 'sample.Sandbox', null],
+            ['MySeeder', null, null, [], []],
+            ['MySeeder', self::MODULE, null, [], []],
+            ['MySeeder', self::SAMPLE_MODULE, null, [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
         $this->assertTrue(
@@ -34,11 +34,11 @@ class SeederMakeTest extends ATestCase
 
 
     // HELPER METHODS
-    protected function getMyPath(string $className, ?string $module): string
+    protected function getMyPath(string $file, ?string $module): string
     {
         ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
 
-        $className = str_replace(['.', '\\'], '/', Str::finish($className, 'Seeder'));
+        $file = str_replace(['.', '\\'], '/', Str::finish($file, 'Seeder'));
 
         $path = $this->app->basePath() . '/';
         if ($module) {
@@ -46,7 +46,7 @@ class SeederMakeTest extends ATestCase
         } else {
             $path .= 'database/seeders/';
         }
-        $path .= $className . '.php';
+        $path .= $file . '.php';
 
         return $path;
     }

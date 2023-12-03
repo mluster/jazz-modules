@@ -86,25 +86,32 @@ abstract class ATestCase extends ABaseTestCase
      */
     protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
+        if (empty($myFile)) {
+            $myFile = [$name];
+        }
         foreach ($myFile as $file) {
             $this->assertMyFileExists($file, $module);
         }
+
+        if (empty($myClass)) {
+            $myClass = [$name];
+        }
         foreach ($myClass as $name) {
-            $this->assertMyClassExists($module, $name);
+            $this->assertMyClassExists($name, $module);
         }
     }
 
     protected function assertMyFileExists(string $file, ?string $module): void
     {
         $file = $this->getMyPath($file, $module);
-        $this->assertFileExists($file, $file . ' MISSING');
+        $this->assertFileExists($file, $file . ' FILE MISSING');
         require_once($file);
     }
 
     protected function assertMyClassExists(string $name, ?string $module): void
     {
         $class = $this->getMyClass($name, $module);
-        $this->assertTrue(class_exists($class, false), $class . ' MISSING');
+        $this->assertTrue(class_exists($class, true), $class . ' CLASS MISSING');
     }
 
     protected function assertMethodInClass(string $class, string $method, bool $expected): void
@@ -121,7 +128,8 @@ abstract class ATestCase extends ABaseTestCase
         ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
 
         $component = Str::replace('.', '/', $this->myComponent);
-        $file = Str::replaceLast('.php', '', $file) . '.php';
+        $file = Str::replaceLast('.php', '', $file);
+        $file = Str::replace('.', '/', $file) . '.php';
 
         $ret = self::SANDBOX . '/';
         if (!file_exists($ret . $file)) {
@@ -140,15 +148,17 @@ abstract class ATestCase extends ABaseTestCase
         ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
 
         $component = Str::replace('.', '\\', $this->myComponent);
+        $className = Str::replace('.', '\\', $className);
 
         $ret = $className;
-        if (!class_exists($className, false)) {
+        if (!class_exists($className, true)) {
             $ret = ($module)
                 ? $meta['namespace'] . $module . '\\'
                 : self::APP_NAMESPACE;
-            if (!class_exists($ret . $className)) {
+            if (!class_exists($ret . $className, true)) {
                 $ret .= $component . '\\';
             }
+            $ret .= $className;
         }
         return $ret;
     }

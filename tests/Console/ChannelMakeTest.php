@@ -12,9 +12,9 @@ class ChannelMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyChannel', null, null, ['MyChannel.php'], ['MyChannel']],
-            ['MyChannel', self::MODULE, null, ['MyChannel.php'], ['MyChannel']],
-            ['MyChannel', self::SAMPLE_MODULE, null, ['MyChannel.php'], ['MyChannel']],
+            ['MyChannel', null, null, [], []],
+            ['MyChannel', self::MODULE, null, [], []],
+            ['MyChannel', self::SAMPLE_MODULE, null, [], []],
         ];
     }
 }

@@ -15,18 +15,18 @@ class ComponentMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyViewComponent', null, [], 'MyViewComponent', 'MyViewComponent'],
-            ['MyViewInlineComponent', null, ['--inline' => null], 'MyViewInlineComponent', 'MyViewInlineComponent'],
+            ['MyViewComponent', null, [], [], []],
+            ['MyViewInlineComponent', null, ['--inline' => null], [], []],
 
-            ['MyViewComponent', self::MODULE, [], 'MyViewComponent', 'MyViewComponent'],
-            ['MyViewInlineComponent', self::MODULE, ['--inline' => null], 'MyViewInlineComponent', 'MyViewInlineComponent'],
+            ['MyViewComponent', self::MODULE, [], [], []],
+            ['MyViewInlineComponent', self::MODULE, ['--inline' => null], [], []],
 
-            ['MyViewComponent', self::SAMPLE_MODULE, [], 'MyViewComponent', 'MyViewComponent'],
-            ['MyViewInlineComponent', self::SAMPLE_MODULE, ['--inline' => null], 'MyViewInlineComponent', 'MyViewInlineComponent'],
+            ['MyViewComponent', self::SAMPLE_MODULE, [], [], []],
+            ['MyViewInlineComponent', self::SAMPLE_MODULE, ['--inline' => null], [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module, ?string $myFile, ?string $myClass): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         $args = $this->myArgs;
 

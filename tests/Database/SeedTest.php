@@ -12,9 +12,9 @@ class SeedTest extends SeederMakeTest
     /**
      * @dataProvider provider
      */
-    public function testRun(string $name, ?string $module, ?array $args): void
+    public function testRun(string $name, ?string $module, ?array $args, array $myFile, array $myClass): void
     {
-        parent::testRun($name, $module, $args);
+        parent::testRun($name, $module, $args, $myFile, $myClass);
 
         $args = ($args ?? []);
 
@@ -33,13 +33,13 @@ class SeedTest extends SeederMakeTest
     public function provider(): array
     {
         return [
-            ['DatabaseSeeder', null, []],
-            ['DatabaseSeeder', self::MODULE, []],
-            ['DatabaseSeeder', 'sample.Sandbox', []],
+            ['DatabaseSeeder', null, [], [], []],
+            ['DatabaseSeeder', self::MODULE, [], [], []],
+            ['DatabaseSeeder', self::SAMPLE_MODULE, [], [], []],
 
-            ['MySeedSeeder', null, []],
-            ['MySeedSeeder', self::MODULE, []],
-            ['MySeedSeeder', 'sample.Sandbox', []],
+            ['MySeedSeeder', null, [], [], []],
+            ['MySeedSeeder', self::MODULE, [], [], []],
+            ['MySeedSeeder', self::SAMPLE_MODULE, [], [], []],
         ];
     }
 }

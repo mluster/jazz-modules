@@ -15,13 +15,13 @@ class ConsoleMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyCommand', null, null, 'MyCommand', 'MyCommand'],
-            ['MyCommand', self::MODULE, null, 'MyCommand', 'MyCommand'],
-            ['MyCommand', self::SAMPLE_MODULE, null, 'MyCommand', 'MyCommand'],
+            ['MyCommand', null, null, [], []],
+            ['MyCommand', self::MODULE, null, [], []],
+            ['MyCommand', self::SAMPLE_MODULE, null, [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module, ?string $myFile, ?string $myClass): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         parent::assertions($name, $module, $myFile, $myClass);
 

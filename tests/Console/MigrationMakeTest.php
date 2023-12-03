@@ -29,23 +29,23 @@ class MigrationMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyMigration', null, []],
-            ['MyTable', null, ['--table' => 'my_table']],
-            ['MyCreate', null, ['--create' => 'my_create']],
+            ['MyMigration', null, [], [], []],
+            ['MyTable', null, ['--table' => 'my_table'], [], []],
+            ['MyCreate', null, ['--create' => 'my_create'], [], []],
 
-            ['MyMigration', self::MODULE, ['--path' => 'not/applicable']],
-            ['MyTable', self::MODULE, ['--table' => 'my_table']],
-            ['MyCreate', self::MODULE, ['--create' => 'my_create']],
+            ['MyMigration', self::MODULE, ['--path' => 'not/applicable'], [], []],
+            ['MyTable', self::MODULE, ['--table' => 'my_table'], [], []],
+            ['MyCreate', self::MODULE, ['--create' => 'my_create'], [], []],
 
-            ['MyMigration', 'sample.Sandbox', ['--path' => 'not/applicable']],
-            ['MyTable', 'sample.Sandbox', ['--table' => 'my_table']],
-            ['MyCreate', 'sample.Sandbox', ['--create' => 'my_create']],
+            ['MyMigration', self::SAMPLE_MODULE, ['--path' => 'not/applicable'], [], []],
+            ['MyTable', self::SAMPLE_MODULE, ['--table' => 'my_table'], [], []],
+            ['MyCreate', self::SAMPLE_MODULE, ['--create' => 'my_create'], [], []],
         ];
     }
 
 
     // ASSERTION METHODS
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         $this->assertMyFileExists($name, $module);
 
@@ -56,11 +56,11 @@ class MigrationMakeTest extends ATestCase
 
 
     // HELPER METHODS
-    protected function getMyPath(string $className, ?string $module): string
+    protected function getMyPath(string $file, ?string $module): string
     {
         ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
 
-        $name = Str::snake($className);
+        $name = Str::snake($file);
         $path = $this->app->basePath() . '/';
         if ($module) {
             $path .= $meta['path'] . '/' . $module . '/' . $meta['assets'] . '/' . $meta['migrations'] . '/';

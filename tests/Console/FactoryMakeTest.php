@@ -15,18 +15,18 @@ class FactoryMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyUser', null, [], 'MyUser', 'MyUser'],
-            ['My.User', null, [], 'My/User', 'My\\User'],
+            ['MyUser', null, [], [], []],
+            ['My.User', null, [], [], []],
 
-            ['MyUser', self::MODULE, [], 'MyUser', 'MyUser'],
-            ['My.User', self::MODULE, [], 'My/User', 'My\\User'],
+            ['MyUser', self::MODULE, [], [], []],
+            ['My.User', self::MODULE, [], [], []],
 
-            ['MyUser', self::SAMPLE_MODULE, [], 'MyUser', 'MyUser'],
-            ['My.User', self::SAMPLE_MODULE, [], 'My/User', 'My\\User'],
+            ['MyUser', self::SAMPLE_MODULE, [], [], []],
+            ['My.User', self::SAMPLE_MODULE, [], [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module, ?string $myFile, ?string $myClass): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         parent::assertions($name, $module, $myFile, $myClass);
 
@@ -39,11 +39,11 @@ class FactoryMakeTest extends ATestCase
 
 
     // HELPER METHODS
-    protected function getMyPath(string $className, ?string $module): string
+    protected function getMyPath(string $file, ?string $module): string
     {
         ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
 
-        $className = str_replace(['.', '\\'], '/', Str::finish($className, 'Factory'));
+        $file = str_replace(['.', '\\'], '/', Str::finish($file, 'Factory'));
 
         $path = $this->app->basePath() . '/';
         if ($module) {
@@ -51,7 +51,7 @@ class FactoryMakeTest extends ATestCase
         } else {
             $path .= 'database/factories/';
         }
-        $path .= $className . '.php';
+        $path .= $file . '.php';
 
         return $path;
     }

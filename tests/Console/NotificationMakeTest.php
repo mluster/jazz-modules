@@ -14,21 +14,21 @@ class NotificationMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyNotification', null, null],
-            ['MyMarkdownNotification', null, ['--markdown' => 'notification']],
+            ['MyNotification', null, null, [], []],
+            ['MyMarkdownNotification', null, ['--markdown' => 'notification'], [], []],
 
-            ['MyNotification', self::MODULE, null],
-            ['MyMarkdownNotification', self::MODULE, ['--markdown' => 'notification']],
+            ['MyNotification', self::MODULE, null, [], []],
+            ['MyMarkdownNotification', self::MODULE, ['--markdown' => 'notification'], [], []],
 
-            ['MyNotification', 'sample.Sandbox', null],
-            ['MyMarkdownNotification', 'sample.Sandbox', ['--markdown' => 'notification']],
+            ['MyNotification', self::SAMPLE_MODULE, null, [], []],
+            ['MyMarkdownNotification', self::SAMPLE_MODULE, ['--markdown' => 'notification'], [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         $args = $this->myArgs;
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
         $this->assertTrue(is_subclass_of($class, Notification::class));

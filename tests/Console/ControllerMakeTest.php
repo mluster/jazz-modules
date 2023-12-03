@@ -47,8 +47,8 @@ class ControllerMakeTest extends ATestCase
         $file->requireOnce($path);
 
 
-        $path = $this->getMyPath('Controller', 'sample.Sandbox');
-        $ns = substr($this->getMyClass('Controller', 'sample.Sandbox'), 0, -11);
+        $path = $this->getMyPath('Controller', self::SAMPLE_MODULE);
+        $ns = substr($this->getMyClass('Controller', self::SAMPLE_MODULE), 0, -11);
         if (!is_dir(dirname($path))) {
             $file->makeDirectory(dirname($path), 0755, true);
         }
@@ -73,99 +73,135 @@ class ControllerMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyController', null, null],
-            ['MyModelController', null, ['--model' => 'MyControllerModel']],
-            ['MyParentController', null, [
-                '--model' => 'MyControllerModelWithParent',
-                '--parent' => 'MyControllerParent'
-            ]],
-            ['MyResourceController', null, ['--resource' => true]],
-            ['MyInvokableController', null, ['--invokable' => true]],
-            ['MyApiController', null, ['--api' => true]],
-            ['MyApiModelController', null, ['--api' => true, '--model' => 'MyControllerApiModel']],
-            ['MyApiParentController', null, [
-                '--api' => true,
-                '--model' => 'MyApiModelWithParent',
-                '--parent' => 'MyApiParent']
+            ['MyController', null, null, [], []],
+            ['MyModelController', null,
+                ['--model' => 'MyControllerModel'],
+                ['MyModelController', 'Models/MyControllerModel'],
+                ['MyModelController', 'Models.MyControllerModel']
             ],
-            ['MyRequestController', null, ['--model' => 'MyRequestModel', '--requests' => true]],
-            ['MySingletonController', null, ['--singleton' => true]],
-            ['MyApiSingletonController', null, ['--api' => true, '--singleton' => true]],
-            ['MySingletonParentController', null, [
-                '--singleton' => true,
-                '--model' => 'MySingletonModelWithParent',
-                '--parent' => 'MySingletonParent',
-            ]],
-            ['MyApiSingletonParentController', null, [
-                '--api' => true,
-                '--singleton' => true,
-                '--model' => 'MySingletonModelWithParent',
-                '--parent' => 'MySingletonParent',
-            ]],
+            ['MyParentController', null,
+                ['--model' => 'MyControllerModelWithParent', '--parent' => 'MyControllerParent'],
+                ['MyParentController', 'Models/MyControllerModelWithParent', 'Models/MyControllerParent'],
+                ['MyParentController', 'Models.MyControllerModelWithParent', 'Models.MyControllerParent']
+            ],
+            ['MyResourceController', null, ['--resource' => true], [], []],
+            ['MyInvokableController', null, ['--invokable' => true], [], []],
+            ['MyApiController', null, ['--api' => true], [], []],
+            ['MyApiModelController', null,
+                ['--api' => true, '--model' => 'MyControllerApiModel'],
+                ['MyApiModelController', 'Models/MyControllerApiModel'],
+                ['MyApiModelController', 'Models.MyControllerApiModel']
+            ],
+            ['MyApiParentController', null,
+                ['--api' => true, '--model' => 'MyApiModelWithParent', '--parent' => 'MyApiParent'],
+                ['MyApiParentController', 'Models/MyApiModelWithParent', 'Models/MyApiParent'],
+                ['MyApiParentController', 'Models.MyApiModelWithParent', 'Models.MyApiParent']
+            ],
+            ['MyRequestController', null,
+                ['--model' => 'MyRequestModel', '--requests' => true],
+                ['MyRequestController', 'Models/MyRequestModel', 'Http/Requests/StoreMyRequestModelRequest', 'Http/Requests/UpdateMyRequestModelRequest'],
+                ['MyRequestController', 'Models.MyRequestModel', 'Http.Requests.StoreMyRequestModelRequest', 'Http.Requests.UpdateMyRequestModelRequest']
+            ],
+            ['MySingletonController', null, ['--singleton' => true], [], []],
+            ['MyApiSingletonController', null, ['--api' => true, '--singleton' => true], [], []],
+            ['MySingletonParentController', null,
+                ['--singleton' => true, '--model' => 'MySingletonModelWithParent', '--parent' => 'MySingletonParent',],
+                ['MySingletonParentController', 'Models/MySingletonModelWithParent', 'Models/MySingletonParent'],
+                ['MySingletonParentController', 'Models.MySingletonModelWithParent', 'Models.MySingletonParent']
+            ],
+            ['MyApiSingletonParentController', null,
+                ['--api' => true, '--singleton' => true, '--model' => 'MyApiSingletonWithParent', '--parent' => 'MyApiSingletonParent',],
+                ['MyApiSingletonParentController', 'Models/MyApiSingletonWithParent', 'Models/MyApiSingletonParent'],
+                ['MyApiSingletonParentController', 'Models.MyApiSingletonWithParent', 'Models.MyApiSingletonParent']
+            ],
 
-            ['MyController', self::MODULE, null],
-            ['MyModelController', self::MODULE, ['--model' => 'MyControllerModel']],
-            ['MyParentController', self::MODULE, [
-                '--model' => 'MyControllerModelWithParent',
-                '--parent' => 'MyControllerParent'
-            ]],
-            ['MyResourceController', self::MODULE, ['--resource' => true]],
-            ['MyInvokableController', self::MODULE, ['--invokable' => true]],
-            ['MyApiController', self::MODULE, ['--api' => true]],
-            ['MyApiModelController', self::MODULE, ['--api' => true, '--model' => 'MyControllerApiModel']],
-            ['MyApiParentController', self::MODULE, [
-                '--api' => true,
-                '--model' => 'MyApiModelWithParent',
-                '--parent' => 'MyApiParent']
+            ['MyController', self::MODULE, null, [], []],
+            ['MyModelController', self::MODULE,
+                ['--model' => 'MyControllerModel'],
+                ['MyModelController', 'Models/MyControllerModel'],
+                ['MyModelController', 'Models.MyControllerModel']
             ],
-            ['MyRequestController', self::MODULE, ['--model' => 'MyRequestModel', '--requests' => true]],
-            ['MySingletonController', self::MODULE, ['--singleton' => true]],
-            ['MyApiSingletonController', self::MODULE, ['--api' => true, '--singleton' => true]],
-            ['MySingletonParentController', self::MODULE, [
-                '--singleton' => true,
-                '--model' => 'MySingletonModelWithParent',
-                '--parent' => 'MySingletonParent',
-            ]],
-            ['MyApiSingletonParentController', self::MODULE, [
-                '--api' => true,
-                '--singleton' => true,
-                '--model' => 'MySingletonModelWithParent',
-                '--parent' => 'MySingletonParent',
-            ]],
+            ['MyParentController', self::MODULE,
+                ['--model' => 'MyControllerModelWithParent', '--parent' => 'MyControllerParent'],
+                ['MyParentController', 'Models/MyControllerModelWithParent', 'Models/MyControllerParent'],
+                ['MyParentController', 'Models.MyControllerModelWithParent', 'Models.MyControllerParent']
+            ],
+            ['MyResourceController', self::MODULE, ['--resource' => true], [], []],
+            ['MyInvokableController', self::MODULE, ['--invokable' => true], [], []],
+            ['MyApiController', self::MODULE, ['--api' => true], [], []],
+            ['MyApiModelController', self::MODULE,
+                ['--api' => true, '--model' => 'MyControllerApiModel'],
+                ['MyApiModelController', 'Models/MyControllerApiModel'],
+                ['MyApiModelController', 'Models.MyControllerApiModel']
+            ],
+            ['MyApiParentController', self::MODULE,
+                ['--api' => true, '--model' => 'MyApiModelWithParent', '--parent' => 'MyApiParent'],
+                ['MyApiParentController', 'Models/MyApiModelWithParent', 'Models/MyApiParent'],
+                ['MyApiParentController', 'Models.MyApiModelWithParent', 'Models.MyApiParent']
+            ],
+            ['MyRequestController', self::MODULE,
+                ['--model' => 'MyRequestModel', '--requests' => true],
+                ['MyRequestController', 'Models/MyRequestModel', 'Http/Requests/StoreMyRequestModelRequest', 'Http/Requests/UpdateMyRequestModelRequest'],
+                ['MyRequestController', 'Models.MyRequestModel', 'Http.Requests.StoreMyRequestModelRequest', 'Http.Requests.UpdateMyRequestModelRequest']
+            ],
+            ['MySingletonController', self::MODULE, ['--singleton' => true], [], []],
+            ['MyApiSingletonController', self::MODULE, ['--api' => true, '--singleton' => true], [], []],
+            ['MySingletonParentController', self::MODULE,
+                ['--singleton' => true, '--model' => 'MySingletonModelWithParent', '--parent' => 'MySingletonParent',],
+                ['MySingletonParentController', 'Models/MySingletonModelWithParent', 'Models/MySingletonParent'],
+                ['MySingletonParentController', 'Models.MySingletonModelWithParent', 'Models.MySingletonParent']
+            ],
+            ['MyApiSingletonParentController', self::MODULE,
+                ['--api' => true, '--singleton' => true, '--model' => 'MyApiSingletonModelWithParent', '--parent' => 'MyApiSingletonParent',],
+                ['MyApiSingletonParentController', 'Models/MyApiSingletonModelWithParent', 'Models/MyApiSingletonParent'],
+                ['MyApiSingletonParentController', 'Models.MyApiSingletonModelWithParent', 'Models.MyApiSingletonParent']
+            ],
 
-            ['MyController', self::SAMPLE_MODULE, null],
-            ['MyModelController', self::SAMPLE_MODULE, ['--model' => 'MyControllerModel']],
-            ['MyParentController', self::SAMPLE_MODULE, [
-                '--model' => 'MyControllerModelWithParent',
-                '--parent' => 'MyControllerParent'
-            ]],
-            ['MyResourceController', self::SAMPLE_MODULE, ['--resource' => true]],
-            ['MyInvokableController', self::SAMPLE_MODULE, ['--invokable' => true]],
-            ['MyApiController', self::SAMPLE_MODULE, ['--api' => true]],
-            ['MyApiModelController', self::SAMPLE_MODULE, ['--api' => true, '--model' => 'MyControllerApiModel']],
-            ['MyApiParentController', self::SAMPLE_MODULE, [
-                '--api' => true,
-                '--model' => 'MyApiModelWithParent',
-                '--parent' => 'MyApiParent']
+            ['MyController', self::SAMPLE_MODULE, null, [], []],
+            ['MyModelController', self::SAMPLE_MODULE,
+                ['--model' => 'MyControllerModel'],
+                ['MyModelController', 'Models/MyControllerModel'],
+                ['MyModelController', 'Models.MyControllerModel']
             ],
-            ['MyRequestController', self::SAMPLE_MODULE, ['--model' => 'MyRequestModel', '--requests' => true]],
-            ['MySingletonController', self::SAMPLE_MODULE, ['--singleton' => true]],
-            ['MyApiSingletonController', self::SAMPLE_MODULE, ['--api' => true, '--singleton' => true]],
-            ['MySingletonParentController', self::SAMPLE_MODULE, [
-                '--singleton' => true,
-                '--model' => 'MySingletonModelWithParent',
-                '--parent' => 'MySingletonParent',
-            ]],
-            ['MyApiSingletonParentController', self::SAMPLE_MODULE, [
-                '--api' => true,
-                '--singleton' => true,
-                '--model' => 'MySingletonModelWithParent',
-                '--parent' => 'MySingletonParent',
-            ]],
+            ['MyParentController', self::SAMPLE_MODULE,
+                ['--model' => 'MyControllerModelWithParent', '--parent' => 'MyControllerParent'],
+                ['MyParentController', 'Models/MyControllerModelWithParent', 'Models/MyControllerParent'],
+                ['MyParentController', 'Models.MyControllerModelWithParent', 'Models.MyControllerParent']
+            ],
+            ['MyResourceController', self::SAMPLE_MODULE, ['--resource' => true], [], []],
+            ['MyInvokableController', self::SAMPLE_MODULE, ['--invokable' => true], [], []],
+            ['MyApiController', self::SAMPLE_MODULE, ['--api' => true], [], []],
+            ['MyApiModelController', self::SAMPLE_MODULE,
+                ['--api' => true, '--model' => 'MyControllerApiModel'],
+                ['MyApiModelController', 'Models/MyControllerApiModel'],
+                ['MyApiModelController', 'Models.MyControllerApiModel']
+            ],
+            ['MyApiParentController', self::SAMPLE_MODULE,
+                ['--api' => true, '--model' => 'MyApiModelWithParent', '--parent' => 'MyApiParent'],
+                ['MyApiParentController', 'Models/MyApiModelWithParent', 'Models/MyApiParent'],
+                ['MyApiParentController', 'Models.MyApiModelWithParent', 'Models.MyApiParent']
+            ],
+            ['MyRequestController', self::SAMPLE_MODULE,
+                ['--model' => 'MyRequestModel', '--requests' => true],
+                ['MyRequestController', 'Models/MyRequestModel', 'Http/Requests/StoreMyRequestModelRequest', 'Http/Requests/UpdateMyRequestModelRequest'],
+                ['MyRequestController', 'Models.MyRequestModel', 'Http.Requests.StoreMyRequestModelRequest', 'Http.Requests.UpdateMyRequestModelRequest']
+            ],
+            ['MySingletonController', self::SAMPLE_MODULE, ['--singleton' => true], [], []],
+            ['MyApiSingletonController', self::SAMPLE_MODULE, ['--api' => true, '--singleton' => true], [], []],
+            ['MySingletonParentController', self::SAMPLE_MODULE,
+                ['--singleton' => true, '--model' => 'MySingletonModelWithParent', '--parent' => 'MySingletonParent',],
+                ['MySingletonParentController', 'Models/MySingletonModelWithParent', 'Models/MySingletonParent'],
+                ['MySingletonParentController', 'Models.MySingletonModelWithParent', 'Models.MySingletonParent']
+            ],
+            ['MyApiSingletonParentController', self::SAMPLE_MODULE,
+                ['--api' => true, '--singleton' => true, '--model' => 'MyApiSingletonModelWithParent', '--parent' => 'MyApiSingletonParent',],
+                ['MyApiSingletonParentController', 'Models/MyApiSingletonModelWithParent', 'Models/MyApiSingletonParent'],
+                ['MyApiSingletonParentController', 'Models.MyApiSingletonModelWithParent', 'Models.MyApiSingletonParent']
+            ],
         ];
     }
 
-    protected function assertions(string $name, ?string $module, ?string $myFile, ?string $myClass): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         $args = $this->myArgs;
         parent::assertions($name, $module, $myFile, $myClass);

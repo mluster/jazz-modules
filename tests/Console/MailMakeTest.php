@@ -14,21 +14,21 @@ class MailMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyMail', null, null],
-            ['MyMarkdownMail', null, ['--markdown' => 'mail']],
+            ['MyMail', null, null, [], []],
+            ['MyMarkdownMail', null, ['--markdown' => 'mail'], [], []],
 
-            ['MyMail', self::MODULE, null],
-            ['MyMarkdownMail', self::MODULE, ['--markdown' => 'mail']],
+            ['MyMail', self::MODULE, null, [], []],
+            ['MyMarkdownMail', self::MODULE, ['--markdown' => 'mail'], [], []],
 
-            ['MyMail', 'sample.Sandbox', null],
-            ['MyMarkdownMail', 'sample.Sandbox', ['--markdown' => 'mail']],
+            ['MyMail', self::SAMPLE_MODULE, null, [], []],
+            ['MyMarkdownMail', self::SAMPLE_MODULE, ['--markdown' => 'mail'], [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         $args = $this->myArgs;
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
         $this->assertTrue(is_subclass_of($class, Mailable::class));

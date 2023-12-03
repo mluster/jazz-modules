@@ -14,24 +14,24 @@ class TestMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyTest', null, null],
-            ['MyTest', null, ['--unit' => null]],
+            ['MyTest', null, null, [], []],
+            ['MyTest', null, ['--unit' => null], [], []],
 
-            ['MyTest', self::MODULE, null],
-            ['MyTest', self::MODULE, ['--unit' => null]],
+            ['MyTest', self::MODULE, null, [], []],
+            ['MyTest', self::MODULE, ['--unit' => null], [], []],
 
-            ['MyTest', 'sample.Sandbox', null],
-            ['MyTest', 'sample.Sandbox', ['--unit' => null]],
+            ['MyTest', 'sample.Sandbox', null, [], []],
+            ['MyTest', 'sample.Sandbox', ['--unit' => null], [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         $file = $this->getMyPath($name, $module);
         $this->assertFileExists($file, $file . ' not found');
     }
 
-    protected function getMyPath(string $className, ?string $module): string
+    protected function getMyPath(string $file, ?string $module): string
     {
         ['name' => $module, 'meta' => $meta] = $this->getMyModule($module);
         $component = str_replace('.', '/', $this->myComponent);
@@ -41,7 +41,7 @@ class TestMakeTest extends ATestCase
             $ret = self::SANDBOX . '/' . $meta['path'] . '/' . $module . '/' . $component;
         }
         $ret .= (array_key_exists('--unit', $this->myArgs)) ? '/Unit' : '/Feature';
-        $ret .= '/' . $className . '.php';
+        $ret .= '/' . $file . '.php';
 
         return $ret;
     }

@@ -17,20 +17,20 @@ class RuleMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyRule', null, null],
-            ['MyImplicitRule', null, ['--implicit' => true]],
+            ['MyRule', null, null, [], []],
+            ['MyImplicitRule', null, ['--implicit' => true], [], []],
 
-            ['MyRule', self::MODULE, null],
-            ['MyImplicitRule', self::MODULE, ['--implicit' => true]],
+            ['MyRule', self::MODULE, null, [], []],
+            ['MyImplicitRule', self::MODULE, ['--implicit' => true], [], []],
 
-            ['MyRule', 'sample.Sandbox', null],
-            ['MyImplicitRule', 'sample.Sandbox', ['--implicit' => true]],
+            ['MyRule', self::SAMPLE_MODULE, null, [], []],
+            ['MyImplicitRule', self::SAMPLE_MODULE, ['--implicit' => true], [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
         $this->assertTrue(is_subclass_of($class, ValidationRule::class));

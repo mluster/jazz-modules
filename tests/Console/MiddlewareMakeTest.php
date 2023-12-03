@@ -12,15 +12,15 @@ class MiddlewareMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyMiddleware', null, null],
-            ['MyMiddleware', self::MODULE, null],
-            ['MyMiddleware', 'sample.Sandbox', null],
+            ['MyMiddleware', null, null, [], []],
+            ['MyMiddleware', self::MODULE, null, [], []],
+            ['MyMiddleware', self::SAMPLE_MODULE, null, [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
         $this->assertMethodInClass($class, 'handle', true);

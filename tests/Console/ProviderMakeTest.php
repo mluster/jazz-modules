@@ -16,35 +16,35 @@ class ProviderMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyProvider', null, null],
+            ['MyProvider', null, null, [], []],
 
-            ['MyProvider', self::MODULE, null],
-            ['MyModuleProvider', self::MODULE, ['--type' => 'module']],
-            ['MyAuthProvider', self::MODULE, ['--type' => 'auth']],
-            ['MyRouterProvider', self::MODULE, ['--type' => 'router']],
-            ['MyEventProvider', self::MODULE, ['--type' => 'event']],
-            ['MyProvider', null, ['--context' => 'default']],
+            ['MyProvider', self::MODULE, null, [], []],
+            ['MyModuleProvider', self::MODULE, ['--type' => 'module'], [], []],
+            ['MyAuthProvider', self::MODULE, ['--type' => 'auth'], [], []],
+            ['MyRouterProvider', self::MODULE, ['--type' => 'router'], [], []],
+            ['MyEventProvider', self::MODULE, ['--type' => 'event'], [], []],
+            ['MyProvider', null, ['--context' => 'default'], [], []],
 
-            ['MyProvider', 'sample.Sandbox', null],
-            ['MyModuleProvider', 'sample.Sandbox', ['--type' => 'module']],
-            ['MyAuthProvider', 'sample.Sandbox', ['--type' => 'auth']],
-            ['MyRouterProvider', 'sample.Sandbox', ['--type' => 'router']],
-            ['MyEventProvider', 'sample.Sandbox', ['--type' => 'event']],
-            ['MyProvider', null, ['--context' => 'sample']],
+            ['MyProvider', self::SAMPLE_MODULE, null, [], []],
+            ['MyModuleProvider', self::SAMPLE_MODULE, ['--type' => 'module'], [], []],
+            ['MyAuthProvider', self::SAMPLE_MODULE, ['--type' => 'auth'], [], []],
+            ['MyRouterProvider', self::SAMPLE_MODULE, ['--type' => 'router'], [], []],
+            ['MyEventProvider', self::SAMPLE_MODULE, ['--type' => 'event'], [], []],
+            ['MyProvider', null, ['--context' => 'sample'], [], []],
         ];
     }
 
-    protected function assertMyFileExists(string $name, ?string $module): void
+    protected function assertMyFileExists(string $file, ?string $module): void
     {
         if (Arr::exists($this->myArgs, '--context')) {
             $context = $this->myArgs['--context'];
             $meta = Config::get('modules.' . $context . '._meta');
 
-            $path = self::SANDBOX . '/' . $meta['path'] . '/' . $name . '.php';
+            $path = self::SANDBOX . '/' . $meta['path'] . '/' . $file . '.php';
             $this->assertFileExists($path, $path . ' not found');
             require_once($path);
             return;
         }
-        parent::assertMyFileExists($name, $module);
+        parent::assertMyFileExists($file, $module);
     }
 }

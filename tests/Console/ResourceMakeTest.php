@@ -15,21 +15,21 @@ class ResourceMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyResource', null, null],
-            ['MyResourceCollection', null, ['--collection' => 'MyCollection']],
+            ['MyResource', null, null, [], []],
+            ['MyResourceCollection', null, ['--collection' => 'MyCollection'], [], []],
 
-            ['MyResource', self::MODULE, null],
-            ['MyResourceCollection', self::MODULE, ['--collection' => 'MyCollection']],
+            ['MyResource', self::MODULE, null, [], []],
+            ['MyResourceCollection', self::MODULE, ['--collection' => 'MyCollection'], [], []],
 
-            ['MyResource', 'sample.Sandbox', null],
-            ['MyResourceCollection', 'sample.Sandbox', ['--collection' => 'MyCollection']],
+            ['MyResource', self::SAMPLE_MODULE, null, [], []],
+            ['MyResourceCollection', self::SAMPLE_MODULE, ['--collection' => 'MyCollection'], [], []],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, array $myFile, array $myClass): void
     {
         $args = $this->myArgs;
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
         $isSubClass = is_subclass_of($class, ResourceCollection::class);
