@@ -14,7 +14,7 @@ use DirectoryIterator;
 abstract class ATestCase extends TestCase
 {
     protected const SANDBOX = 'laravel';
-    protected const APP_PATH = self::SANDBOX . '/app';
+    protected const APP_PATH = 'app';
     protected const APP_NAMESPACE = 'App\\';
 
     protected array $sandboxClean = [

@@ -15,20 +15,20 @@ class FactoryMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyUser', null, []],
-            ['My.User', null, []],
+            ['MyUser', null, [], 'MyUser', 'MyUser'],
+            ['My.User', null, [], 'My/User', 'My\\User'],
 
-            ['MyUser', self::MODULE, []],
-            ['My.User', self::MODULE, []],
+            ['MyUser', self::MODULE, [], 'MyUser', 'MyUser'],
+            ['My.User', self::MODULE, [], 'My/User', 'My\\User'],
 
-            ['MyUser', 'sample.Sandbox', []],
-            ['My.User', 'sample.Sandbox', []],
+            ['MyUser', self::SAMPLE_MODULE, [], 'MyUser', 'MyUser'],
+            ['My.User', self::SAMPLE_MODULE, [], 'My/User', 'My\\User'],
         ];
     }
 
-    protected function assertions(string $name, ?string $module): void
+    protected function assertions(string $name, ?string $module, ?string $myFile, ?string $myClass): void
     {
-        parent::assertions($name, $module);
+        parent::assertions($name, $module, $myFile, $myClass);
 
         $class = $this->getMyClass($name, $module);
         $this->assertTrue(

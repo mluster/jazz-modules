@@ -12,12 +12,12 @@ class CastMakeTest extends ATestCase
     public function provider(): array
     {
         return [
-            ['MyCast', null, null, 'MyCast', 'MyCast'],
-            ['MyCast', self::MODULE, null, 'MyCast', 'MyCast'],
-            ['MyCast', self::SAMPLE_MODULE, null, 'MyCast', 'MyCast'],
-            ['MyInboundCast', null, ['--inbound' => true], 'MyInboundCast', 'MyInboundCast'],
-            ['MyInboundCast', self::MODULE, ['--inbound' => true], 'MyInboundCast', 'MyInboundCast'],
-            ['MyInboundCast', self::SAMPLE_MODULE, ['--inbound' => true], 'MyInboundCast', 'MyInboundCast'],
+            ['MyCast', null, null, ['MyCast'], ['MyCast']],
+            ['MyCast', self::MODULE, null, ['MyCast'], ['MyCast']],
+            ['MyCast', self::SAMPLE_MODULE, null, ['MyCast'], ['MyCast']],
+            ['MyInboundCast', null, ['--inbound' => true], ['MyInboundCast'], ['MyInboundCast']],
+            ['MyInboundCast', self::MODULE, ['--inbound' => true], ['MyInboundCast'], ['MyInboundCast']],
+            ['MyInboundCast', self::SAMPLE_MODULE, ['--inbound' => true], ['MyInboundCast'], ['MyInboundCast']],
         ];
     }
 }
