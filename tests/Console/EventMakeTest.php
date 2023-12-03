@@ -15,6 +15,10 @@ class EventMakeTest extends ATestCase
             ['MyEvent', null, null, [], []],
             ['MyEvent', self::MODULE, null, [], []],
             ['MyEvent', self::SAMPLE_MODULE, null, [], []],
+
+            ['App\\Events\\MyFullEvent', null, null, ['MyFullEvent'], ['MyFullEvent']],
+            ['Module\\Sandbox\\Events\\MyFullEvent', self::MODULE, null, ['MyFullEvent'], ['MyFullEvent']],
+            ['Sample\\Sandbox\\Events\\MyFullEvent', self::SAMPLE_MODULE, null, ['MyFullEvent'], ['MyFullEvent']],
         ];
     }
 }

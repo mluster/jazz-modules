@@ -27,9 +27,6 @@ abstract class ATestCase extends ABaseTestCase
     protected array $myArgs = [];
 
 
-    /**
-     * Set Up
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -46,9 +43,6 @@ abstract class ATestCase extends ABaseTestCase
 
     /**
      * Test RUN
-     * @param string $name
-     * @param ?string $module
-     * @param ?array $args
      * @dataProvider provider
      */
     public function testRun(string $name, ?string $module, ?array $args, array $myFile, array $myClass): void
@@ -69,18 +63,12 @@ abstract class ATestCase extends ABaseTestCase
         $this->assertions($name, $module, $myFile, $myClass);
     }
 
-    /**
-     * Data Provider
-     * @return array
-     */
     abstract public function provider(): array;
 
 
     // ASSERTIONS
     /**
      * Assertions
-     * @param string $name
-     * @param ?string $module
      * @param array<string> $myFile
      * @param array<string> $myClass
      */

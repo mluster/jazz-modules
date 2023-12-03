@@ -29,6 +29,9 @@ class ListenerMakeTest extends ATestCase
             ['MyEventListener', self::SAMPLE_MODULE, ['--event' => 'MyListenerEvent', '--queued' => false], [], []],
             ['MyQueuedListener', self::SAMPLE_MODULE, ['--event' => null, '--queued' => true], [], []],
             ['MyQueuedEventListener', self::SAMPLE_MODULE, ['--event' => 'MyQueuedListenerEvent', '--queued' => true], [], []],
+
+            ['App\\Listeners\\MyFullListener', null, ['--event' => null, '--queued' => false], ['MyFullListener'], ['MyFullListener']],
+            ['App\\Listeners\\MyFullEventListener', null, ['--event' => 'App\\Events\\MyFullListenerEvent', '--queued' => false], ['MyFullEventListener'], ['MyFullEventListener']],
         ];
     }
 
