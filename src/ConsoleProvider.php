@@ -20,6 +20,8 @@ use Jazz\Modules\Console\ListenerMake;
 use Jazz\Modules\Console\MailMake;
 use Jazz\Modules\Console\MiddlewareMake;
 use Jazz\Modules\Console\ModelMake;
+use Jazz\Modules\Console\ModelPrune;
+use Jazz\Modules\Console\ModelShow;
 use Jazz\Modules\Console\NotificationMake;
 use Jazz\Modules\Console\ObserverMake;
 use Jazz\Modules\Console\PolicyMake;
@@ -59,6 +61,8 @@ use Illuminate\Foundation\Console\ScopeMakeCommand;
 use Illuminate\Foundation\Console\TestMakeCommand;
 use Illuminate\Database\Console\Migrations\MigrateMakeCommand;
 use Illuminate\Database\Console\Factories\FactoryMakeCommand;
+use Illuminate\Database\Console\PruneCommand;
+use Illuminate\Database\Console\ShowModelCommand;
 use Illuminate\Database\Console\Seeds\SeederMakeCommand;
 use Illuminate\Database\Console\Seeds\SeedCommand;
 use Illuminate\Foundation\Console\StubPublishCommand;
@@ -94,6 +98,9 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
         'Seed' => SeedCommand::class,
 
         'StubPublish' => StubPublishCommand::class,
+
+        'ModelShow' => ShowModelCommand::class,
+        'ModelPrune' => PruneCommand::class,
     ];
 
 
@@ -311,5 +318,15 @@ class ConsoleProvider extends ServiceProvider implements DeferrableProvider
     protected function registerStubPublish(): void
     {
         $this->app->singleton(StubPublishCommand::class, StubPublish::class);
+    }
+
+    protected function registerModelShow(): void
+    {
+        $this->app->singleton(ShowModelCommand::class, ModelShow::class);
+    }
+
+    protected function registerModelPrune(): void
+    {
+        $this->app->singleton(PruneCommand::class, ModelPrune::class);
     }
 }
